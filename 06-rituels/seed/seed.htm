@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>طقس زراعة البذرة الكونية</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #030205;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .screen-container {
+      position: relative;
+      width: 440px;
+      height: 900px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      perspective: 1000px;
+    }
+
+    /* 1. الصفحة التمهيدية */
+    .welcome-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background: url('assets/first-seed.png') no-repeat center center / cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 120px;
+      transition: opacity 1.2s ease, visibility 1.2s ease;
+    }
+
+    /* الأيقونة الشفافة ذات الإطار الذهبي (مرفوعة بمقدار 1 سم) */
+    .ritual-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.45);
+      border: 2px solid #ffd700;
+      padding: 20px 36px;
+      border-radius: 50px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 
+                  inset 0 0 15px rgba(255, 215, 0, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      margin-bottom: 38px;
+    }
+
+    .ritual-icon-btn:hover {
+      transform: scale(1.08);
+      background: rgba(20, 15, 5, 0.6);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.95), 
+                  inset 0 0 25px rgba(255, 215, 0, 0.6);
+    }
+
+    .ritual-icon-btn img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 8px #ffd700);
+    }
+
+    .ritual-icon-btn span {
+      color: #fff8d6;
+      font-size: 19px;
+      font-weight: bold;
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
+      letter-spacing: 0.5px;
+    }
+
+    .welcome-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* 2. الفيديو النهائي */
+    .bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    /* 3. صورة خلفية الفضاء المتحركة */
+    .bg-space {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 180%;
+      background: url('assets/space-seed.png') no-repeat top center / cover;
+      z-index: 2;
+      transition: transform 12s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 1.8s ease;
+    }
+
+    /* 4. صورة البذرة */
+    .seed-image {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0px) scale(1);
+      width: 350px;
+      height: auto;
+      z-index: 3;
+      pointer-events: none;
+      transition: transform 12s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.8s ease 11.2s;
+    }
+
+    /* 5. مساحة الكتابة */
+    .oval-input-wrapper {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      min-height: 580px;
+      max-height: 680px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 4;
+      transform-origin: center center;
+      transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s, min-height 0.3s;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      border-radius: 50% / 25%;
+      background: rgba(12, 8, 4, 0.68);
+      border: 4px solid #ffd700;
+      padding: 70px 32px;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.6;
+      outline: none;
+      resize: none;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #ffd700 transparent;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.7),
+                  0 0 60px rgba(255, 215, 0, 0.4),
+                  inset 0 0 45px rgba(255, 215, 0, 0.5);
+      transition: all 0.5s ease;
+    }
+
+    textarea::placeholder {
+      color: rgba(255, 235, 179, 0.85);
+      font-weight: normal;
+      text-shadow: none;
+    }
+
+    .plant-btn {
+      position: absolute;
+      bottom: 160px;
+      padding: 14px 52px;
+      font-size: 19px;
+      font-weight: bold;
+      color: #1a0f00;
+      background: linear-gradient(135deg, #ffe066, #d4af37, #996515);
+      border: 1.5px solid #fff3a8;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+      transition: opacity 0.6s ease, transform 0.3s ease;
+      z-index: 5;
+    }
+
+    /* --- الأنيميشن --- */
+
+    .planting .plant-btn {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .planting textarea {
+      border-color: #ffffff !important;
+      color: #ffd700;
+      background: rgba(255, 215, 0, 0.35);
+      box-shadow: inset 0 0 60px #ffd700, 0 0 90px #ffd700, 0 0 130px #ffea75;
+    }
+
+    .planting .oval-input-wrapper {
+      transform: translate(-50%, -50%) scale(0.001);
+    }
+
+    .drop-seed .bg-space {
+      transform: translateY(-40%);
+    }
+
+    .drop-seed .seed-image {
+      transform: translate3d(-50%, -50%, -900px) scale(0.0001);
+      opacity: 0;
+    }
+
+    .show-video .bg-video {
+      opacity: 1;
+    }
+
+    .show-video .bg-space {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- موسيقى الخلفية المستمرة -->
+  <audio id="bgMusic" src="assets/méditation.mp3" loop preload="auto" crossorigin="anonymous"></audio>
+
+  <div class="screen-container" id="screen">
+
+    <div class="welcome-screen" id="welcomeScreen">
+      <!-- الأيقونة الشفافة بالإطار الذهبي المتوهج -->
+      <div class="ritual-icon-btn" onclick="enterSeedRitual()">
+        <img src="assets/seed.png" alt="أيقونة البذرة">
+        <span>زراعة البذرة</span>
+      </div>
+    </div>
+
+    <video class="bg-video" id="myVideo" preload="auto" playsinline>
+      <source src="assets/seed.mp4" type="video/mp4">
+    </video>
+
+    <div class="bg-space"></div>
+    <img src="assets/seed.png" class="seed-image" id="seedImg" alt="البذرة">
+
+    <div class="oval-input-wrapper" id="ovalWrapper">
+      <textarea id="myText" placeholder="اكتب فكرتك داخل البذرة..."></textarea>
+    </div>
+    
+    <button class="plant-btn" onclick="startPlanting()">ازرع 🌱</button>
+  </div>
+
+  <script>
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const bgMusic = document.getElementById('bgMusic');
+    const textarea = document.getElementById('myText');
+    const ovalWrapper = document.getElementById('ovalWrapper');
+    const screen = document.getElementById('screen');
+    const video = document.getElementById('myVideo');
+
+    let audioCtx, gainNode;
+
+    function enterSeedRitual() {
+      // إعداد مضخم الصوت (Web Audio API) لمضاعفة الصوت للضعف (2.0) أو أكثر
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let source = audioCtx.createMediaElementSource(bgMusic);
+        gainNode = audioCtx.createGain();
+        
+        // هنا تم مضاعفة الصوت إلى الضعف (يمكنك تعديل الرقم 2.0 إلى 2.5 أو 3.0 إذا أردت أعلى)
+        gainNode.gain.value = 2.0; 
+        
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+      }
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      bgMusic.play().catch(e => console.log("تفاعل مطلوب للصوت:", e));
+      welcomeScreen.classList.add('hide');
+    }
+
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      let newHeight = this.scrollHeight;
+
+      if (newHeight > 560 && newHeight < 680) {
+        ovalWrapper.style.minHeight = newHeight + 'px';
+        ovalWrapper.style.width = (350 + (newHeight - 560) * 0.15) + 'px'; 
+      }
+    });
+
+    function startPlanting() {
+      if (textarea.value.trim() === "") {
+        alert("الرجاء كتابة الفكرة أولاً!");
+        return;
+      }
+
+      textarea.readOnly = true;
+      video.load();
+
+      screen.classList.add('planting');
+
+      setTimeout(() => {
+        screen.classList.add('drop-seed');
+      }, 2100);
+
+      setTimeout(() => {
+        video.muted = false;
+        video.play();
+        screen.classList.add('show-video');
+      }, 14100);
+    }
+  </script>
+
+</body>
+  </html>
+  
