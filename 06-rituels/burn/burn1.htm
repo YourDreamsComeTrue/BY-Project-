@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حرق النص مع خلفية فيديو تفاعلية</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        /* 1. الصفحة التمهيدية (البداية) */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: url('assets/first-seed.png') no-repeat center center / cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 120px;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        .welcome-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* الأيقونة الشفافة ذات الإطار الذهبي */
+        .ritual-icon-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.45);
+            border: 2px solid #ffd700;
+            padding: 20px 36px;
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 
+                        inset 0 0 15px rgba(255, 215, 0, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            margin-bottom: 38px;
+        }
+
+        .ritual-icon-btn:hover {
+            transform: scale(1.08);
+            background: rgba(20, 15, 5, 0.6);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.95), 
+                        inset 0 0 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .ritual-icon-btn img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 8px #ffd700);
+        }
+
+        .ritual-icon-btn span {
+            color: #fff8d6;
+            font-size: 19px;
+            font-weight: bold;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
+            letter-spacing: 0.5px;
+        }
+
+        /* الفيديو في الخلفية */
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* حاوية العرض ثلاثي الأبعاد */
+        .scene {
+            position: relative;
+            z-index: 2;
+            perspective: 1200px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: auto;
+            margin-bottom: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* كتاب مكون من صفحتين */
+        .book-container {
+            display: flex;
+            width: 100%;
+            height: 220px;
+            transform-style: preserve-3d;
+            transition: transform 1.5s cubic-bezier(0.6, -0.2, 0.2, 1), 
+                        opacity 1.2s ease;
+        }
+
+        .page {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            padding: 10px;
+            transition: transform 1.5s cubic-bezier(0.6, -0.2, 0.2, 1);
+        }
+
+        .page-left {
+            border-radius: 12px 0 0 12px;
+            border-left: none;
+            transform-origin: right center;
+        }
+
+        .page-right {
+            border-radius: 0 12px 12px 0;
+            border-right: none;
+            transform-origin: left center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            resize: none;
+            line-height: 1.5;
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* زر الحرق */
+        .burn-btn {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.65);
+            color: #ff7700;
+            border: 1px solid #ff5500;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .burn-btn:hover {
+            background: #ff5500;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 85, 0, 0.8);
+        }
+
+        /* تأثير انطواء واختفاء النص للداخل */
+        .book-container.burning .page-left {
+            transform: rotateY(85deg);
+        }
+
+        .book-container.burning .page-right {
+            transform: rotateY(-85deg);
+        }
+
+        .book-container.burning {
+            transform: translateZ(-800px) scale(0.05);
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الصفحة التمهيدية البدئية -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="ritual-icon-btn" onclick="startRitual()">
+            <img src="assets/seed.png" alt="أيقونة البذرة">
+            <span>بدء طقس الحرق</span>
+        </div>
+    </div>
+
+    <!-- فيديو الخلفية (المسار المحدث assets/burn.mp4) -->
+    <video id="bgVideo" playsinline muted>
+        <source src="assets/burn.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <!-- مشهد مساحة الكتابة -->
+    <div class="scene">
+        <div class="book-container" id="bookContainer">
+            <div class="page page-left">
+                <textarea id="textLeft" placeholder="اكتب هنا..."></textarea>
+            </div>
+            <div class="page page-right">
+                <textarea id="textRight" placeholder="تابع الكتابة هنا..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر الحرق -->
+    <button class="burn-btn" id="burnBtn">
+        🔥 احرق النص
+    </button>
+
+    <script>
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const video = document.getElementById('bgVideo');
+        const burnBtn = document.getElementById('burnBtn');
+        const bookContainer = document.getElementById('bookContainer');
+        const textLeft = document.getElementById('textLeft');
+        const textRight = document.getElementById('textRight');
+
+        // عند النقر على أيقونة الترحيب
+        function startRitual() {
+            welcomeScreen.classList.add('hide');
+        }
+
+        // تثبيت الفيديو عند الثانية 13 فور تحميل البيانات
+        video.addEventListener('loadedmetadata', () => {
+            video.currentTime = 13;
+            video.pause();
+        });
+
+        // متابعة وقوف الفيديو عند الثانية 48
+        video.addEventListener('timeupdate', () => {
+            if (video.currentTime >= 48) {
+                video.pause();
+            }
+        });
+
+        // عند الضغط على زر الحرق
+        burnBtn.addEventListener('click', () => {
+            // التحقق من أن المستخدم كتب نصاً قبل الحرق (اختياري)
+            if (textLeft.value.trim() === "" && textRight.value.trim() === "") {
+                alert("الرجاء كتابة شيء لكي تحرقه!");
+                return;
+            }
+
+            // 1. بدء انكماش وانطواء مساحة النص للداخل
+            bookContainer.classList.add('burning');
+
+            // 2. الانتظار لمدة 3 ثوانٍ ثم تشغيل الفيديو مع الصوت
+            setTimeout(() => {
+                video.muted = false; // تفعيل الصوت
+                video.currentTime = 13; // التأكد من البداية من الثانية 13
+                video.play();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
