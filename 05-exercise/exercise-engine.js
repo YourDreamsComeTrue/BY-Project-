@@ -2,10 +2,10 @@ let saveTimer = null;
 let currentExerciseData = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. قراءة متغيرات المسار من الرابط (مع وضع قيم افتراضية تطابق مجلداتك)
+  // 1. قراءة متغيرات المسار من الرابط (مع القيم الافتراضية الصحيحة والمحدثة)
   const urlParams = new URLSearchParams(window.location.search);
   const lessonFolder = urlParams.get('lesson') || 'lesson-00001';
-  const titleFolder = urlParams.get('title') || 'titile-01';
+  const titleFolder = urlParams.get('title') || 'title-02'; // تم التعديل هنا لتتوافق مع مجلدك الحالي
   const exerciseFile = urlParams.get('ex') || 'exercise01';
 
   // 2. بناء المسار الديناميكي المباشر للملف من مجلد 07-content
@@ -89,4 +89,3 @@ function loadSavedAnswer(id) {
     textarea.style.height = textarea.scrollHeight + "px";
   }
 }
-  
