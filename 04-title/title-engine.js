@@ -1,21 +1,19 @@
 let currentExerciseData = null;
 let saveTimer = null;
 
-// 1. تحديد واستخراج متغيرات الرابط (URL Parameters)
+// 1. استخراج متغيرات الرابط
 const urlParams = new URLSearchParams(window.location.search);
 const lessonFolder = urlParams.get('lesson') || 'lesson-00001';
 const titleFolder = urlParams.get('title') || 'title-02';
 const exerciseFile = urlParams.get('ex') || 'exercise01';
-const ritualType = urlParams.get('ritual') || 'seed'; // خيارات: 'seed' أو 'burn'
+const ritualType = urlParams.get('ritual') || 'seed';
 
-// 2. دوال بناء المسارات النسبية الصحيحة من مجلد 04-title
+// 2. دوال المسارات
 function getRitualPath(type) {
-    // المسار: الخروج من 04-title والدخول إلى 06-rituels
     return `../06-rituels/${type}/${type}.html`;
 }
 
 function getContentScriptPath(lesson, title, file) {
-    // المسار: الخروج من 04-title والدخول إلى 07-content
     return `../07-content/${lesson}/${title}/${file}.js`;
 }
 
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadContentData();
 });
 
-// 3. إدارة التبديل بين الأزرار الأربعة (المشاهدة، الشرح، الملخص، الطقوس)
+// 3. إدارة التبويبات (الأيقونات الأربعة والـ iframe للطقوس)
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
@@ -37,12 +35,10 @@ function setupTabNavigation() {
         });
     });
 
-    // تفعيل التبويب الأول افتراضياً عند التحميل
     const defaultBtn = document.getElementById("btn-watch");
     if (defaultBtn) defaultBtn.click();
 }
 
-// 4. عرض المحتوى داخل تبويب tab-content-area
 function renderTabSection(tab) {
     const container = document.getElementById("tab-content-area");
     if (!container) return;
@@ -53,17 +49,13 @@ function renderTabSection(tab) {
         case "watch":
             container.innerHTML = `<div class="content-box"><p>قسم المشاهدة جاهز لعرض الفيديو.</p></div>`;
             break;
-
         case "explain":
             container.innerHTML = `<div class="content-box"><p>محتوى الشرح والتوضيح للدرس.</p></div>`;
             break;
-
         case "summary":
             container.innerHTML = `<div class="content-box"><p>ملخص النقاط الأساسية للعنوان.</p></div>`;
             break;
-
         case "rituels":
-            // استدعاء ملف الطقس (seed.html أو burn.html) عبر iframe
             const iframeSrc = getRitualPath(ritualType);
             container.innerHTML = `
                 <iframe 
@@ -76,7 +68,7 @@ function renderTabSection(tab) {
     }
 }
 
-// 5. جلب ملف التمرين من 07-content وتضمينه أسفل الصفحة
+// 4. جلب ملف التمرين وتعبئة العناصر الثابتة في الصفحة
 function loadContentData() {
     const scriptPath = getContentScriptPath(lessonFolder, titleFolder, exerciseFile);
     const script = document.createElement("script");
@@ -85,47 +77,42 @@ function loadContentData() {
     script.onload = () => {
         if (typeof exerciseData !== "undefined") {
             currentExerciseData = exerciseData;
-            renderExerciseUI(currentExerciseData);
+            
+            // وضع السؤال في العنصر المخصص له في الـ HTML الأصلي
+            const questionEl = document.getElementById("questionText");
+            if (questionEl) {
+                questionEl.textContent = currentExerciseData.question;
+            }
+
+            // ربط مربع النص بالحفظ والاسترجاع
+            const textarea = document.getElementById("userAnswer");
+            if (textarea) {
+                loadSavedAnswer(currentExerciseData.id, textarea);
+
+                textarea.addEventListener("input", function () {
+                    this.style.height = "auto";
+                    this.style.height = this.scrollHeight + "px";
+
+                    clearTimeout(saveTimer);
+                    saveTimer = setTimeout(() => {
+                        autoSaveData(currentExerciseData.id, this.value);
+                    }, 1200);
+                });
+            }
         }
     };
 
     script.onerror = () => {
-        const exContainer = document.getElementById("exercises-container");
-        if (exContainer) {
-            exContainer.innerHTML = `<p style="color:red;">تعذر تحميل التمرين من المسار المحدد.</p>`;
+        const questionEl = document.getElementById("questionText");
+        if (questionEl) {
+            questionEl.textContent = "تعذر تحميل السؤال من المسار المحدد.";
         }
     };
 
     document.head.appendChild(script);
 }
 
-// 6. بناء عناصر واجهة التمرين داخل exercises-container
-function renderExerciseUI(data) {
-    const container = document.getElementById("exercises-container");
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="exercise-card">
-            <h3 class="exercise-question">${data.question || 'لا يوجد سؤال'}</h3>
-            <textarea id="userAnswer" placeholder="اكتب إجابتك هنا..." style="width:100%; min-height:100px; resize:none;"></textarea>
-        </div>
-    `;
-
-    const textarea = document.getElementById("userAnswer");
-    loadSavedAnswer(data.id, textarea);
-
-    textarea.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = this.scrollHeight + "px";
-
-        clearTimeout(saveTimer);
-        saveTimer = setTimeout(() => {
-            autoSaveData(data.id, this.value);
-        }, 1200);
-    });
-}
-
-// 7. حفظ واسترجاع البيانات
+// 5. الحفظ والاسترجاع
 function autoSaveData(exerciseId, text) {
     const payload = {
         exerciseId: exerciseId,
@@ -154,5 +141,5 @@ function loadSavedAnswer(exerciseId, textareaElement) {
         textareaElement.style.height = "auto";
         textareaElement.style.height = textareaElement.scrollHeight + "px";
     }
-}
-    
+                }
+            
