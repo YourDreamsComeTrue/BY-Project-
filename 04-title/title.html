@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>العنوان</title>
     <link rel="stylesheet" href="title-style.css">
+    <!-- استدعاء ملف تنسيق التمرين ليتم تطبيقه على الهيكل الثابت بالأسفل -->
+    <link rel="stylesheet" href="../05-exercise/exercise-style.css">
 </head>
 <body>
 
@@ -42,10 +44,17 @@
         <!-- 3. مساحة استدعاء التمارين تحت الأقسام -->
         <section class="exercises-wrapper">
             <h2 class="section-subtitle">التمارين التفاعلية</h2>
-            <div id="exercises-container" class="exercises-list"></div>
+            <div id="exercises-container" class="exercises-list">
+                <!-- الهيكل الأصلي الثابت للتمرين للحفاظ على شكل التصميم 100% -->
+                <div class="exercise-box">
+                    <div id="questionText" class="question-title">جاري تحميل السؤال...</div>
+                    <textarea id="userAnswer" class="exercise-input" placeholder="اكتب إجابتك هنا..."></textarea>
+                </div>
+            </div>
         </section>
     </main>
 
     <script type="module" src="title-engine.js"></script>
 </body>
-</html>
+    </html>
+    
