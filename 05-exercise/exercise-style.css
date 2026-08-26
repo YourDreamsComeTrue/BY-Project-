@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+}
+
+.exercise-card {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.question-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #1e293b;
+  text-align: right;
+  width: 100%;
+}
+
+.color-picker-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+}
+
+.color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-btn:hover { transform: scale(1.1); }
+.color-btn.green { background-color: #d1fae5; }
+.color-btn.red { background-color: #ffe4e6; }
+.color-btn.reset { background-color: #f3f4f6; }
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
+  direction: rtl;
+  text-align: right;
+  resize: none;
+  overflow: hidden;
+  display: block;
+}
+
+textarea.bg-green { background-color: #f0fdf4 !important; border-color: #86efac; }
+textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }

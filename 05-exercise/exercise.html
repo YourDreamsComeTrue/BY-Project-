@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="exercise-style.css">
+</head>
+<body>
+
+  <div class="exercise-card">
+    <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
+
+    <div class="color-picker-toolbar">
+      <button class="color-btn green" onclick="setBgColor('green')" title="أخضر فاتح"></button>
+      <button class="color-btn red" onclick="setBgColor('red')" title="أحمر فاتح"></button>
+      <button class="color-btn reset" onclick="setBgColor('default')" title="إعادة افتراضي"></button>
+    </div>
+
+    <textarea 
+      id="userAnswer" 
+      placeholder="اكتب إجابتك هنا..."
+      dir="rtl"
+    ></textarea>
+  </div>
+
+  <!-- تحميل المحرك -->
+  <script src="exercise-engine.js"></script>
+</body>
+</html>
