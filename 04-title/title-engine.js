@@ -1,5 +1,4 @@
 let currentExerciseData = null;
-let saveTimer = null;
 
 // 1. استخراج متغيرات الرابط
 const urlParams = new URLSearchParams(window.location.search);
@@ -13,16 +12,17 @@ function getRitualPath(type) {
     return `../06-rituels/${type}/${type}.html`;
 }
 
-function getContentScriptPath(lesson, title, file) {
-    return `../07-content/${lesson}/${title}/${file}.js`;
+function getExerciseIframePath(lesson, title, file) {
+    // يستدعي صفحة exercise.html مع تمرير المتغيرات لها لتفتح التمرين بتصميمه الأصلي
+    return `../05-exercise/exercise.html?lesson=${lesson}&title=${title}&ex=${file}`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     setupTabNavigation();
-    loadContentData();
+    loadExerciseIframe();
 });
 
-// 3. إدارة التبويبات (الأيقونات الأربعة والـ iframe للطقوس)
+// 3. إدارة التبويبات للأقسام الأربعة
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
@@ -68,78 +68,18 @@ function renderTabSection(tab) {
     }
 }
 
-// 4. جلب ملف التمرين وتعبئة العناصر الثابتة في الصفحة
-function loadContentData() {
-    const scriptPath = getContentScriptPath(lessonFolder, titleFolder, exerciseFile);
-    const script = document.createElement("script");
-    script.src = scriptPath;
+// 4. تحميل صفحة التمرين الأصلي داخل iframe للحفاظ على التصميم 100%
+function loadExerciseIframe() {
+    const container = document.getElementById("exercises-container");
+    if (!container) return;
 
-    script.onload = () => {
-        if (typeof exerciseData !== "undefined") {
-            currentExerciseData = exerciseData;
-            
-            // وضع السؤال في العنصر المخصص له في الـ HTML الأصلي
-            const questionEl = document.getElementById("questionText");
-            if (questionEl) {
-                questionEl.textContent = currentExerciseData.question;
-            }
+    const exerciseUrl = getExerciseIframePath(lessonFolder, titleFolder, exerciseFile);
 
-            // ربط مربع النص بالحفظ والاسترجاع
-            const textarea = document.getElementById("userAnswer");
-            if (textarea) {
-                loadSavedAnswer(currentExerciseData.id, textarea);
-
-                textarea.addEventListener("input", function () {
-                    this.style.height = "auto";
-                    this.style.height = this.scrollHeight + "px";
-
-                    clearTimeout(saveTimer);
-                    saveTimer = setTimeout(() => {
-                        autoSaveData(currentExerciseData.id, this.value);
-                    }, 1200);
-                });
-            }
-        }
-    };
-
-    script.onerror = () => {
-        const questionEl = document.getElementById("questionText");
-        if (questionEl) {
-            questionEl.textContent = "تعذر تحميل السؤال من المسار المحدد.";
-        }
-    };
-
-    document.head.appendChild(script);
+    container.innerHTML = `
+        <iframe 
+            src="${exerciseUrl}" 
+            class="exercise-frame"
+            style="width:100%; min-height:350px; border:none; border-radius:12px;">
+        </iframe>
+    `;
 }
-
-// 5. الحفظ والاسترجاع
-function autoSaveData(exerciseId, text) {
-    const payload = {
-        exerciseId: exerciseId,
-        content: text,
-        updatedAt: new Date().toISOString()
-    };
-
-    if (window.CoreStorage && typeof window.CoreStorage.save === "function") {
-        window.CoreStorage.save(payload);
-    } else {
-        localStorage.setItem(exerciseId, JSON.stringify(payload));
-    }
-}
-
-function loadSavedAnswer(exerciseId, textareaElement) {
-    let saved = null;
-    if (window.CoreStorage && typeof window.CoreStorage.get === "function") {
-        saved = window.CoreStorage.get(exerciseId);
-    } else {
-        const raw = localStorage.getItem(exerciseId);
-        if (raw) saved = JSON.parse(raw);
-    }
-
-    if (saved && saved.content && textareaElement) {
-        textareaElement.value = saved.content;
-        textareaElement.style.height = "auto";
-        textareaElement.style.height = textareaElement.scrollHeight + "px";
-    }
-                }
-            
