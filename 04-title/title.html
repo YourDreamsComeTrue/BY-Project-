@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العنوان</title>
+    <link rel="stylesheet" href="title-style.css">
+</head>
+<body>
+
+    <main class="title-container">
+        <!-- 1. كتابة العنوان -->
+        <header class="title-header">
+            <h1 id="title-heading" class="main-title">...</h1>
+        </header>
+
+        <!-- 2. الأيقونات الأربعة المرتبة أفقياً -->
+        <nav class="nav-icons">
+            <button class="icon-btn" data-tab="watch" id="btn-watch">
+                <span class="icon">🎥</span>
+                <span class="label">المشاهدة</span>
+            </button>
+            <button class="icon-btn" data-tab="explain" id="btn-explain">
+                <span class="icon">📖</span>
+                <span class="label">الشرح</span>
+            </button>
+            <button class="icon-btn" data-tab="summary" id="btn-summary">
+                <span class="icon">📝</span>
+                <span class="label">الملخص</span>
+            </button>
+            <button class="icon-btn" data-tab="rituels" id="btn-rituels">
+                <span class="icon">✨</span>
+                <span class="label">الطقوس</span>
+            </button>
+        </nav>
+
+        <!-- مساحة عرض القسم النشط من الأقسام الأربعة -->
+        <section id="tab-content-area" class="tab-content-container"></section>
+
+        <hr class="section-divider">
+
+        <!-- 3. مساحة استدعاء التمارين تحت الأقسام -->
+        <section class="exercises-wrapper">
+            <h2 class="section-subtitle">التمارين التفاعلية</h2>
+            <div id="exercises-container" class="exercises-list"></div>
+        </section>
+    </main>
+
+    <script type="module" src="title-engine.js"></script>
+</body>
+</html>
