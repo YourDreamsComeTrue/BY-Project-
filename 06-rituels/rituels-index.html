@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الطقوس</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+        .rituals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .ritual-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            text-decoration: none;
+            color: inherit;
+        }
+        .ritual-card:hover {
+            transform: translateY(-3px);
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+        }
+        .ritual-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        .ritual-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>اختر الطقس المناسب لك</h1>
+        
+        <div class="rituals-grid">
+            <!-- يمكنك إضافة أي طقس جديد هنا ببساطة -->
+            <a href="burn/burn.html" class="ritual-card">
+                <div class="ritual-title">طقس الحرق</div>
+                <div class="ritual-desc">التخلص من المعتقدات والمشاعر المقيدة</div>
+            </a>
+
+            <a href="seed/seed.html" class="ritual-card">
+                <div class="ritual-title">طقس البذرة</div>
+                <div class="ritual-desc">غرس النوايا والأهداف الجديدة</div>
+            </a>
+
+            <!-- مثال للطقوس المستقبليّة -->
+            <!--
+            <a href="water/water.html" class="ritual-card">
+                <div class="ritual-title">طقس الماء</div>
+                <div class="ritual-desc">التنظيف والتطهير الشعوري</div>
+            </a>
+            -->
+        </div>
+    </div>
+
+</body>
+</html>
