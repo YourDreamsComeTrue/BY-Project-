@@ -18,74 +18,59 @@ body {
 .main-title {
     text-align: center;
     color: #1e293b;
-    font-size: 1.6rem;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
 }
 
-/* ترتيب الأيقونات الأربعة أفقياً */
+/* ترتيب الأزرار أفقياً وبشكل رقيق وأنيق */
 .nav-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .icon-btn {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    background: #f8fafc;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.icon-btn .icon { font-size: 1.4rem; }
-.icon-btn .label { font-size: 0.85rem; font-weight: bold; color: #475569; margin-top: 4px; }
-
-.icon-btn.active {
-    background: #2563eb;
-    border-color: #2563eb;
-}
-.icon-btn.active .label { color: #ffffff; }
-
-.tab-content-container {
-    min-height: 200px;
-    padding: 16px;
+    padding: 6px 10px; /* حجم رقيق لا يشغل مساحة كبيرة */
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background-color: #ffffff;
-}
-
-.video-responsive {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 6px;
-}
-.video-responsive iframe {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-}
-
-.section-divider { margin: 24px 0; border: 0; border-top: 1px solid #e2e8f0; }
-
-.exercises-list { display: flex; flex-direction: column; gap: 10px; }
-.exercise-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: #f1f5f9;
-    border-radius: 6px;
-}
-.action-btn {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: 20px; /* زوايا منحنية وأنيقة */
+    background: #ffffff;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.icon-btn .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.icon-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.icon-btn:hover .label {
+    color: #2563eb;
+}
+
+.section-divider { 
+    margin: 16px 0; 
+    border: 0; 
+    border-top: 1px solid #f1f5f9; 
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #334155;
+    margin-bottom: 12px;
+}
+
+.exercises-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
 }
