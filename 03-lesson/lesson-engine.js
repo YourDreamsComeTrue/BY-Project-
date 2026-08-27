@@ -51,9 +51,10 @@ async function initEngine() {
       });
     }
   } catch (err) {
-    console.error("خطأ أثناء استدعاء عناوين الدرس:", err);
+    console.error("تفاصيل الخطأ:", err);
     if (contentElement) {
-      contentElement.innerHTML = "<p>تعذر تحميل عناوين هذا الدرس. تأكد من وجود ملف lesson2.js داخل المجلد.</p>";
+      // إظهار نص الخطأ التقني المباشر باللون الأحمر
+      contentElement.innerHTML = `<p style="color:red; direction:ltr; text-align:left; font-family:monospace;">${err.message}</p>`;
     }
   }
 }
