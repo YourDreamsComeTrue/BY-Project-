@@ -26,25 +26,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 // 4. استدعاء ملف البيانات ديناميكياً من مسار 07-content
 async function loadTitleData() {
     try {
-        // تحويل 'title-02' إلى 'title02.js' لتطابق اسم الملف
         const fileName = `${titleFolder.replace('-', '')}.js`;
         const dataPath = `../07-content/${lessonFolder}/${titleFolder}/${fileName}`;
         
-        // استدعاء الملف ديناميكياً
         const dataModule = await import(dataPath);
-        const titleData = dataModule.titleData;
+        currentExerciseData = dataModule.titleData; // حفظ البيانات للاستخدام
 
         // تحديث نص العنوان الرئيسي
         const headingElement = document.getElementById("title-heading");
-        if (headingElement && titleData.heading) {
-            headingElement.textContent = titleData.heading;
+        if (headingElement && currentExerciseData.heading) {
+            headingElement.textContent = currentExerciseData.heading;
         }
     } catch (error) {
         console.error("تعذر تحميل ملف البيانات من المسار المحدد:", error);
     }
 }
 
-// 5. ربط أزرار التنقل لفتح المحتويات في نوافذ جديدة
+// 5. ربط أزرار التنقل لفتح المحتويات في صفحة العرض الموحدة
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
@@ -58,27 +56,19 @@ function setupTabNavigation() {
 function openContentInNewTab(tab) {
     let url = "";
 
-    switch (tab) {
-        case "watch":
-            url = `watch.html?lesson=${lessonFolder}&title=${titleFolder}`;
-            break;
-        case "explain":
-            url = `explain.html?lesson=${lessonFolder}&title=${titleFolder}`;
-            break;
-        case "summary":
-            url = `summary.html?lesson=${lessonFolder}&title=${titleFolder}`;
-            break;
-        case "rituels":
-            url = getRitualPath(ritualType);
-            break;
+    if (tab === "rituels") {
+        url = getRitualPath(ritualType);
+    } else {
+        // توجيه الأزرار (watch, explain, summary) إلى صفحة عرض موحدة تعتمد على البيانات
+        url = `view.html?type=${tab}&lesson=${lessonFolder}&title=${titleFolder}`;
     }
 
     if (url) {
-        window.open(url, '_blank'); // فتح الرابط في نافذة/تبويب جديد
+        window.open(url, '_blank'); // فتح الرابط في نافذة جديدة
     }
 }
 
-// 6. عرض التمرين فقط في الصفحة الحالية داخل iframe
+// 6. عرض التمرين فقط في الصفحة الحالية
 function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
@@ -92,4 +82,4 @@ function loadExerciseIframe() {
             style="width:100%; min-height:350px; border:none; border-radius:12px;">
         </iframe>
     `;
-                    }
+}
