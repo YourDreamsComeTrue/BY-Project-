@@ -1,11 +1,15 @@
-export const titleData = {
+export default {
+  id: "title-02",
+  
+  // الاحتفاظ بالهيكل الخاص بك كما هو
+  titleData: {
     heading: "سيكولوجية النجاح - المعتقدات المقيدة",
     
-    // القسم 1: المشاهدة (تم تحديث رابط يوتيوب ووقت البداية والنهاية)
+    // القسم 1: المشاهدة
     watch: {
         videoId: "IC8DMfyBCBM", 
-        startSeconds: 87,       // البداية من الثانية 87 (01:27)
-        endSeconds: 171         // النهاية عند الثانية 171 (02:51)
+        startSeconds: 87,
+        endSeconds: 171
     },
     
     // القسم 2: الشرح
@@ -27,12 +31,11 @@ export const titleData = {
         `
     },
     
-    // القسم 4: الطقوس
+    // القسم 4: الطقوس والتمارين
     rituelsFile: "./rituels.js", 
-    
-    // مساحة التمارين المفتوحة
     exercises: [
         { id: "ex_01", title: "تمرين رصد المعتقدات المقيدة", file: "./exercise01.js" },
         { id: "ex_02", title: "تمرين إعادة الصياغة الذهنية", file: "./exercise02.js" }
     ]
+  }
 };
