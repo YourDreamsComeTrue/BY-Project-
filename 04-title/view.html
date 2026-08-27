@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض المحتوى</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: #f4f6f9; 
+            padding: 20px; 
+            direction: rtl; 
+            margin: 0;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #ffffff; 
+            padding: 24px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06); 
+        }
+        h2 {
+            color: #1e293b;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+        }
+        .video-container { 
+            position: relative; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+            border-radius: 8px; 
+            background-color: #000;
+        }
+        .video-container iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            border: 0;
+        }
+        .content-body {
+            line-height: 1.7;
+            color: #334155;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content-display">
+        <h2>جاري تحميل المحتوى...</h2>
+    </div>
+
+    <script type="module">
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        const lesson = urlParams.get('lesson');
+        const title = urlParams.get('title');
+
+        async function loadData() {
+            const fileName = `${title.replace('-', '')}.js`;
+            const dataPath = `../07-content/${lesson}/${title}/${fileName}`;
+            
+            try {
+                const module = await import(dataPath);
+                const data = module.titleData;
+                const container = document.getElementById('content-display');
+
+                if (type === 'watch') {
+                    const videoId = data.watch.videoId;
+                    const start = data.watch.startSeconds || 0;
+                    const end = data.watch.endSeconds ? `&end=${data.watch.endSeconds}` : '';
+                    
+                    container.innerHTML = `
+                        <h2>${data.heading} - المشاهدة</h2>
+                        <div class="video-container">
+                            <iframe 
+                                src="https://www.youtube-nocookie.com/embed/${videoId}?start=${start}${end}&rel=0" 
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    `;
+                } else if (type === 'explain') {
+                    container.innerHTML = `
+                        <h2>${data.heading} - الشرح</h2>
+                        <div class="content-body">${data.explain.content}</div>
+                    `;
+                } else if (type === 'summary') {
+                    container.innerHTML = `
+                        <h2>${data.heading} - الملخص</h2>
+                        <div class="content-body">${data.summary.content}</div>
+                    `;
+                }
+            } catch (err) {
+                document.getElementById('content-display').innerHTML = '<p style="color:red;">تعذر تحميل المحتوى المطلب.</p>';
+                console.error(err);
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
