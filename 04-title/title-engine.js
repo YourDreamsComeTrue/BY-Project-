@@ -13,7 +13,6 @@ function getRitualPath(type) {
 }
 
 function getExerciseIframePath(lesson, title, file) {
-    // يستدعي صفحة exercise.html مع تمرير المتغيرات لها لتفتح التمرين بتصميمه الأصلي
     return `../05-exercise/exercise.html?lesson=${lesson}&title=${title}&ex=${file}`;
 }
 
@@ -22,53 +21,45 @@ document.addEventListener("DOMContentLoaded", () => {
     loadExerciseIframe();
 });
 
-// 3. إدارة التبويبات للأقسام الأربعة
+// 3. فتح المحتوى في صفحة/نافذة جديدة عند الضغط على الأزرار
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
         btn.addEventListener("click", () => {
-            buttons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-
             const tab = btn.getAttribute("data-tab");
-            renderTabSection(tab);
+            openContentInNewTab(tab);
         });
     });
-
-    const defaultBtn = document.getElementById("btn-watch");
-    if (defaultBtn) defaultBtn.click();
 }
 
-function renderTabSection(tab) {
-    const container = document.getElementById("tab-content-area");
-    if (!container) return;
-
-    container.innerHTML = "";
+function openContentInNewTab(tab) {
+    let url = "";
 
     switch (tab) {
         case "watch":
-            container.innerHTML = `<div class="content-box"><p>قسم المشاهدة جاهز لعرض الفيديو.</p></div>`;
+            // يمكنك وضع رابط صفحة المشاهدة الخاصة بالدرس هنا
+            url = `watch.html?lesson=${lessonFolder}&title=${titleFolder}`;
             break;
         case "explain":
-            container.innerHTML = `<div class="content-box"><p>محتوى الشرح والتوضيح للدرس.</p></div>`;
+            // يمكنك وضع رابط صفحة الشرح هنا
+            url = `explain.html?lesson=${lessonFolder}&title=${titleFolder}`;
             break;
         case "summary":
-            container.innerHTML = `<div class="content-box"><p>ملخص النقاط الأساسية للعنوان.</p></div>`;
+            // يمكنك وضع رابط صفحة الملخص هنا
+            url = `summary.html?lesson=${lessonFolder}&title=${titleFolder}`;
             break;
         case "rituels":
-            const iframeSrc = getRitualPath(ritualType);
-            container.innerHTML = `
-                <iframe 
-                    src="${iframeSrc}" 
-                    class="rituels-frame"
-                    style="width:100%; height:500px; border:none; border-radius:12px;">
-                </iframe>
-            `;
+            // فتح رابط الطقوس مباشرة في نافذة جديدة
+            url = getRitualPath(ritualType);
             break;
+    }
+
+    if (url) {
+        window.open(url, '_blank'); // يفتح الرابط في تبويب/صفحة جديدة
     }
 }
 
-// 4. تحميل صفحة التمرين الأصلي داخل iframe للحفاظ على التصميم 100%
+// 4. عرض التمرين فقط داخل الصفحة الحالية
 function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
