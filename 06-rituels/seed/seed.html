@@ -20,7 +20,7 @@
       overflow: hidden;
     }
 
-    /* تم التعديل هنا لملء الشاشة بالكامل 100% وإزالة الحواف الدائرية */
+    /* ملء الشاشة بالكامل 100% */
     .screen-container, .main-container, .card, .wrapper {
       position: relative;
       width: 100% !important;
@@ -128,56 +128,58 @@
     /* 4. صورة البذرة */
     .seed-image {
       position: absolute;
-      top: 40%;
+      top: 42%;
       left: 50%;
       transform: translate3d(-50%, -50%, 0px) scale(1);
-      width: 350px;
+      width: 550px; /* تم تكبير حجم البذرة لتناسب الشاشة الكاملة */
       height: auto;
       z-index: 3;
       pointer-events: none;
       transition: transform 12s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.8s ease 11.2s;
     }
 
-    /* 5. مساحة الكتابة */
+    /* 5. مساحة الكتابة (تم تكبير العرض والطول الأساسي لتناسب القراءة الواضحة) */
     .oval-input-wrapper {
       position: absolute;
-      top: 38%;
+      top: 42%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 350px;
-      min-height: 580px;
-      max-height: 680px;
+      width: 600px;        /* عرض أكبر بكثير ومناسب لشاشات الكمبيوتر */
+      max-width: 90vw;     /* لتبقى متجاوبة ولا تخرج عن حدود الشاشات الصغيرة */
+      min-height: 420px;   /* مساحة مريحة للبداية */
+      max-height: 75vh;    /* أقصى ارتفاع مسموح به قبل ظهور شريط التمرير */
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 4;
       transform-origin: center center;
-      transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s, min-height 0.3s;
+      transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     textarea {
       width: 100%;
       height: 100%;
-      min-height: 560px;
-      border-radius: 50% / 25%;
-      background: rgba(12, 8, 4, 0.68);
+      min-height: 420px;
+      max-height: 75vh;
+      border-radius: 50% / 305%; /* شكل بيضاوي متناسق وجميل */
+      background: rgba(12, 8, 4, 0.75);
       border: 4px solid #ffd700;
-      padding: 70px 32px;
+      padding: 60px 50px;
       color: #ffffff;
-      font-size: 18px;
+      font-size: 20px;     /* خط أضح وأكبر للقارئ */
       font-weight: 600;
       text-align: center;
-      line-height: 1.6;
+      line-height: 1.8;    /* تباعد مريح جداً بين السطور */
       outline: none;
       resize: none;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: #ffd700 transparent;
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.9);
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.7),
-                  0 0 60px rgba(255, 215, 0, 0.4),
-                  inset 0 0 45px rgba(255, 215, 0, 0.5);
-      transition: all 0.5s ease;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.7),
+                  0 0 80px rgba(255, 215, 0, 0.4),
+                  inset 0 0 50px rgba(255, 215, 0, 0.5);
+      transition: all 0.3s ease;
     }
 
     textarea::placeholder {
@@ -188,9 +190,9 @@
 
     .plant-btn {
       position: absolute;
-      bottom: 160px;
-      padding: 14px 52px;
-      font-size: 19px;
+      bottom: 80px; /* تم تعديل الموقع لتكون مرئية ومناسبة للشاشة الكاملة */
+      padding: 16px 56px;
+      font-size: 20px;
       font-weight: bold;
       color: #1a0f00;
       background: linear-gradient(135deg, #ffe066, #d4af37, #996515);
@@ -200,6 +202,10 @@
       box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
       transition: opacity 0.6s ease, transform 0.3s ease;
       z-index: 5;
+    }
+
+    .plant-btn:hover {
+      transform: scale(1.05);
     }
 
     /* --- الأنيميشن --- */
@@ -261,7 +267,7 @@
     <img src="assets/seed.png" class="seed-image" id="seedImg" alt="البذرة">
 
     <div class="oval-input-wrapper" id="ovalWrapper">
-      <textarea id="myText" placeholder="اكتب فكرتك داخل البذرة..."></textarea>
+      <textarea id="myText" placeholder="اكتب فكرتك أو نيتك داخل البذرة..."></textarea>
     </div>
     
     <button class="plant-btn" onclick="startPlanting()">ازرع 🌱</button>
@@ -295,13 +301,13 @@
       welcomeScreen.classList.add('hide');
     }
 
+    // تمدد تلقائي ناعم وذكي للمساحة حسب كمية الكتابة
     textarea.addEventListener('input', function() {
       this.style.height = 'auto';
       let newHeight = this.scrollHeight;
-
-      if (newHeight > 560 && newHeight < 680) {
+      if (newHeight > 420) {
+        this.style.height = newHeight + 'px';
         ovalWrapper.style.minHeight = newHeight + 'px';
-        ovalWrapper.style.width = (350 + (newHeight - 560) * 0.15) + 'px'; 
       }
     });
 
@@ -329,5 +335,5 @@
   </script>
 
 </body>
-      </html>
-      
+    </html>
+        
