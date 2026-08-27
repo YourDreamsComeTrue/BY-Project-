@@ -5,76 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>معرض الطقوس</title>
     <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            direction: rtl;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            color: #1e293b;
-            font-size: 1.6rem;
-            margin-bottom: 24px;
-        }
-        .rituals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-        .ritual-card {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            text-decoration: none;
-            color: inherit;
-        }
-        .ritual-card:hover {
-            transform: translateY(-3px);
-            border-color: #2563eb;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
-        }
-        .ritual-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-        .ritual-desc {
-            font-size: 0.85rem;
-            color: #64748b;
-        }
+        body { font-family: system-ui, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; direction: rtl; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: #1e293b; font-size: 1.6rem; margin-bottom: 24px; }
+        .rituals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+        .ritual-card { background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.04); text-decoration: none; color: inherit; }
+        .ritual-card:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12); }
+        .ritual-title { font-size: 1.1rem; font-weight: bold; color: #1e293b; margin-bottom: 6px; }
+        .ritual-desc { font-size: 0.85rem; color: #64748b; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>اختر الطقس المناسب لك</h1>
-        
-        <div class="rituals-grid">
-            <!-- طقس الحرق (يفتح في تبويب جديد بكامل الشاشة) -->
-            <a href="burn/burn.html" target="_blank" class="ritual-card">
-                <div class="ritual-title">طقس الحرق</div>
-                <div class="ritual-desc">التخلص من المعتقدات والمشاعر المقيدة</div>
-            </a>
-
-            <!-- طقس البذرة (يفتح في تبويب جديد بكامل الشاشة) -->
-            <a href="seed/seed.html" target="_blank" class="ritual-card">
-                <div class="ritual-title">طقس البذرة</div>
-                <div class="ritual-desc">غرس النوايا والأهداف الجديدة</div>
-            </a>
+        <div class="rituals-grid" id="rituals-container">
+            <!-- سيتم توليد الطقوس هنا تلقائياً -->
         </div>
     </div>
 
+    <script type="module">
+        import { ritualsList } from './rituals-data.js';
+
+        const container = document.getElementById('rituals-container');
+        
+        ritualsList.forEach(ritual => {
+            const card = document.createElement('a');
+            card.href = ritual.path;
+            card.target = "_blank";
+            card.className = "ritual-card";
+            
+            card.innerHTML = `
+                <div class="ritual-title">${ritual.title}</div>
+                <div class="ritual-desc">${ritual.description}</div>
+            `;
+            
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>
