@@ -1,9 +1,9 @@
 let currentExerciseData = null;
 
-// 1. استخراج متغيرات الرابط
+// 1. استخراج متغيرات الرابط (URL Parameters)
 const urlParams = new URLSearchParams(window.location.search);
 const lessonFolder = urlParams.get('lesson') || 'lesson-00001';
-const titleFolder = urlParams.get('title') || 'title-01'; // القيمة الافتراضية
+const titleFolder = urlParams.get('title') || 'title-02';
 const exerciseFile = urlParams.get('ex') || 'exercise01';
 const ritualType = urlParams.get('ritual') || 'seed';
 
@@ -16,32 +16,35 @@ function getExerciseIframePath(lesson, title, file) {
     return `../05-exercise/exercise.html?lesson=${lesson}&title=${title}&ex=${file}`;
 }
 
+// 3. تحميل البيانات والواجهة عند اكتمال الصفحة
 document.addEventListener("DOMContentLoaded", async () => {
-    // تحميل بيانات العنوان ديناميكياً بناءً على متغير title من الرابط
-    await loadTitleData();
-
-    setupTabNavigation();
-    loadExerciseIframe();
+    await loadTitleData(); // قراءة الملف الديناميكي وتحديث العنوان
+    setupTabNavigation();  // إعداد روابط النوافذ الخارجية
+    loadExerciseIframe();  // عرض التمرين في الصفحة الحالية
 });
 
-// دالة لجلب الملف الخاص بالعنوان (مثلاً title-02.js)
+// 4. استدعاء ملف البيانات ديناميكياً من مسار 07-content
 async function loadTitleData() {
     try {
-        // استدعاء الملف بنفس الاسم الممرر في الرابط
-        const dataModule = await import(`./${titleFolder}.js`);
+        // تحويل 'title-02' إلى 'title02.js' لتطابق اسم الملف
+        const fileName = `${titleFolder.replace('-', '')}.js`;
+        const dataPath = `../07-content/${lessonFolder}/${titleFolder}/${fileName}`;
+        
+        // استدعاء الملف ديناميكياً
+        const dataModule = await import(dataPath);
         const titleData = dataModule.titleData;
 
-        // تحديث عنوان الصفحة بالبيانات القادمة من الملف
+        // تحديث نص العنوان الرئيسي
         const headingElement = document.getElementById("title-heading");
         if (headingElement && titleData.heading) {
             headingElement.textContent = titleData.heading;
         }
     } catch (error) {
-        console.error(`تعذر تحميل الملف: ${titleFolder}.js`, error);
+        console.error("تعذر تحميل ملف البيانات من المسار المحدد:", error);
     }
 }
 
-// 3. فتح المحتوى في صفحة جديدة عند الضغط على الأزرار
+// 5. ربط أزرار التنقل لفتح المحتويات في نوافذ جديدة
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
@@ -71,11 +74,11 @@ function openContentInNewTab(tab) {
     }
 
     if (url) {
-        window.open(url, '_blank');
+        window.open(url, '_blank'); // فتح الرابط في نافذة/تبويب جديد
     }
 }
 
-// 4. عرض التمرين
+// 6. عرض التمرين فقط في الصفحة الحالية داخل iframe
 function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
@@ -89,4 +92,4 @@ function loadExerciseIframe() {
             style="width:100%; min-height:350px; border:none; border-radius:12px;">
         </iframe>
     `;
-}
+                    }
