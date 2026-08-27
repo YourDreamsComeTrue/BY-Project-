@@ -20,13 +20,16 @@
       overflow: hidden;
     }
 
-    .screen-container {
+    /* تم التعديل هنا لملء الشاشة بالكامل 100% وإزالة الحواف الدائرية */
+    .screen-container, .main-container, .card, .wrapper {
       position: relative;
-      width: 440px;
-      height: 900px;
-      border-radius: 28px;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100vh !important;
+      min-height: 100vh;
+      border-radius: 0 !important;
       overflow: hidden;
-      box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+      box-shadow: none;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -52,7 +55,7 @@
       transition: opacity 1.2s ease, visibility 1.2s ease;
     }
 
-    /* الأيقونة الشفافة ذات الإطار الذهبي (مرفوعة بمقدار 1 سم) */
+    /* الأيقونة الشفافة ذات الإطار الذهبي */
     .ritual-icon-btn {
       display: flex;
       flex-direction: column;
@@ -275,15 +278,11 @@
     let audioCtx, gainNode;
 
     function enterSeedRitual() {
-      // إعداد مضخم الصوت (Web Audio API) لمضاعفة الصوت للضعف (2.0) أو أكثر
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let source = audioCtx.createMediaElementSource(bgMusic);
         gainNode = audioCtx.createGain();
-        
-        // هنا تم مضاعفة الصوت إلى الضعف (يمكنك تعديل الرقم 2.0 إلى 2.5 أو 3.0 إذا أردت أعلى)
         gainNode.gain.value = 2.0; 
-        
         source.connect(gainNode);
         gainNode.connect(audioCtx.destination);
       }
@@ -330,5 +329,5 @@
   </script>
 
 </body>
-  </html>
-  
+      </html>
+      
