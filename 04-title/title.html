@@ -11,10 +11,10 @@
     <main class="title-container">
         <!-- 1. كتابة العنوان -->
         <header class="title-header">
-            <h1 id="title-heading" class="main-title">...</h1>
+            <h1 id="title-heading" class="main-title">جاري التحميل...</h1>
         </header>
 
-        <!-- 2. الأيقونات الأربعة (رقيقة وبدون رموز) -->
+        <!-- 2. الأيقونات الأربعة -->
         <nav class="nav-icons">
             <button class="icon-btn" data-tab="watch" id="btn-watch">
                 <span class="label">المشاهدة</span>
@@ -30,11 +30,13 @@
             </button>
         </nav>
 
-        <!-- تم إلغاء section الخاص بـ tab-content-area لأن العرض أصبح في نافذة خارجية -->
+        <!-- مساحة عرض محتوى التبويبات (المشاهدة، الشرح، الملخص) -->
+        <section id="tab-content-area" class="tab-content-area" style="display: none; margin: 20px 0; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        </section>
 
         <hr class="section-divider">
 
-        <!-- 3. مساحة استدعاء التمارين فقط -->
+        <!-- 3. مساحة استدعاء التمارين -->
         <section class="exercises-wrapper">
             <h2 class="section-subtitle">التمارين التفاعلية</h2>
             <div id="exercises-container" class="exercises-list"></div>
@@ -43,4 +45,5 @@
 
     <script type="module" src="title-engine.js"></script>
 </body>
-</html>
+        </html>
+        
