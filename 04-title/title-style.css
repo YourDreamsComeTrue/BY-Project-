@@ -2,21 +2,23 @@ body {
     font-family: system-ui, -apple-system, sans-serif;
     background-color: #f4f6f9;
     margin: 0;
-    padding: 16px;
+    padding: 0; /* إلغاء الهوامش لتغطي الحاوية كامل العرض */
     direction: rtl;
+    min-height: 100vh;
 }
 
-/* توسيع الحاوية الرئيسية لتوفير مساحة أكبر للتمرين والمحتوى */
+/* 1. جعل الحاوية تمتد لتغطي كامل الصفحة طولاً وعرضاً */
 .title-container {
-    max-width: 1000px;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
     margin: 0 auto;
     background: #ffffff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    padding: 24px 16px; /* تقليل البادينغ المزدوج لإعطاء مساحة أكبر للداخل */
+    border-radius: 0; /* ملء الشاشة بالكامل */
 }
 
-/* محاذاة العنوان من البداية (يمين) */
+/* 2. محاذاة العنوان الرئيسي إلى اليمين */
 .main-title {
     text-align: right;
     color: #1e293b;
@@ -25,7 +27,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* ترتيب الأزرار أفقياً */
+/* 3. الأزرار */
 .nav-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -37,7 +39,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8px 12px;
+    padding: 10px;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     background: #ffffff;
@@ -60,7 +62,7 @@ body {
     color: #2563eb;
 }
 
-/* حاوية عرض المحتوى الديناميكية (المشاهدة، الشرح، الملخص) */
+/* 4. حاوية عرض المحتوى الديناميكية */
 .tab-content-area {
     position: relative;
     display: none;
@@ -73,7 +75,7 @@ body {
     overflow-y: auto;
 }
 
-/* زر الإغلاق الأحادي في أسفل الحاوية */
+/* زر الإغلاق */
 .close-btn {
     position: absolute;
     bottom: 10px;
@@ -92,11 +94,6 @@ body {
     justify-content: center;
     line-height: 1;
     box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    transition: background-color 0.2s;
-}
-
-.close-btn:hover {
-    background-color: #dc2626;
 }
 
 .section-divider { 
@@ -105,15 +102,17 @@ body {
     border-top: 1px solid #f1f5f9; 
 }
 
-/* مساحة عرض التمرين العريضة */
+/* 5. توسيع مساحة التمرين لتصل للأطراف تماماً */
 .exercises-wrapper {
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .exercises-list { 
     width: 100%;
-    display: flex; 
-    flex-direction: column; 
+    margin: 0;
+    padding: 0;
 }
 
 .exercises-list iframe {
