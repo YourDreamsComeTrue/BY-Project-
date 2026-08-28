@@ -5,11 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>العنوان</title>
     <link rel="stylesheet" href="title-style.css">
+    <style>
+      /* محاذاة العنوان الرئيسي إلى اليمين بدلاً من الوسط */
+      .title-header {
+          text-align: right;
+      }
+      .main-title {
+          text-align: right;
+      }
+
+      /* تنسيقات حاوية المحتوى مع زر الإغلاق والتمدد التلقائي */
+      .tab-content-area {
+          position: relative;
+          display: none;
+          margin: 20px 0;
+          padding: 25px 20px 45px 20px;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+          max-height: 80vh; /* التوسع والقدرة على التمرير للمحتوى الكبير */
+          overflow-y: auto;
+      }
+
+      /* زر الإغلاق الاحمر (X) في أسفل اليسار/اليمين */
+      .close-btn {
+          position: absolute;
+          bottom: 10px;
+          left: 15px;
+          background-color: #ff4d4d;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 26px;
+          height: 26px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+          transition: background-color 0.2s;
+      }
+      .close-btn:hover {
+          background-color: #cc0000;
+      }
+
+      /* توسيع مساحة التمرين إلغاء الهوامش الضيقة */
+      .exercises-wrapper {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+      }
+      .exercises-list {
+          width: 100%;
+      }
+    </style>
 </head>
 <body>
 
     <main class="title-container">
-        <!-- 1. كتابة العنوان -->
+        <!-- 1. كتابة العنوان (محاذاة من بداية الصفحة/يمين) -->
         <header class="title-header">
             <h1 id="title-heading" class="main-title">جاري التحميل...</h1>
         </header>
@@ -30,20 +87,20 @@
             </button>
         </nav>
 
-        <!-- مساحة عرض محتوى التبويبات (المشاهدة، الشرح، الملخص) -->
-        <section id="tab-content-area" class="tab-content-area" style="display: none; margin: 20px 0; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <!-- مساحة عرض المحتوى الديناميكية مع إمكانية التمدد والتمرير وزر الإغلاق -->
+        <section id="tab-content-area" class="tab-content-area">
+            <div id="tab-body"></div>
+            <button id="close-tab-btn" class="close-btn" title="إغلاق">✕</button>
         </section>
 
         <hr class="section-divider">
 
-        <!-- 3. مساحة استدعاء التمارين -->
+        <!-- 3. مساحة استدعاء التمرين مباشرة بدون عنوان فرعي -->
         <section class="exercises-wrapper">
-            <h2 class="section-subtitle">التمارين التفاعلية</h2>
             <div id="exercises-container" class="exercises-list"></div>
         </section>
     </main>
 
     <script type="module" src="title-engine.js"></script>
 </body>
-        </html>
-        
+</html>
