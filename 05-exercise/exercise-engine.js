@@ -1,78 +1,86 @@
-                           Let saveTimer = null;
+let saveTimer = null;
 let currentExerciseData = null;
 
-Document.addEventListener("DOMContentLoaded", async () => {
-  // 1. قراءة معرّف التمرين من الرابط مع ضبط المعرّف الافتراضي الجديد
-  Const urlParams = new URLSearchParams(window.location.search);
-  Const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
+document.addEventListener("DOMContentLoaded", async () => {
+  // 1. قراءة المعرّف من الرابط
+  const urlParams = new URLSearchParams(window.location.search);
+  const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-  // 2. التحميل الديناميكي لملف البيانات من مجلد data بحروف صغيرة
-  Try {
-    Const exerciseModule = await import(`./data/exercise-${exerciseId}.js`);
-    CurrentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
+  // 2. ربط أزرار الألوان من داخل الموديول
+  document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
+  document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
+  document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
 
-    If (currentExerciseData) {
-      Document.getElementById("questionText").textContent = currentExerciseData.question;
-      LoadSavedAnswer(currentExerciseData.id || exerciseId);
+  // 3. التحميل الديناميكي للبيانات
+  try {
+    const exerciseModule = await import(`./data/exercise-${exerciseId}.js`);
+    currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
+
+    if (currentExerciseData && currentExerciseData.question) {
+      document.getElementById("questionText").textContent = currentExerciseData.question;
+      loadSavedAnswer(currentExerciseData.id || exerciseId);
+    } else {
+      document.getElementById("questionText").textContent = "الملف موجود ولكن لم يتم العثور على نص السؤال.";
     }
   } catch (error) {
-    Console.error("خطأ في تحميل ملف التمرين:", error);
-    Document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
+    console.error("خطأ في تحميل ملف التمرين:", error);
+    document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
   }
 
-  // 3. التوسع التلقائي والحفظ
-  Const textarea = document.getElementById("userAnswer");
-  Textarea.addEventListener("input", function () {
-    This.style.height = "auto";
-    This.style.height = this.scrollHeight + "px";
+  // 4. الحفظ والتوسع التلقائي
+  const textarea = document.getElementById("userAnswer");
+  textarea?.addEventListener("input", function () {
+    this.style.height = "auto";
+    this.style.height = this.scrollHeight + "px";
 
-    ClearTimeout(saveTimer);
-    SaveTimer = setTimeout(() => {
-      AutoSaveData(this.value);
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      autoSaveData(this.value);
     }, 1200);
   });
 });
 
-Function setBgColor(color) {
-  Const textarea = document.getElementById("userAnswer");
-  Textarea.classList.remove("bg-green", "bg-red");
+function setBgColor(color) {
+  const textarea = document.getElementById("userAnswer");
+  if (!textarea) return;
+  textarea.classList.remove("bg-green", "bg-red");
   
-  If (color === "green") textarea.classList.add("bg-green");
-  If (color === "red") textarea.classList.add("bg-red");
+  if (color === "green") textarea.classList.add("bg-green");
+  if (color === "red") textarea.classList.add("bg-red");
 }
 
-Function autoSaveData(latestText) {
-  If (!currentExerciseData) return;
+function autoSaveData(latestText) {
+  if (!currentExerciseData) return;
 
-  Const payload = {
-    ExerciseId: currentExerciseData.id,
-    Content: latestText,
-    UpdatedAt: new Date().toISOString()
+  const payload = {
+    exerciseId: currentExerciseData.id,
+    content: latestText,
+    updatedAt: new Date().toISOString()
   };
 
-  If (window.CoreStorage && typeof window.CoreStorage.save === "function") {
-    Window.CoreStorage.save(payload);
+  if (window.CoreStorage && typeof window.CoreStorage.save === "function") {
+    window.CoreStorage.save(payload);
   } else {
-    LocalStorage.setItem(currentExerciseData.id, JSON.stringify(payload));
-    Console.log("تم الحفظ في التخزين المحلي:", payload);
+    localStorage.setItem(currentExerciseData.id, JSON.stringify(payload));
+    console.log("تم الحفظ في التخزين المحلي:", payload);
   }
 }
 
-Function loadSavedAnswer(id) {
-  Const textarea = document.getElementById("userAnswer");
-  Let saved = null;
+function loadSavedAnswer(id) {
+  const textarea = document.getElementById("userAnswer");
+  if (!textarea) return;
+  let saved = null;
 
-  If (window.CoreStorage && typeof window.CoreStorage.get === "function") {
-    Saved = window.CoreStorage.get(id);
+  if (window.CoreStorage && typeof window.CoreStorage.get === "function") {
+    saved = window.CoreStorage.get(id);
   } else {
-    Const raw = localStorage.getItem(id);
-    If (raw) saved = JSON.parse(raw);
+    const raw = localStorage.getItem(id);
+    if (raw) saved = JSON.parse(raw);
   }
 
-  If (saved && saved.content) {
-    Textarea.value = saved.content;
-    Textarea.style.height = "auto";
-    Textarea.style.height = textarea.scrollHeight + "px";
+  if (saved && saved.content) {
+    textarea.value = saved.content;
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
   }
-  }
-  
+}
