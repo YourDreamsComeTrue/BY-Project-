@@ -1,37 +1,28 @@
 let saveTimer = null;
 let currentExerciseData = null;
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. قراءة متغيرات المسار من الرابط (مع القيم الافتراضية الصحيحة والمحدثة)
+document.addEventListener("DOMContentLoaded", async () => {
+  // 1. قراءة معرّف التمرين فقط من الرابط (مثال: exercise.html?id=l1-t1-e1)
   const urlParams = new URLSearchParams(window.location.search);
-  const lessonFolder = urlParams.get('lesson') || 'lesson-00001';
-  const titleFolder = urlParams.get('title') || 'title-02'; // تم التعديل هنا لتتوافق مع مجلدك الحالي
-  const exerciseFile = urlParams.get('ex') || 'exercise01';
+  const exerciseId = urlParams.get('id') || 'l1-t1-e1';
 
-  // 2. بناء المسار الديناميكي المباشر للملف من مجلد 07-content
-  const scriptPath = `../07-content/${lessonFolder}/${titleFolder}/${exerciseFile}.js`;
+  // 2. التحميل الديناميكي لملف البيانات من مجلد DATA المجاور باستعمال ES Modules
+  try {
+    const exerciseModule = await import(`./DATA/exercise-${exerciseId}.js`);
+    currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
 
-  // 3. تحميل ملف التمرين المطلوب ديناميكياً
-  const script = document.createElement('script');
-  script.src = scriptPath;
-
-  script.onload = () => {
-    if (typeof exerciseData !== "undefined") {
-      currentExerciseData = exerciseData;
+    if (currentExerciseData) {
       document.getElementById("questionText").textContent = currentExerciseData.question;
       
       // استرجاع البيانات المحفوظة سابقاً إن وجدت
-      loadSavedAnswer(currentExerciseData.id);
+      loadSavedAnswer(currentExerciseData.id || exerciseId);
     }
-  };
+  } catch (error) {
+    console.error("خطأ في تحميل ملف التمرين:", error);
+    document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
+  }
 
-  script.onerror = () => {
-    document.getElementById("questionText").textContent = "تعذر تحميل السؤال من المسار المحدد.";
-  };
-
-  document.head.appendChild(script);
-
-  // 4. التوسع التلقائي لمربع النص والحفظ التلقائي
+  // 3. التوسع التلقائي لمربع النص والحفظ التلقائي
   const textarea = document.getElementById("userAnswer");
   textarea.addEventListener("input", function () {
     this.style.height = "auto";
@@ -88,4 +79,4 @@ function loadSavedAnswer(id) {
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
   }
-}
+                           }
