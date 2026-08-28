@@ -1,17 +1,16 @@
 let currentTitleData = null;
 
-// 1. استخراج المعرّف من الرابط
 const urlParams = new URLSearchParams(window.location.search);
 const titleId = urlParams.get('id') || 'l000001-t02';
 
-// 2. التحميل عند جاهزية العناصر
 document.addEventListener("DOMContentLoaded", async () => {
     await loadTitleData();
     setupTabNavigation();
+    setupCloseButton();
     loadExerciseIframe();
 });
 
-// 3. قراءة البيانات ديناميكياً
+// قراءة البيانات
 async function loadTitleData() {
     try {
         const dataModule = await import(`./data/title-${titleId}.js`);
@@ -32,35 +31,46 @@ async function loadTitleData() {
     }
 }
 
-// 4. ربط الأزرار لعرض المحتوى داخل نفس الصفحة
+// إعداد أزرار التبويب
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
         btn.addEventListener("click", () => {
             const tab = btn.getAttribute("data-tab");
             
-            // فتح الطقوس في نافذة خارجية عند النقر عليها
             if (tab === "rituels") {
                 const ritualPath = currentTitleData?.rituelsFile || "../06-rituels/rituels-index.html";
                 window.open(ritualPath, '_blank');
                 return;
             }
 
-            // عرض بقية الأقسام في الصفحة الحالية
             renderTabContent(tab);
         });
     });
 }
 
+// زر الإغلاق الأحادي في أسفل الحاوية
+function setupCloseButton() {
+    const closeBtn = document.getElementById("close-tab-btn");
+    const contentArea = document.getElementById("tab-content-area");
+    if (closeBtn && contentArea) {
+        closeBtn.addEventListener("click", () => {
+            contentArea.style.display = "none";
+        });
+    }
+}
+
+// عرض محتوى التبويب
 function renderTabContent(tab) {
     const contentArea = document.getElementById("tab-content-area");
-    if (!contentArea || !currentTitleData) return;
+    const tabBody = document.getElementById("tab-body");
+    if (!contentArea || !tabBody || !currentTitleData) return;
 
     contentArea.style.display = "block";
 
     if (tab === "watch" && currentTitleData.watch) {
         const { videoId, startSeconds, endSeconds } = currentTitleData.watch;
-        contentArea.innerHTML = `
+        tabBody.innerHTML = `
             <h3 style="margin-top:0;">فيديو المشاهدة</h3>
             <iframe 
                 src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&end=${endSeconds}" 
@@ -69,19 +79,19 @@ function renderTabContent(tab) {
             </iframe>
         `;
     } else if (tab === "explain" && currentTitleData.explain) {
-        contentArea.innerHTML = `
+        tabBody.innerHTML = `
             <h3 style="margin-top:0;">الشرح</h3>
             <div>${currentTitleData.explain.content}</div>
         `;
     } else if (tab === "summary" && currentTitleData.summary) {
-        contentArea.innerHTML = `
+        tabBody.innerHTML = `
             <h3 style="margin-top:0;">الملخص</h3>
             <div>${currentTitleData.summary.content}</div>
         `;
     }
 }
 
-// 5. تحميل iframe التمارين
+// عرض التمرين في iframe واسع النطاق وبدون أشرطة تمرير خارجية
 function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
@@ -99,7 +109,8 @@ function loadExerciseIframe() {
         <iframe 
             src="${exerciseUrl}" 
             class="exercise-frame"
-            style="width:100%; min-height:350px; border:none; border-radius:12px;">
+            scrolling="no"
+            style="width:100%; min-height:400px; border:none; border-radius:12px; overflow:hidden;">
         </iframe>
     `;
 }
