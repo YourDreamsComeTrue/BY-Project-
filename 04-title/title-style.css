@@ -1,81 +1,74 @@
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0; /* إلغاء الهوامش لتغطي الحاوية كامل العرض */
+/* إزالة أي هوامش من الصفحة الخارجية تماماً */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100%;
+    background-color: #ffffff; /* جعل الخلفية بيضاء موحدة */
     direction: rtl;
-    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* 1. جعل الحاوية تمتد لتغطي كامل الصفحة طولاً وعرضاً */
+/* 1. جعل حاوية العنوان تتمدد لتغطي 100% من عرض وارتفاع الشاشة */
 .title-container {
-    width: 100%;
+    width: 100% !important;
     min-height: 100vh;
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0 !important;
     background: #ffffff;
-    padding: 24px 16px; /* تقليل البادينغ المزدوج لإعطاء مساحة أكبر للداخل */
-    border-radius: 0; /* ملء الشاشة بالكامل */
+    padding: 16px 10px !important; /* تقليل الهوامش الجانبية لإعطاء اتساع للتمرين */
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 /* 2. محاذاة العنوان الرئيسي إلى اليمين */
 .main-title {
     text-align: right;
     color: #1e293b;
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 20px;
+    font-size: 1.35rem;
+    margin-top: 5px;
+    margin-bottom: 16px;
+    padding: 0 5px;
 }
 
 /* 3. الأزرار */
 .nav-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 6px;
+    margin-bottom: 16px;
 }
 
 .icon-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 8px 4px;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     background: #ffffff;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
 .icon-btn .label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #64748b;
-}
-
-.icon-btn:hover {
-    background-color: #f8fafc;
-    border-color: #cbd5e1;
-}
-
-.icon-btn:hover .label {
-    color: #2563eb;
 }
 
 /* 4. حاوية عرض المحتوى الديناميكية */
 .tab-content-area {
     position: relative;
     display: none;
-    margin: 20px 0;
-    padding: 20px 20px 45px 20px;
+    margin: 15px 0;
+    padding: 15px 15px 45px 15px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    max-height: 75vh;
+    max-height: 70vh;
     overflow-y: auto;
 }
 
-/* زر الإغلاق */
 .close-btn {
     position: absolute;
     bottom: 10px;
@@ -92,31 +85,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 .section-divider { 
-    margin: 20px 0; 
+    margin: 15px 0; 
     border: 0; 
     border-top: 1px solid #f1f5f9; 
 }
 
-/* 5. توسيع مساحة التمرين لتصل للأطراف تماماً */
-.exercises-wrapper {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.exercises-list { 
-    width: 100%;
-    margin: 0;
-    padding: 0;
+/* 5. إلغاء أي قيود على عرض التمرين وتوسيعه لأقصى حد */
+.exercises-wrapper, 
+.exercises-list {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .exercises-list iframe {
-    width: 100%;
+    width: 100% !important;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
+    display: block;
 }
