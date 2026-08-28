@@ -1,7 +1,6 @@
 export default {
-  id: "title-02",
+  id: "l000001-t02",
   
-  // الاحتفاظ بالهيكل الخاص بك كما هو
   titleData: {
     heading: "سيكولوجية النجاح - المعتقدات المقيدة",
     
@@ -31,11 +30,8 @@ export default {
         `
     },
     
-    // القسم 4: الطقوس والتمارين
-    rituelsFile: "./rituels.js", 
-    exercises: [
-        { id: "ex_01", title: "تمرين رصد المعتقدات المقيدة", file: "./exercise01.js" },
-        { id: "ex_02", title: "تمرين إعادة الصياغة الذهنية", file: "./exercise02.js" }
-    ]
+    // القسم 4: الطقوس والتمارين (بالصيغة الجديدة)
+    rituelsFile: "../06-rituels/rituels-index.html", 
+    exercises: ["l000001-t02-e01", "l000001-t02-e02"]
   }
 };
