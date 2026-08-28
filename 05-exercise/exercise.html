@@ -11,9 +11,9 @@
     <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
 
     <div class="color-picker-toolbar">
-      <button class="color-btn green" onclick="setBgColor('green')" title="أخضر فاتح"></button>
-      <button class="color-btn red" onclick="setBgColor('red')" title="أحمر فاتح"></button>
-      <button class="color-btn reset" onclick="setBgColor('default')" title="إعادة افتراضي"></button>
+      <button class="color-btn green" id="btnGreen" title="أخضر فاتح"></button>
+      <button class="color-btn red" id="btnRed" title="أحمر فاتح"></button>
+      <button class="color-btn reset" id="btnReset" title="إعادة افتراضي"></button>
     </div>
 
     <textarea 
@@ -23,7 +23,6 @@
     ></textarea>
   </div>
 
-  <!-- تم إضافة type="module" لتفعيل الـ import الديناميكي -->
   <script type="module" src="exercise-engine.js"></script>
 </body>
 </html>
