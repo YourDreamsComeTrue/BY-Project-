@@ -6,44 +6,47 @@ body {
     direction: rtl;
 }
 
+/* توسيع الحاوية الرئيسية لتوفير مساحة أكبر للتمرين والمحتوى */
 .title-container {
-    max-width: 750px;
+    max-width: 1000px;
     margin: 0 auto;
     background: #ffffff;
-    padding: 20px;
+    padding: 24px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
+/* محاذاة العنوان من البداية (يمين) */
 .main-title {
-    text-align: center;
+    text-align: right;
     color: #1e293b;
     font-size: 1.5rem;
-    margin-bottom: 16px;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 
-/* ترتيب الأزرار أفقياً وبشكل رقيق وأنيق */
+/* ترتيب الأزرار أفقياً */
 .nav-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .icon-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 6px 10px; /* حجم رقيق لا يشغل مساحة كبيرة */
+    padding: 8px 12px;
     border: 1px solid #e2e8f0;
-    border-radius: 20px; /* زوايا منحنية وأنيقة */
+    border-radius: 20px;
     background: #ffffff;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .icon-btn .label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: #64748b;
 }
@@ -57,20 +60,64 @@ body {
     color: #2563eb;
 }
 
+/* حاوية عرض المحتوى الديناميكية (المشاهدة، الشرح، الملخص) */
+.tab-content-area {
+    position: relative;
+    display: none;
+    margin: 20px 0;
+    padding: 20px 20px 45px 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+/* زر الإغلاق الأحادي في أسفل الحاوية */
+.close-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+    background-color: #dc2626;
+}
+
 .section-divider { 
-    margin: 16px 0; 
+    margin: 20px 0; 
     border: 0; 
     border-top: 1px solid #f1f5f9; 
 }
 
-.section-subtitle {
-    font-size: 1.1rem;
-    color: #334155;
-    margin-bottom: 12px;
+/* مساحة عرض التمرين العريضة */
+.exercises-wrapper {
+    width: 100%;
 }
 
 .exercises-list { 
+    width: 100%;
     display: flex; 
     flex-direction: column; 
-    gap: 10px; 
+}
+
+.exercises-list iframe {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
 }
