@@ -1,82 +1,78 @@
-let saveTimer = null;
+                           Let saveTimer = null;
 let currentExerciseData = null;
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // 1. قراءة معرّف التمرين فقط من الرابط (مثال: exercise.html?id=l1-t1-e1)
-  const urlParams = new URLSearchParams(window.location.search);
-  const exerciseId = urlParams.get('id') || 'l1-t1-e1';
+Document.addEventListener("DOMContentLoaded", async () => {
+  // 1. قراءة معرّف التمرين من الرابط مع ضبط المعرّف الافتراضي الجديد
+  Const urlParams = new URLSearchParams(window.location.search);
+  Const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-  // 2. التحميل الديناميكي لملف البيانات من مجلد DATA المجاور باستعمال ES Modules
-  try {
-    const exerciseModule = await import(`./DATA/exercise-${exerciseId}.js`);
-    currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
+  // 2. التحميل الديناميكي لملف البيانات من مجلد data بحروف صغيرة
+  Try {
+    Const exerciseModule = await import(`./data/exercise-${exerciseId}.js`);
+    CurrentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
 
-    if (currentExerciseData) {
-      document.getElementById("questionText").textContent = currentExerciseData.question;
-      
-      // استرجاع البيانات المحفوظة سابقاً إن وجدت
-      loadSavedAnswer(currentExerciseData.id || exerciseId);
+    If (currentExerciseData) {
+      Document.getElementById("questionText").textContent = currentExerciseData.question;
+      LoadSavedAnswer(currentExerciseData.id || exerciseId);
     }
   } catch (error) {
-    console.error("خطأ في تحميل ملف التمرين:", error);
-    document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
+    Console.error("خطأ في تحميل ملف التمرين:", error);
+    Document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
   }
 
-  // 3. التوسع التلقائي لمربع النص والحفظ التلقائي
-  const textarea = document.getElementById("userAnswer");
-  textarea.addEventListener("input", function () {
-    this.style.height = "auto";
-    this.style.height = this.scrollHeight + "px";
+  // 3. التوسع التلقائي والحفظ
+  Const textarea = document.getElementById("userAnswer");
+  Textarea.addEventListener("input", function () {
+    This.style.height = "auto";
+    This.style.height = this.scrollHeight + "px";
 
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      autoSaveData(this.value);
+    ClearTimeout(saveTimer);
+    SaveTimer = setTimeout(() => {
+      AutoSaveData(this.value);
     }, 1200);
   });
 });
 
-// تغيير خلفية مربع النص
-function setBgColor(color) {
-  const textarea = document.getElementById("userAnswer");
-  textarea.classList.remove("bg-green", "bg-red");
+Function setBgColor(color) {
+  Const textarea = document.getElementById("userAnswer");
+  Textarea.classList.remove("bg-green", "bg-red");
   
-  if (color === "green") textarea.classList.add("bg-green");
-  if (color === "red") textarea.classList.add("bg-red");
+  If (color === "green") textarea.classList.add("bg-green");
+  If (color === "red") textarea.classList.add("bg-red");
 }
 
-// التوصيل مع طبقة CORE أو التخزين المحلي
-function autoSaveData(latestText) {
-  if (!currentExerciseData) return;
+Function autoSaveData(latestText) {
+  If (!currentExerciseData) return;
 
-  const payload = {
-    exerciseId: currentExerciseData.id,
-    content: latestText,
-    updatedAt: new Date().toISOString()
+  Const payload = {
+    ExerciseId: currentExerciseData.id,
+    Content: latestText,
+    UpdatedAt: new Date().toISOString()
   };
 
-  if (window.CoreStorage && typeof window.CoreStorage.save === "function") {
-    window.CoreStorage.save(payload);
+  If (window.CoreStorage && typeof window.CoreStorage.save === "function") {
+    Window.CoreStorage.save(payload);
   } else {
-    localStorage.setItem(currentExerciseData.id, JSON.stringify(payload));
-    console.log("تم الحفظ في التخزين المحلي:", payload);
+    LocalStorage.setItem(currentExerciseData.id, JSON.stringify(payload));
+    Console.log("تم الحفظ في التخزين المحلي:", payload);
   }
 }
 
-// جلب الإجابة السابقة عند فتح الصفحة
-function loadSavedAnswer(id) {
-  const textarea = document.getElementById("userAnswer");
-  let saved = null;
+Function loadSavedAnswer(id) {
+  Const textarea = document.getElementById("userAnswer");
+  Let saved = null;
 
-  if (window.CoreStorage && typeof window.CoreStorage.get === "function") {
-    saved = window.CoreStorage.get(id);
+  If (window.CoreStorage && typeof window.CoreStorage.get === "function") {
+    Saved = window.CoreStorage.get(id);
   } else {
-    const raw = localStorage.getItem(id);
-    if (raw) saved = JSON.parse(raw);
+    Const raw = localStorage.getItem(id);
+    If (raw) saved = JSON.parse(raw);
   }
 
-  if (saved && saved.content) {
-    textarea.value = saved.content;
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
+  If (saved && saved.content) {
+    Textarea.value = saved.content;
+    Textarea.style.height = "auto";
+    Textarea.style.height = textarea.scrollHeight + "px";
   }
-                           }
+  }
+  
