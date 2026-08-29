@@ -24,16 +24,23 @@
   border-color: #bfdbfe;
 }
 
-.btn-attempt-control:hover { background-color: #e2e8f0; }
+.btn-attempt-control:hover { 
+  background-color: #e2e8f0; 
+}
 
-/* النافذة المنبثقة (Modal) */
+/* النافذة المنبثقة (Modal) - معدّلة لضمان الظهور كاملاً */
 .modal-overlay {
   display: none;
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.5);
+  top: 0; 
+  left: 0; 
+  right: 0;
+  bottom: 0;
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  z-index: 99999;
   align-items: center;
   justify-content: center;
   padding: 16px;
@@ -44,12 +51,14 @@
   background: #ffffff;
   width: 100%;
   max-width: 500px;
-  max-height: 80vh;
+  max-height: 85vh;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  z-index: 100000;
 }
 
 .modal-header {
@@ -60,10 +69,20 @@
   align-items: center;
 }
 
-.modal-header h3 { margin: 0; font-size: 1.1rem; color: #1e293b; }
+.modal-header h3 { 
+  margin: 0; 
+  font-size: 1.1rem; 
+  color: #1e293b; 
+}
 
 .close-modal-btn {
-  background: none; border: none; font-size: 1.5rem; color: #64748b; cursor: pointer;
+  background: none; 
+  border: none; 
+  font-size: 1.5rem; 
+  color: #64748b; 
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
 }
 
 .modal-body {
@@ -94,10 +113,18 @@
   margin-bottom: 6px;
 }
 
-.history-title { font-size: 0.9rem; font-weight: bold; color: #1e293b; }
+.history-title { 
+  font-size: 0.9rem; 
+  font-weight: bold; 
+  color: #1e293b; 
+}
 
 /* التاريخ بخط رقيق وحجم صغير */
-.history-date { font-size: 0.75rem; color: #94a3b8; font-weight: 300; }
+.history-date { 
+  font-size: 0.75rem; 
+  color: #94a3b8; 
+  font-weight: 300; 
+}
 
 .history-item-body {
   font-size: 0.88rem;
@@ -112,7 +139,10 @@
   margin-bottom: 8px;
 }
 
-.history-item-actions { display: flex; gap: 6px; }
+.history-item-actions { 
+  display: flex; 
+  gap: 6px; 
+}
 
 .btn-history-action {
   font-size: 0.75rem;
@@ -122,4 +152,8 @@
   background: #ffffff;
   cursor: pointer;
 }
-.btn-history-action:hover { background: #f1f5f9; }
+
+.btn-history-action:hover { 
+  background: #f1f5f9; 
+  }
+  
