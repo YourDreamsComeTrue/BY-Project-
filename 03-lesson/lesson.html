@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عرض الدرس</title>
-  <link rel="stylesheet" href="Lesson-style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس</title>
+    <link rel="stylesheet" href="Lesson-style.css">
 </head>
 <body>
 
-  <div class="lesson-container">
-    <header class="lesson-header">
-      <h1 id="lesson-title">جاري تحميل عنوان الدرس الرئيسي...</h1>
-    </header>
+    <main class="lesson-container">
+        <!-- 1. عنوان الدرس الرئيسي -->
+        <header class="lesson-header">
+            <h1 id="lesson-heading" class="main-title">جاري تحميل الدرس...</h1>
+        </header>
 
-    <!-- سيتم طباعة كل العناوين ومحتوياتها هنا تلقائياً -->
-    <main id="lesson-content">
-      <p>جاري استدعاء العناوين...</p>
+        <!-- 2. مساحة استدعاء العناوين التابعة للدرس -->
+        <section class="titles-wrapper">
+            <div id="titles-container" class="titles-list"></div>
+        </section>
     </main>
-  </div>
 
-  <script src="lesson-engine.js" type="module"></script>
+    <script type="module" src="lesson-engine.js"></script>
 </body>
 </html>
