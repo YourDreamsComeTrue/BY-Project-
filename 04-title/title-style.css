@@ -1,41 +1,40 @@
-/* إزالة أي هوامش من الصفحة الخارجية تماماً */
 html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 100%;
-    background-color: #ffffff; /* جعل الخلفية بيضاء موحدة */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: transparent; /* ليتناسب مع خلفية صفحة الدرس */
     direction: rtl;
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* 1. جعل حاوية العنوان تتمدد لتغطي 100% من عرض وارتفاع الشاشة */
+/* 1. بطاقة العنوان: مرنة وتتوسع بحسب المحتوى */
 .title-container {
-    width: 100% !important;
-    min-height: 100vh;
+    width: 100%;
     box-sizing: border-box;
-    margin: 0 !important;
+    margin: 0 auto;
     background: #ffffff;
-    padding: 16px 10px !important; /* تقليل الهوامش الجانبية لإعطاء اتساع للتمرين */
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    padding: 20px 16px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-/* 2. محاذاة العنوان الرئيسي إلى اليمين */
+/* 2. العنوان الرئيسي */
 .main-title {
     text-align: right;
     color: #1e293b;
     font-size: 1.35rem;
-    margin-top: 5px;
+    font-weight: 700;
+    margin-top: 0;
     margin-bottom: 16px;
-    padding: 0 5px;
+    padding: 0 4px;
 }
 
-/* 3. الأزرار */
+/* 3. شريط أزرار التبويب */
 .nav-icons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 8px;
     margin-bottom: 16px;
 }
 
@@ -43,67 +42,81 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8px 4px;
+    padding: 10px 4px;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     background: #ffffff;
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: #f8fafc;
 }
 
 .icon-btn .label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: #64748b;
 }
 
-/* 4. حاوية عرض المحتوى الديناميكية */
+/* 4. حاوية عرض المحتوى (المشاهدة / الشرح / الملخص) */
 .tab-content-area {
     position: relative;
     display: none;
-    margin: 15px 0;
-    padding: 15px 15px 45px 15px;
+    margin: 16px 0;
+    padding: 16px 16px 50px 16px; /* مساحة سفلية تكفي زر الإغلاق دون تغطية النص */
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    max-height: 70vh;
-    overflow-y: auto;
+    box-sizing: border-box;
+    word-break: break-word;
+    line-height: 1.7;
 }
 
+/* زر الإغلاق الأحمر */
 .close-btn {
     position: absolute;
-    bottom: 10px;
-    left: 15px;
+    bottom: 12px;
+    left: 16px;
     background-color: #ef4444;
     color: #ffffff;
     border: none;
     border-radius: 50%;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.close-btn:hover {
+    background-color: #dc2626;
 }
 
 .section-divider { 
-    margin: 15px 0; 
+    margin: 20px 0; 
     border: 0; 
     border-top: 1px solid #f1f5f9; 
 }
 
-/* 5. إلغاء أي قيود على عرض التمرين وتوسيعه لأقصى حد */
+/* 5. حاوية التمرين المستقرة */
 .exercises-wrapper, 
 .exercises-list {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.exercises-list iframe {
-    width: 100% !important;
+.exercises-list iframe,
+#exercise-iframe {
+    width: 100%;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     display: block;
-}
+    }
+    
