@@ -1,12 +1,25 @@
 let saveTimer = null;
 let currentExerciseData = null;
 
+// دالة حساب الارتفاع وإرسال الرسالة إلى الحاوية الرئيسية (title-engine)
+function sendHeightToParent() {
+  const textarea = document.getElementById("userAnswer");
+  if (textarea) {
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+  }
+  
+  // حساب الارتفاع الإجمالي للمستند وإرساله للأب
+  const fullHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+  window.parent.postMessage({ type: "RESIZE_EXERCISE", height: fullHeight + 20 }, "*");
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   // 1. قراءة المعرّف من الرابط
   const urlParams = new URLSearchParams(window.location.search);
   const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-  // 2. ربط أزرار الألوان من داخل الموديول
+  // 2. ربط أزرار الألوان
   document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
   document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
@@ -27,17 +40,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
   }
 
-  // 4. الحفظ والتوسع التلقائي
+  // 4. الحفظ التلقائي وتحديث الارتفاع للأب عند الكتابة
   const textarea = document.getElementById("userAnswer");
   textarea?.addEventListener("input", function () {
-    this.style.height = "auto";
-    this.style.height = this.scrollHeight + "px";
+    sendHeightToParent(); // تحديث الارتفاع لحظياً مع كل سطر جديد
 
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       autoSaveData(this.value);
     }, 1200);
   });
+
+  // إرسال الارتفاع الأولي بعد استقرار العناصر في الصفحة
+  setTimeout(sendHeightToParent, 300);
 });
 
 function setBgColor(color) {
@@ -80,7 +95,7 @@ function loadSavedAnswer(id) {
 
   if (saved && saved.content) {
     textarea.value = saved.content;
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
+    sendHeightToParent(); // ضبط الارتفاع بناءً على النص المسترجع
   }
-}
+                          }
+    
