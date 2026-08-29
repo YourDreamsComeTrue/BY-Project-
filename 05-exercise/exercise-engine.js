@@ -1,30 +1,32 @@
 let saveTimer = null;
 let currentExerciseData = null;
 
-// دالة حساب الارتفاع وإرسال الرسالة إلى الحاوية الرئيسية (title-engine)
 function sendHeightToParent() {
   const textarea = document.getElementById("userAnswer");
   if (textarea) {
+    // 1. إعادة تعيين الارتفاع مؤقتاً لحساب الانكماش الصحيح عند الحذف
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
   }
   
-  // حساب الارتفاع الإجمالي للمستند وإرساله للأب
-  const fullHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-  window.parent.postMessage({ type: "RESIZE_EXERCISE", height: fullHeight + 20 }, "*");
+  // 2. إرسال الارتفاع الصافي للتمرين مع هامش بسيط
+  const container = document.querySelector(".exercise-container") || document.body;
+  const contentHeight = container.getBoundingClientRect().height;
+  
+  window.parent.postMessage({ 
+    type: "RESIZE_EXERCISE", 
+    height: Math.ceil(contentHeight) + 10 
+  }, "*");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1. قراءة المعرّف من الرابط
   const urlParams = new URLSearchParams(window.location.search);
   const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-  // 2. ربط أزرار الألوان
   document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
   document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
 
-  // 3. التحميل الديناميكي للبيانات
   try {
     const exerciseModule = await import(`./data/exercise-${exerciseId}.js`);
     currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
@@ -40,10 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("questionText").textContent = "تعذر تحميل السؤال للمعرّف المحدد.";
   }
 
-  // 4. الحفظ التلقائي وتحديث الارتفاع للأب عند الكتابة
   const textarea = document.getElementById("userAnswer");
   textarea?.addEventListener("input", function () {
-    sendHeightToParent(); // تحديث الارتفاع لحظياً مع كل سطر جديد
+    sendHeightToParent(); // تحديث وتعديل الارتفاع زيارة أو نقصاناً عند كل تغيير
 
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
@@ -51,8 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 1200);
   });
 
-  // إرسال الارتفاع الأولي بعد استقرار العناصر في الصفحة
-  setTimeout(sendHeightToParent, 300);
+  setTimeout(sendHeightToParent, 200);
 });
 
 function setBgColor(color) {
@@ -77,7 +77,6 @@ function autoSaveData(latestText) {
     window.CoreStorage.save(payload);
   } else {
     localStorage.setItem(currentExerciseData.id, JSON.stringify(payload));
-    console.log("تم الحفظ في التخزين المحلي:", payload);
   }
 }
 
@@ -95,7 +94,6 @@ function loadSavedAnswer(id) {
 
   if (saved && saved.content) {
     textarea.value = saved.content;
-    sendHeightToParent(); // ضبط الارتفاع بناءً على النص المسترجع
+    sendHeightToParent();
   }
-                          }
-    
+  }
