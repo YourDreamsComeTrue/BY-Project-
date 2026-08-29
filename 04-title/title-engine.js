@@ -91,7 +91,7 @@ function renderTabContent(tab) {
     }
 }
 
-// عرض التمرين في iframe واسع النطاق وبدون أشرطة تمرير خارجية
+// عرض التمرين والتعديل التلقائي للارتفاع ليعرض كافة الأسطر بوضوح
 function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
@@ -107,10 +107,22 @@ function loadExerciseIframe() {
 
     container.innerHTML = `
         <iframe 
+            id="exercise-iframe"
             src="${exerciseUrl}" 
             class="exercise-frame"
             scrolling="no"
-            style="width:100%; min-height:400px; border:none; border-radius:12px; overflow:hidden;">
+            style="width:100%; min-height:350px; border:none; border-radius:12px; overflow:hidden; transition: height 0.1s ease;">
         </iframe>
     `;
-}
+
+    // استقبال الارتفاع الجديد تلقائياً من صفحة التمرين لتمديد الـ iframe
+    window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "RESIZE_EXERCISE") {
+            const iframe = document.getElementById("exercise-iframe");
+            if (iframe) {
+                iframe.style.height = event.data.height + "px";
+            }
+        }
+    });
+        }
+               
