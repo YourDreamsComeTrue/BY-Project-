@@ -1,75 +1,9 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  direction: rtl;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-}
-
-.exercise-card {
-  width: 100%;
-  background-color: #ffffff;
-}
-
-.question-title {
-  font-size: 1.15rem;
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #1e293b;
-  text-align: right;
-  width: 100%;
-}
-
-.color-picker-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  justify-content: flex-end;
-}
-
-.color-btn {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid #cbd5e1;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.color-btn:hover { transform: scale(1.1); }
-.color-btn.green { background-color: #d1fae5; }
-.color-btn.red { background-color: #ffe4e6; }
-.color-btn.reset { background-color: #f3f4f6; }
-
-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 12px;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 1rem;
-  line-height: 1.6;
-  direction: rtl;
-  text-align: right;
-  resize: none;
-  overflow: hidden;
-  display: block;
-}
-
-textarea.bg-green { background-color: #f0fdf4 !important; border-color: #86efac; }
-textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
-
-/* تنسيق أزرار المحاولات والنسخ الجديدة */
+/* شريط التحكم السفلي */
 #attempt-controls {
   margin-top: 12px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  justify-content: flex-start;
 }
 
 .btn-attempt-control {
@@ -84,16 +18,108 @@ textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
   transition: all 0.2s ease;
 }
 
-.btn-attempt-control:hover {
-  background-color: #e2e8f0;
-}
-
-.btn-attempt-control.btn-copy {
+.btn-attempt-control.btn-new {
   background-color: #eff6ff;
   color: #1d4ed8;
   border-color: #bfdbfe;
 }
 
-.btn-attempt-control.btn-copy:hover {
-  background-color: #dbeafe;
+.btn-attempt-control:hover { background-color: #e2e8f0; }
+
+/* النافذة المنبثقة (Modal) */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
 }
+
+.modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 { margin: 0; font-size: 1.1rem; color: #1e293b; }
+
+.close-modal-btn {
+  background: none; border: none; font-size: 1.5rem; color: #64748b; cursor: pointer;
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* بطاقة المحاولة داخل السجل */
+.history-item-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+.history-item-card.active {
+  border-color: #93c5fd;
+  background: #f0f9ff;
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.history-title { font-size: 0.9rem; font-weight: bold; color: #1e293b; }
+
+/* التاريخ بخط رقيق وحجم صغير */
+.history-date { font-size: 0.75rem; color: #94a3b8; font-weight: 300; }
+
+.history-item-body {
+  font-size: 0.88rem;
+  color: #334155;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #f1f5f9;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.history-item-actions { display: flex; gap: 6px; }
+
+.btn-history-action {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  cursor: pointer;
+}
+.btn-history-action:hover { background: #f1f5f9; }
