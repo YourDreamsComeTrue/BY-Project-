@@ -1,66 +1,18 @@
-let currentTitleData = null;
-
-const urlParams = new URLSearchParams(window.location.search);
-const titleId = urlParams.get('id') || 'l000001-t02';
-
-document.addEventListener("DOMContentLoaded", async () => {
-    await loadTitleData();
-    setupTabNavigation();
-    setupCloseButton();
-    loadExerciseIframe();
-});
-
-// قراءة البيانات
-async function loadTitleData() {
-    try {
-        const dataModule = await import(`./data/title-${titleId}.js`);
-        const data = dataModule.default || dataModule.titleData;
-        
-        currentTitleData = data.titleData ? data.titleData : data;
-
-        const headingElement = document.getElementById("title-heading");
-        if (headingElement && currentTitleData.heading) {
-            headingElement.textContent = currentTitleData.heading;
-        }
-    } catch (error) {
-        console.error("تعذر تحميل ملف بيانات العنوان:", error);
-        const headingElement = document.getElementById("title-heading");
-        if (headingElement) {
-            headingElement.textContent = "تعذر تحميل عنوان الدرس.";
-        }
-    }
+        // دالة حساب الارتفاع الإجمالي للعنوان وإرساله لصفحة الدرس
+function sendTitleHeightToParent() {
+    setTimeout(() => {
+        const fullHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        window.parent.postMessage({
+            type: "RESIZE_TITLE",
+            titleId: titleId,
+            height: fullHeight + 20
+        }, "*");
+    }, 150);
 }
 
-// إعداد أزرار التبويب
-function setupTabNavigation() {
-    const buttons = document.querySelectorAll(".icon-btn");
-    buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const tab = btn.getAttribute("data-tab");
-            
-            if (tab === "rituels") {
-                const ritualPath = currentTitleData?.rituelsFile || "../06-rituels/rituels-index.html";
-                window.open(ritualPath, '_blank');
-                return;
-            }
+// أضف استدعاء الدالة في الحالات التالية داخل title-engine.js:
 
-            renderTabContent(tab);
-        });
-    });
-}
-
-// زر الإغلاق الأحادي في أسفل الحاوية
-function setupCloseButton() {
-    const closeBtn = document.getElementById("close-tab-btn");
-    const contentArea = document.getElementById("tab-content-area");
-    if (closeBtn && contentArea) {
-        closeBtn.addEventListener("click", () => {
-            contentArea.style.display = "none";
-        });
-    }
-}
-
-// عرض محتوى التبويب
+// 1. عند فتح أي تبويب (مشاهدة / شرح / ملخص)
 function renderTabContent(tab) {
     const contentArea = document.getElementById("tab-content-area");
     const tabBody = document.getElementById("tab-body");
@@ -89,40 +41,31 @@ function renderTabContent(tab) {
             <div>${currentTitleData.summary.content}</div>
         `;
     }
+    
+    sendTitleHeightToParent(); // <-- تحديث الارتفاع عند فتح المحتوى
 }
 
-// عرض التمرين والتعديل التلقائي للارتفاع ليعرض كافة الأسطر بوضوح
-function loadExerciseIframe() {
-    const container = document.getElementById("exercises-container");
-    if (!container) return;
-
-    let targetExerciseId = "l000001-t02-e01";
-
-    if (currentTitleData && currentTitleData.exercises && currentTitleData.exercises.length > 0) {
-        const firstEx = currentTitleData.exercises[0];
-        targetExerciseId = typeof firstEx === "string" ? firstEx : (firstEx.id || targetExerciseId);
+// 2. عند إغلاق زر التبويب الأحادي
+function setupCloseButton() {
+    const closeBtn = document.getElementById("close-tab-btn");
+    const contentArea = document.getElementById("tab-content-area");
+    if (closeBtn && contentArea) {
+        closeBtn.addEventListener("click", () => {
+            contentArea.style.display = "none";
+            sendTitleHeightToParent(); // <-- تحديث الارتفاع عند الإغلاق
+        });
     }
+}
 
-    const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}`;
-
-    container.innerHTML = `
-        <iframe 
-            id="exercise-iframe"
-            src="${exerciseUrl}" 
-            class="exercise-frame"
-            scrolling="no"
-            style="width:100%; min-height:350px; border:none; border-radius:12px; overflow:hidden; transition: height 0.1s ease;">
-        </iframe>
-    `;
-
-    // استقبال الارتفاع الجديد تلقائياً من صفحة التمرين لتمديد الـ iframe
-    window.addEventListener("message", (event) => {
-        if (event.data && event.data.type === "RESIZE_EXERCISE") {
-            const iframe = document.getElementById("exercise-iframe");
-            if (iframe) {
-                iframe.style.height = event.data.height + "px";
-            }
+// 3. عند استقبال رسالة تمدد التمرين من الأسفل
+window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "RESIZE_EXERCISE") {
+        const iframe = document.getElementById("exercise-iframe");
+        if (iframe) {
+            iframe.style.height = event.data.height + "px";
+            sendTitleHeightToParent(); // <-- إشعار الدرس بتمدد التمرين
         }
-    });
-        }
+    }
+});
+
                
