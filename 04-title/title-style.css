@@ -7,17 +7,16 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* بطاقة العنوان تملك هامشاً سفلياً ثابتاً لمنع الالتصاق بالحاوية التالية */
+/* 1. جعل حاوية العنوان تمتد بكامل العرض وتقليل الهوامش الداخلية لتكبير مساحة التمرين */
 .title-container {
     width: 100%;
     box-sizing: border-box;
-    margin: 0 auto 20px auto;
+    margin: 0 auto;
     background: #ffffff;
-    padding: 20px 16px;
+    padding: 16px 8px; /* تقليل البادينغ من الجوانب لزيادة اتساع التمرين */
     border-radius: 16px;
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    overflow: visible; /* السماح بقياس الارتفاع الحقيقي */
 }
 
 .main-title {
@@ -27,6 +26,7 @@ html, body {
     font-weight: 700;
     margin-top: 0;
     margin-bottom: 16px;
+    padding: 0 8px;
 }
 
 .nav-icons {
@@ -34,6 +34,7 @@ html, body {
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     margin-bottom: 16px;
+    padding: 0 4px;
 }
 
 .icon-btn {
@@ -56,7 +57,7 @@ html, body {
 .tab-content-area {
     position: relative;
     display: none;
-    margin: 16px 0;
+    margin: 16px 4px;
     padding: 16px 16px 50px 16px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -85,11 +86,12 @@ html, body {
 }
 
 .section-divider { 
-    margin: 20px 0; 
+    margin: 16px 0; 
     border: 0; 
     border-top: 1px solid #f1f5f9; 
 }
 
+/* 2. إلغاء القيود ليتوسع التمرين لأقصى عرض متاح */
 .exercises-wrapper, 
 .exercises-list {
     width: 100%;
@@ -103,5 +105,4 @@ html, body {
     border: none;
     border-radius: 12px;
     display: block;
-    }
-    
+}
