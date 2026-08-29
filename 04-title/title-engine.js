@@ -10,16 +10,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadExerciseIframe();
 });
 
-// حساب ارتفاع بطاقة العنوان الحقيقي وإرسال إشارة التعديل (زيادة أو انكماش) للدرس
+// حساب الارتفاع الحقيقي للحاوية المغلقة
 function sendTitleHeightToParent() {
-    const container = document.querySelector(".title-container") || document.body;
-    const realHeight = container.getBoundingClientRect().height;
+    requestAnimationFrame(() => {
+        const container = document.querySelector(".title-container") || document.body;
+        const realHeight = container.getBoundingClientRect().height;
 
-    window.parent.postMessage({
-        type: "RESIZE_TITLE",
-        titleId: titleId,
-        height: Math.ceil(realHeight) + 15
-    }, "*");
+        window.parent.postMessage({
+            type: "RESIZE_TITLE",
+            titleId: titleId,
+            height: Math.ceil(realHeight) + 20
+        }, "*");
+    });
 }
 
 async function loadTitleData() {
@@ -77,11 +79,12 @@ function renderTabContent(tab) {
         const { videoId, startSeconds, endSeconds } = currentTitleData.watch;
         tabBody.innerHTML = `
             <h3 style="margin-top:0;">فيديو المشاهدة</h3>
-            <iframe 
-                src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&end=${endSeconds}" 
-                style="width:100%; height:360px; border:none; border-radius:10px;" 
-                allowfullscreen>
-            </iframe>
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&end=${endSeconds}" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         `;
     } else if (tab === "explain" && currentTitleData.explain) {
         tabBody.innerHTML = `
@@ -95,7 +98,10 @@ function renderTabContent(tab) {
         `;
     }
 
+    // قياس الارتفاع فوراً ثم قياسه مرة أخرى بعد استقرار الفيديو
     sendTitleHeightToParent();
+    setTimeout(sendTitleHeightToParent, 150);
+    setTimeout(sendTitleHeightToParent, 400);
 }
 
 function loadExerciseIframe() {
@@ -121,7 +127,6 @@ function loadExerciseIframe() {
         </iframe>
     `;
 
-    // استقبال تعديل ارتفاع التمرين (سواء بالزيادة أو النقصان) لتعديل ارتفاع العنوان فوراً
     window.addEventListener("message", (event) => {
         if (event.data && event.data.type === "RESIZE_EXERCISE") {
             const iframe = document.getElementById("exercise-iframe");
@@ -131,4 +136,4 @@ function loadExerciseIframe() {
             }
         }
     });
-}
+    }
