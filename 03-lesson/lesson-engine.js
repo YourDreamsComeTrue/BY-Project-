@@ -45,13 +45,11 @@ function renderTitles() {
         iframe.style.borderRadius = "12px";
         iframe.style.marginBottom = "24px";
         iframe.style.overflow = "hidden";
-        iframe.style.transition = "height 0.2s ease";
 
         container.appendChild(iframe);
     });
 }
 
-// الاستماع لرسائل التمدد وتكبير إطار العنوان المناسب
 function listenForTitleResize() {
     window.addEventListener("message", (event) => {
         if (event.data && event.data.type === "RESIZE_TITLE") {
@@ -61,4 +59,5 @@ function listenForTitleResize() {
             }
         }
     });
-}
+        }
+        
