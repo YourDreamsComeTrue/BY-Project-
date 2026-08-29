@@ -6,9 +6,9 @@ const lessonId = urlParams.get('id') || 'l000001';
 document.addEventListener("DOMContentLoaded", async () => {
     await loadLessonData();
     renderTitles();
+    listenForTitleResize();
 });
 
-// 1. تحميل بيانات الدرس
 async function loadLessonData() {
     try {
         const dataModule = await import(`./data/lesson-${lessonId}.js`);
@@ -22,35 +22,43 @@ async function loadLessonData() {
         }
     } catch (error) {
         console.error("تعذر تحميل ملف بيانات الدرس:", error);
-        const headingElement = document.getElementById("lesson-heading");
-        if (headingElement) {
-            headingElement.textContent = "تعذر تحميل الدرس المطلوبة.";
-        }
     }
 }
 
-// 2. عرض العناوين المندرجة تحت الدرس
 function renderTitles() {
     const container = document.getElementById("titles-container");
     if (!container || !currentLessonData || !currentLessonData.titles) return;
 
     container.innerHTML = "";
 
-    currentLessonData.titles.forEach((titleId, index) => {
-        const titleUrl = `../04-title/title.html?id=${titleId}`;
+    currentLessonData.titles.forEach((tId) => {
+        const titleUrl = `../04-title/title.html?id=${tId}`;
         
         const iframe = document.createElement("iframe");
-        iframe.id = `title-iframe-${index}`;
+        iframe.id = `title-iframe-${tId}`;
         iframe.src = titleUrl;
         iframe.className = "title-frame";
         iframe.setAttribute("scrolling", "no");
         iframe.style.width = "100%";
-        iframe.style.minHeight = "400px";
+        iframe.style.minHeight = "350px";
         iframe.style.border = "none";
         iframe.style.borderRadius = "12px";
-        iframe.style.marginBottom = "20px";
+        iframe.style.marginBottom = "24px";
         iframe.style.overflow = "hidden";
+        iframe.style.transition = "height 0.2s ease";
 
         container.appendChild(iframe);
     });
-          }
+}
+
+// الاستماع لرسائل التمدد وتكبير إطار العنوان المناسب
+function listenForTitleResize() {
+    window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "RESIZE_TITLE") {
+            const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
+            if (targetIframe) {
+                targetIframe.style.height = event.data.height + "px";
+            }
+        }
+    });
+}
