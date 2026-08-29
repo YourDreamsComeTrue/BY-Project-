@@ -1,56 +1,56 @@
-import { lessonsIndex } from '../07-content/lesson.js';
+let currentLessonData = null;
 
-async function initEngine() {
-  const mainTitleElement = document.getElementById('lesson-title');
-  const contentElement = document.getElementById('lesson-content');
+const urlParams = new URLSearchParams(window.location.search);
+const lessonId = urlParams.get('id') || 'l000001';
 
-  // 1. قراءة اسم مجلد الدرس من الرابط
-  const urlParams = new URLSearchParams(window.location.search);
-  const lessonFolder = urlParams.get('lesson') || 'lesson-00001';
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadLessonData();
+    renderTitles();
+});
 
-  // 2. تعيين العنوان الرئيسي فوراً
-  const lessonInfo = lessonsIndex ? lessonsIndex.find(item => item.id === lessonFolder) : null;
-  if (mainTitleElement) {
-    mainTitleElement.textContent = lessonInfo ? lessonInfo.mainTitle : "عنوان الدرس غير محدد";
-  }
+// 1. تحميل بيانات الدرس
+async function loadLessonData() {
+    try {
+        const dataModule = await import(`./data/lesson-${lessonId}.js`);
+        const data = dataModule.default || dataModule.lessonData;
+        
+        currentLessonData = data.lessonData ? data.lessonData : data;
 
-  // 3. استدعاء ملف lesson2.js
-  try {
-    const lessonModule = await import(`../07-content/${lessonFolder}/lesson2.js`);
-    const titlesList = lessonModule.default;
-
-    if (contentElement && Array.isArray(titlesList)) {
-      contentElement.innerHTML = '';
-
-      titlesList.forEach(item => {
-        const data = item.titleData || item;
-
-        const titleHeader = document.createElement('h2');
-        titleHeader.className = 'sub-title';
-        titleHeader.textContent = data.heading || item.title || 'عنوان فرعي';
-
-        const sectionBody = document.createElement('div');
-        sectionBody.className = 'title-body';
-
-        const explainContent = data.explain ? data.explain.content : '';
-        const summaryContent = data.summary ? data.summary.content : '';
-        const fallbackContent = item.content || '';
-
-        sectionBody.innerHTML = (explainContent || summaryContent) 
-          ? (explainContent + summaryContent) 
-          : fallbackContent;
-
-        contentElement.appendChild(titleHeader);
-        contentElement.appendChild(sectionBody);
-      });
+        const headingElement = document.getElementById("lesson-heading");
+        if (headingElement && currentLessonData.heading) {
+            headingElement.textContent = currentLessonData.heading;
+        }
+    } catch (error) {
+        console.error("تعذر تحميل ملف بيانات الدرس:", error);
+        const headingElement = document.getElementById("lesson-heading");
+        if (headingElement) {
+            headingElement.textContent = "تعذر تحميل الدرس المطلوبة.";
+        }
     }
-  } catch (err) {
-    console.error("تفاصيل الخطأ:", err);
-    if (contentElement) {
-      contentElement.innerHTML = `<p style="color:red; direction:ltr; text-align:left; font-family:monospace;">${err.message}</p>`;
-    }
-  }
 }
 
-initEngine();
+// 2. عرض العناوين المندرجة تحت الدرس
+function renderTitles() {
+    const container = document.getElementById("titles-container");
+    if (!container || !currentLessonData || !currentLessonData.titles) return;
 
+    container.innerHTML = "";
+
+    currentLessonData.titles.forEach((titleId, index) => {
+        const titleUrl = `../04-title/title.html?id=${titleId}`;
+        
+        const iframe = document.createElement("iframe");
+        iframe.id = `title-iframe-${index}`;
+        iframe.src = titleUrl;
+        iframe.className = "title-frame";
+        iframe.setAttribute("scrolling", "no");
+        iframe.style.width = "100%";
+        iframe.style.minHeight = "400px";
+        iframe.style.border = "none";
+        iframe.style.borderRadius = "12px";
+        iframe.style.marginBottom = "20px";
+        iframe.style.overflow = "hidden";
+
+        container.appendChild(iframe);
+    });
+          }
