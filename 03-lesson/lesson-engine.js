@@ -6,7 +6,7 @@ const lessonId = urlParams.get('id') || 'l000001';
 document.addEventListener("DOMContentLoaded", async () => {
     await loadLessonData();
     renderTitles();
-    listenForTitleResize();
+    listenForMessages();
 });
 
 async function loadLessonData() {
@@ -50,14 +50,29 @@ function renderTitles() {
     });
 }
 
-function listenForTitleResize() {
+function listenForMessages() {
     window.addEventListener("message", (event) => {
-        if (event.data && event.data.type === "RESIZE_TITLE") {
+        if (!event.data) return;
+
+        // 1. التكيف مع الارتفاع
+        if (event.data.type === "RESIZE_TITLE") {
             const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
             if (targetIframe) {
                 targetIframe.style.height = event.data.height + "px";
             }
         }
-    });
+
+        // 2. قاطع الصوت الصارم: تفريغ وإعادة تعيين إطار العنوان عند إغلاق الفيديو
+        if (event.data.type === "STOP_VIDEO_STREAM") {
+            const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
+            if (targetIframe) {
+                // إجبار المتصفح على قطع جميع الاتصالات الصوتية والمشغلات داخل الإطار
+                const currentSrc = targetIframe.src;
+                targetIframe.src = "about:blank";
+                setTimeout(() => {
+                    targetIframe.src = currentSrc;
+                }, 50);
+            }
         }
-        
+    });
+                }
