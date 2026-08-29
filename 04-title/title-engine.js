@@ -10,20 +10,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadExerciseIframe();
 });
 
-// دالة حساب الارتفاع الكلي للعنوان وتمريرها فوراً لصفحة الدرس
+// حساب ارتفاع بطاقة العنوان الحقيقي وإرسال إشارة التعديل (زيادة أو انكماش) للدرس
 function sendTitleHeightToParent() {
-    // التأكد من أن التمرير يأخذ الارتفاع الفعلي الكلي بدقة
-    const body = document.body;
-    const html = document.documentElement;
-    const height = Math.max(
-        body.scrollHeight, body.offsetHeight, 
-        html.clientHeight, html.scrollHeight, html.offsetHeight
-    );
+    const container = document.querySelector(".title-container") || document.body;
+    const realHeight = container.getBoundingClientRect().height;
 
     window.parent.postMessage({
         type: "RESIZE_TITLE",
         titleId: titleId,
-        height: height + 30 // هامش أمان إضافي يمنع القص
+        height: Math.ceil(realHeight) + 15
     }, "*");
 }
 
@@ -66,7 +61,7 @@ function setupCloseButton() {
     if (closeBtn && contentArea) {
         closeBtn.addEventListener("click", () => {
             contentArea.style.display = "none";
-            setTimeout(sendTitleHeightToParent, 100);
+            sendTitleHeightToParent();
         });
     }
 }
@@ -100,7 +95,7 @@ function renderTabContent(tab) {
         `;
     }
 
-    setTimeout(sendTitleHeightToParent, 100);
+    sendTitleHeightToParent();
 }
 
 function loadExerciseIframe() {
@@ -122,19 +117,18 @@ function loadExerciseIframe() {
             src="${exerciseUrl}" 
             class="exercise-frame"
             scrolling="no"
-            style="width:100%; min-height:350px; border:none; border-radius:12px; overflow:hidden;">
+            style="width:100%; min-height:200px; border:none; border-radius:12px; overflow:hidden;">
         </iframe>
     `;
 
-    // عند استقبال إشارة تمدد التمرين، يتم تعديل إطار التمرين أولاً ثم إبلاغ الدرس فوراً
+    // استقبال تعديل ارتفاع التمرين (سواء بالزيادة أو النقصان) لتعديل ارتفاع العنوان فوراً
     window.addEventListener("message", (event) => {
         if (event.data && event.data.type === "RESIZE_EXERCISE") {
             const iframe = document.getElementById("exercise-iframe");
             if (iframe) {
                 iframe.style.height = event.data.height + "px";
-                // إبلاغ الدرس بالتمدد الكلي الجديد
                 sendTitleHeightToParent();
             }
         }
     });
-        }
+}
