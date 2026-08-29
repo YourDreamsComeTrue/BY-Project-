@@ -32,7 +32,8 @@ function renderTitles() {
     container.innerHTML = "";
 
     currentLessonData.titles.forEach((tId) => {
-        const titleUrl = `../04-title/title.html?id=${tId}`;
+        // التعديل هنا: تمرير lessonId مع رابط العنوان ليعرف أنه داخل هذا الدرس بالتحديد
+        const titleUrl = `../04-title/title.html?id=${tId}&lessonId=${lessonId}`;
         
         const iframe = document.createElement("iframe");
         iframe.id = `title-iframe-${tId}`;
@@ -66,7 +67,6 @@ function listenForMessages() {
         if (event.data.type === "STOP_VIDEO_STREAM") {
             const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
             if (targetIframe) {
-                // إجبار المتصفح على قطع جميع الاتصالات الصوتية والمشغلات داخل الإطار
                 const currentSrc = targetIframe.src;
                 targetIframe.src = "about:blank";
                 setTimeout(() => {
@@ -75,4 +75,4 @@ function listenForMessages() {
             }
         }
     });
-                }
+}
