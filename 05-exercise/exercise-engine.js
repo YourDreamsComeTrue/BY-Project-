@@ -4,20 +4,22 @@ let currentExerciseData = null;
 const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-// عزل كامل: إذا لم يأتِ context أو titleId، يثبت السياق كـ standalone حصراً
-const contextId = urlParams.get('context') || urlParams.get('titleId') || 'standalone';
+// 1. تحديد السياق بدقة لمنع التداخل بين المنفرد والدرس
+const contextId = urlParams.get('context') || urlParams.get('titleId') || urlParams.get('lessonId') || 'standalone';
 
+// 2. جلب آخر محاولة فعلية
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
+let isNewAttemptPending = false; // راية لمنع إنشاء محاولة فارغة قبل الكتابة
 
-const getStorageKey = (ctx, exId, attemptNum) => `${ctx}_${exId}_attempt_${attemptNum}`;
+const getStorageKey = (ctx, exId, attemptNum) => `ex_data_${ctx}_${exId}_att_${attemptNum}`;
 
 function getLastAttempt(ctx, exId) {
-  const lastSaved = localStorage.getItem(`${ctx}_${exId}_latest_attempt`);
+  const lastSaved = localStorage.getItem(`ex_last_${ctx}_${exId}`);
   return lastSaved ? parseInt(lastSaved, 10) : 1;
 }
 
 function setLastAttempt(ctx, exId, attemptNum) {
-  localStorage.setItem(`${ctx}_${exId}_latest_attempt`, attemptNum);
+  localStorage.setItem(`ex_last_${ctx}_${exId}`, attemptNum);
 }
 
 function sendHeightToParent() {
@@ -32,7 +34,7 @@ function sendHeightToParent() {
   
   const modal = document.getElementById("historyModal");
   if (modal && getComputedStyle(modal).display !== "none") {
-    contentHeight = Math.max(contentHeight, 520);
+    contentHeight = Math.max(contentHeight, 550);
   }
 
   window.parent.postMessage({ 
@@ -63,11 +65,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const textarea = document.getElementById("userAnswer");
   textarea?.addEventListener("input", function () {
+    // إذا كان هناك طلب محاولة جديدة، نقوم بتفعيلها رسمياً عند أول كتابة
+    if (isNewAttemptPending) {
+      const maxAttempt = getLastAttempt(contextId, exerciseId);
+      currentAttempt = maxAttempt + 1;
+      isNewAttemptPending = false;
+    }
+
     sendHeightToParent();
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       autoSaveData(this.value);
-    }, 1200);
+    }, 1000);
   });
 
   setTimeout(sendHeightToParent, 200);
@@ -83,6 +92,8 @@ function setBgColor(color) {
 }
 
 function autoSaveData(latestText) {
+  if (!latestText.trim() && isNewAttemptPending) return;
+
   const key = getStorageKey(contextId, exerciseId, currentAttempt);
   const payload = {
     contextId: contextId,
@@ -135,12 +146,17 @@ function setupModalEvents() {
     }
   });
 
+  // إضافة محاولة جديدة بدون قفز أرقام
   btnNew?.addEventListener("click", (e) => {
     e.preventDefault();
-    const maxAttempt = getLastAttempt(contextId, exerciseId);
-    currentAttempt = maxAttempt + 1;
-    setLastAttempt(contextId, exerciseId, currentAttempt);
-    loadSavedAnswer();
+    const textarea = document.getElementById("userAnswer");
+    if (textarea) {
+      textarea.value = "";
+      textarea.focus();
+    }
+    isNewAttemptPending = true; // ننتظر الكتابة ليتم اعتماد الرقم الجديد
+    if (modal) modal.style.display = "none";
+    sendHeightToParent();
   });
 }
 
@@ -150,6 +166,7 @@ function renderHistoryList() {
   listContainer.innerHTML = "";
 
   const totalAttempts = getLastAttempt(contextId, exerciseId);
+  let foundAny = false;
 
   for (let i = totalAttempts; i >= 1; i--) {
     const key = getStorageKey(contextId, exerciseId, i);
@@ -157,16 +174,18 @@ function renderHistoryList() {
     if (!raw) continue;
 
     const item = JSON.parse(raw);
-    
+    if (!item.content || !item.content.trim()) continue; // تجاهل المحاولات الفارغة
+
+    foundAny = true;
     const card = document.createElement("div");
     card.className = `history-item-card ${i === currentAttempt ? 'active' : ''}`;
 
     card.innerHTML = `
       <div class="history-item-header">
         <span class="history-title">المحاولة رقم (${item.attempt}) ${i === currentAttempt ? '<b>(الحالية)</b>' : ''}</span>
-        <span class="history-date">${item.updatedAt || 'بدون تاريخ'}</span>
+        <span class="history-date">${item.updatedAt || ''}</span>
       </div>
-      <div class="history-item-body">${item.content || '<i>محتوى فارغ</i>'}</div>
+      <div class="history-item-body">${item.content}</div>
       <div class="history-item-actions">
         <button type="button" class="btn-history-action btn-copy-act">📋 نسخ المحتوى للمحاولة الحالية</button>
         <button type="button" class="btn-history-action btn-switch-act">👁️ فتح هذه المحاولة</button>
@@ -176,7 +195,7 @@ function renderHistoryList() {
     card.querySelector(".btn-copy-act").onclick = () => {
       const txt = document.getElementById("userAnswer");
       if (txt) {
-        txt.value = item.content || "";
+        txt.value = item.content;
         autoSaveData(txt.value);
         sendHeightToParent();
         document.getElementById("historyModal").style.display = "none";
@@ -186,6 +205,7 @@ function renderHistoryList() {
 
     card.querySelector(".btn-switch-act").onclick = () => {
       currentAttempt = item.attempt;
+      isNewAttemptPending = false;
       loadSavedAnswer();
       document.getElementById("historyModal").style.display = "none";
       sendHeightToParent();
@@ -193,5 +213,9 @@ function renderHistoryList() {
 
     listContainer.appendChild(card);
   }
-}
-  
+
+  if (!foundAny) {
+    listContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">لا توجد محاولات محفوظة بعد.</div>`;
+  }
+    }
+    
