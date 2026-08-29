@@ -1,73 +1,41 @@
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 20px;
-  color: #333;
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f4f6f9;
+    direction: rtl;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
 .lesson-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 20px 16px;
 }
 
-.lesson-header {
-  background: #4a90e2;
-  color: #ffffff;
-  padding: 24px 20px;
-  text-align: center;
+.main-title {
+    text-align: right;
+    color: #0f172a;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding: 0 5px;
 }
 
-.lesson-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
+.titles-wrapper, 
+.titles-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.navigation-section {
-  background: #f8f9fa;
-  padding: 15px 24px;
-  border-bottom: 1px solid #eee;
+.title-frame {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-
-.navigation-section h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: #666;
-}
-
-#titles-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-#titles-list li a {
-  display: inline-block;
-  padding: 8px 14px;
-  background: #e9ecef;
-  color: #495057;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-#titles-list li a:hover,
-#titles-list li a.active {
-  background: #4a90e2;
-  color: #ffffff;
-}
-
-#lesson-content {
-  padding: 24px;
-  line-height: 1.7;
-}
-
