@@ -40,6 +40,20 @@ async function loadTitleData() {
     }
 }
 
+// دالة تفريغ وقتل الفيديو والصوت نهائياً
+function stopAndDestroyVideo() {
+    const tabBody = document.getElementById("tab-body");
+    if (tabBody) {
+        // إزالة أي إطارات iframe لمنع استمرار تشغيل الصوت في الخلفية
+        const iframes = tabBody.querySelectorAll("iframe");
+        iframes.forEach(iframe => {
+            iframe.src = "about:blank"; // تدمير رابط الفيديو
+            iframe.remove(); // حذف العنصر من الـ DOM
+        });
+        tabBody.innerHTML = "";
+    }
+}
+
 function setupTabNavigation() {
     const buttons = document.querySelectorAll(".icon-btn");
     buttons.forEach(btn => {
@@ -52,23 +66,24 @@ function setupTabNavigation() {
                 return;
             }
 
+            // إيقاف أي فيديو يعمل قبل فتح التبويب الجديد
+            stopAndDestroyVideo();
             renderTabContent(tab);
         });
     });
 }
 
-// 2. تعديل إغلاق التبويب لتصفير الـ HTML وإيقاف الفيديو والصوت تماماً
 function setupCloseButton() {
     const closeBtn = document.getElementById("close-tab-btn");
     const contentArea = document.getElementById("tab-content-area");
-    const tabBody = document.getElementById("tab-body");
 
     if (closeBtn && contentArea) {
         closeBtn.addEventListener("click", () => {
             contentArea.style.display = "none";
-            if (tabBody) {
-                tabBody.innerHTML = ""; // إزالة الفيديو وتدمير المشغل فوراً لإيقاف الصوت
-            }
+            
+            // قاطع الصوت الحاسم: تدمير الفيديو وإفراغ الحاوية
+            stopAndDestroyVideo();
+            
             sendTitleHeightToParent();
         });
     }
@@ -142,5 +157,4 @@ function loadExerciseIframe() {
             }
         }
     });
-                    }
-                    
+                            }
