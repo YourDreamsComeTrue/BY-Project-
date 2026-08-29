@@ -57,12 +57,18 @@ function setupTabNavigation() {
     });
 }
 
+// 2. تعديل إغلاق التبويب لتصفير الـ HTML وإيقاف الفيديو والصوت تماماً
 function setupCloseButton() {
     const closeBtn = document.getElementById("close-tab-btn");
     const contentArea = document.getElementById("tab-content-area");
+    const tabBody = document.getElementById("tab-body");
+
     if (closeBtn && contentArea) {
         closeBtn.addEventListener("click", () => {
             contentArea.style.display = "none";
+            if (tabBody) {
+                tabBody.innerHTML = ""; // إزالة الفيديو وتدمير المشغل فوراً لإيقاف الصوت
+            }
             sendTitleHeightToParent();
         });
     }
@@ -81,7 +87,8 @@ function renderTabContent(tab) {
             <h3 style="margin-top:0;">فيديو المشاهدة</h3>
             <div class="video-wrapper">
                 <iframe 
-                    src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&end=${endSeconds}" 
+                    src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}&end=${endSeconds}&enablejsapi=1" 
+                    allow="autoplay; encrypted-media"
                     allowfullscreen>
                 </iframe>
             </div>
@@ -98,7 +105,6 @@ function renderTabContent(tab) {
         `;
     }
 
-    // قياس الارتفاع فوراً ثم قياسه مرة أخرى بعد استقرار الفيديو
     sendTitleHeightToParent();
     setTimeout(sendTitleHeightToParent, 150);
     setTimeout(sendTitleHeightToParent, 400);
@@ -136,4 +142,5 @@ function loadExerciseIframe() {
             }
         }
     });
-    }
+                    }
+                    
