@@ -81,9 +81,15 @@ function setupCloseButton() {
         closeBtn.addEventListener("click", () => {
             contentArea.style.display = "none";
             
-            // قاطع الصوت الحاسم: تدمير الفيديو وإفراغ الحاوية
+            // 1. تدمير الفيديو وإفراغ الحاوية محلياً
             stopAndDestroyVideo();
             
+            // 2. إرسال أمر لصفحة الدرس لإعادة شحن الـ iframe وقطع الصوت تماماً في المتصفحات التي تُبقي الصوت بالخلفية
+            window.parent.postMessage({
+                type: "STOP_VIDEO_STREAM",
+                titleId: titleId
+            }, "*");
+
             sendTitleHeightToParent();
         });
     }
@@ -157,4 +163,5 @@ function loadExerciseIframe() {
             }
         }
     });
-                            }
+    }
+    
