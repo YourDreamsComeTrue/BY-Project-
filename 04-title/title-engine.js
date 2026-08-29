@@ -2,6 +2,8 @@ let currentTitleData = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 const titleId = urlParams.get('id') || 'l000001-t02';
+// 1. استخراج معرف الدرس إن وجد (لتمييز السياق)
+const lessonId = urlParams.get('lessonId');
 
 document.addEventListener("DOMContentLoaded", async () => {
     await loadTitleData();
@@ -142,7 +144,11 @@ function loadExerciseIframe() {
         targetExerciseId = typeof firstEx === "string" ? firstEx : (firstEx.id || targetExerciseId);
     }
 
-    const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}`;
+    // 2. تجميع السياق: إذا كان هناك lessonId نربطه مع titleId، وإلا نكتفي بـ titleId
+    const contextParam = lessonId ? `${lessonId}_${titleId}` : titleId;
+
+    // 3. تمرير المعامل context في رابط التمرين
+    const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
 
     container.innerHTML = `
         <iframe 
@@ -163,5 +169,4 @@ function loadExerciseIframe() {
             }
         }
     });
-    }
-    
+}
