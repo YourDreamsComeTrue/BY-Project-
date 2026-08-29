@@ -4,13 +4,11 @@ let currentExerciseData = null;
 const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-// 1. استخراج سياق الاستخدام (context) مع اختيار 'standalone' في حال عدم وجود سياق
-const contextId = urlParams.get('context') || 'standalone';
+// إذا لم يمرر context، نستخدم معرف التمرين نفسه كسياق منفرد ثابت
+const contextId = urlParams.get('context') || urlParams.get('titleId') || exerciseId;
 
-// 2. تحديد رقم المحاولة الحالية بناءً على السياق الحالي والتمرين
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
 
-// تركيب مفتاح التخزين الفريد المركب: [السياق]_[التمرين]_[المحاولة]
 const getStorageKey = (ctx, exId, attemptNum) => `${ctx}_${exId}_attempt_${attemptNum}`;
 
 function getLastAttempt(ctx, exId) {
@@ -30,15 +28,24 @@ function sendHeightToParent() {
   }
   
   const container = document.querySelector(".exercise-card") || document.body;
-  const contentHeight = container.getBoundingClientRect().height;
+  let contentHeight = container.getBoundingClientRect().height;
   
+  // إذا كانت النافذة المنبثقة مفتوحة، نضمن إعطاء ارتفاع كافٍ للـ iframe
+  const modal = document.getElementById("historyModal");
+  if (modal && getComputedStyle(modal).display !== "none") {
+    contentHeight = Math.max(contentHeight, 500);
+  }
+
   window.parent.postMessage({ 
     type: "RESIZE_EXERCISE", 
-    height: Math.ceil(contentHeight) + 10 
+    height: Math.ceil(contentHeight) + 20 
   }, "*");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // ربط أحداث الأزرار فور تحميل الـ DOM
+  setupModalEvents();
+  
   document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
   document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
@@ -55,12 +62,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   loadSavedAnswer();
-  setupModalEvents();
 
   const textarea = document.getElementById("userAnswer");
   textarea?.addEventListener("input", function () {
     sendHeightToParent();
-
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       autoSaveData(this.value);
@@ -115,20 +120,25 @@ function setupModalEvents() {
   const btnClose = document.getElementById("btnCloseModal");
   const btnNew = document.getElementById("btnNewAttempt");
 
-  btnOpen?.addEventListener("click", () => {
+  btnOpen?.addEventListener("click", (e) => {
+    e.preventDefault();
     renderHistoryList();
-    if (modal) modal.style.display = "flex";
+    if (modal) {
+      modal.style.display = "flex";
+      sendHeightToParent();
+    }
   });
 
-  btnClose?.addEventListener("click", () => {
-    if (modal) modal.style.display = "none";
+  btnClose?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (modal) {
+      modal.style.display = "none";
+      sendHeightToParent();
+    }
   });
 
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) modal.style.display = "none";
-  });
-
-  btnNew?.addEventListener("click", () => {
+  btnNew?.addEventListener("click", (e) => {
+    e.preventDefault();
     const maxAttempt = getLastAttempt(contextId, exerciseId);
     currentAttempt = maxAttempt + 1;
     setLastAttempt(contextId, exerciseId, currentAttempt);
@@ -165,7 +175,6 @@ function renderHistoryList() {
       </div>
     `;
 
-    // زر نسخ المحتوى
     card.querySelector(".btn-copy-act").onclick = () => {
       const txt = document.getElementById("userAnswer");
       if (txt) {
@@ -176,7 +185,6 @@ function renderHistoryList() {
       }
     };
 
-    // زر التبديل إلى المحاولة
     card.querySelector(".btn-switch-act").onclick = () => {
       currentAttempt = item.attempt;
       loadSavedAnswer();
@@ -185,4 +193,4 @@ function renderHistoryList() {
 
     listContainer.appendChild(card);
   }
-    }
+      }
