@@ -5,15 +5,14 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   direction: rtl;
-  margin: 0 !important;
-  padding: 0 !important; /* تم التعديل إلى 0 لإزالة الضيق جانبيًا */
-  width: 100% !important;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
 }
 
 .exercise-card {
   width: 100%;
   background-color: #ffffff;
-  padding: 4px 0; /* مسافة رأسية بسيطة فقط بدون ضغط الجوانب */
 }
 
 .question-title {
@@ -29,7 +28,7 @@ body {
   display: flex;
   gap: 8px;
   margin-bottom: 8px;
-  justify-content: flex-start; /* محاذاة أزرار الألوان لليمين اتساقاً مع النص */
+  justify-content: flex-end;
 }
 
 .color-btn {
@@ -47,7 +46,7 @@ body {
 .color-btn.reset { background-color: #f3f4f6; }
 
 textarea {
-  width: 100% !important;
+  width: 100%;
   min-height: 120px;
   padding: 12px;
   border: 1.5px solid #cbd5e1;
