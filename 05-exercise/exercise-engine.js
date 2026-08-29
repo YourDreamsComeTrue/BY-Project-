@@ -4,8 +4,8 @@ let currentExerciseData = null;
 const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-// إذا لم يمرر context، نستخدم معرف التمرين نفسه كسياق منفرد ثابت
-const contextId = urlParams.get('context') || urlParams.get('titleId') || exerciseId;
+// عزل كامل: إذا لم يأتِ context أو titleId، يثبت السياق كـ standalone حصراً
+const contextId = urlParams.get('context') || urlParams.get('titleId') || 'standalone';
 
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
 
@@ -30,10 +30,9 @@ function sendHeightToParent() {
   const container = document.querySelector(".exercise-card") || document.body;
   let contentHeight = container.getBoundingClientRect().height;
   
-  // إذا كانت النافذة المنبثقة مفتوحة، نضمن إعطاء ارتفاع كافٍ للـ iframe
   const modal = document.getElementById("historyModal");
   if (modal && getComputedStyle(modal).display !== "none") {
-    contentHeight = Math.max(contentHeight, 500);
+    contentHeight = Math.max(contentHeight, 520);
   }
 
   window.parent.postMessage({ 
@@ -43,7 +42,6 @@ function sendHeightToParent() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // ربط أحداث الأزرار فور تحميل الـ DOM
   setupModalEvents();
   
   document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
@@ -182,6 +180,7 @@ function renderHistoryList() {
         autoSaveData(txt.value);
         sendHeightToParent();
         document.getElementById("historyModal").style.display = "none";
+        sendHeightToParent();
       }
     };
 
@@ -189,8 +188,10 @@ function renderHistoryList() {
       currentAttempt = item.attempt;
       loadSavedAnswer();
       document.getElementById("historyModal").style.display = "none";
+      sendHeightToParent();
     };
 
     listContainer.appendChild(card);
   }
-      }
+}
+  
