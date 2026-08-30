@@ -6,7 +6,7 @@ export const lessonsConfig = [
     description: "مقدمة شاملة لتنظيم الموارد المالية الشخصية.",
     type: "video", // video | short | lecture
     topics: ["مال", "تطوير_ذات"],
-    path: "./lesson.html?id=l000001" // المسار أصبح مباشر داخل نفس المجلد
+    path: "../03-lesson/lesson.html?id=l000001"
   },
   {
     id: "l000002",
@@ -15,7 +15,7 @@ export const lessonsConfig = [
     description: "خطوات عملية لبناء بيئة اجتماعية صحية.",
     type: "lecture",
     topics: ["علاقات", "تطوير_ذات"],
-    path: "./lesson.html?id=l000002"
+    path: "../03-lesson/lesson.html?id=l000002"
   },
   {
     id: "l000003",
@@ -24,6 +24,7 @@ export const lessonsConfig = [
     description: "مقطع سريع يوضح العلاقة بين المال والعلاقات.",
     type: "short",
     topics: ["مال", "علاقات"],
-    path: "./lesson.html?id=l000003"
+    path: "../03-lesson/lesson.html?id=l000003"
   }
 ];
+      
