@@ -10,23 +10,25 @@
   <div class="exercise-card">
     <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
 
-    <div class="color-picker-toolbar">
-      <button class="color-btn green" id="btnGreen" title="أخضر فاتح"></button>
-      <button class="color-btn red" id="btnRed" title="أحمر فاتح"></button>
-      <button class="color-btn reset" id="btnReset" title="إعادة افتراضي"></button>
-    </div>
-
     <textarea 
       id="userAnswer" 
       placeholder="اكتب إجابتك هنا..."
       dir="rtl"
     ></textarea>
 
-    <!-- شريط الأزرار السفلي المصغر (تأكيد مكان النجمة بالأسفل) -->
+    <!-- شريط التحكم السفلي الموحد (يحتوي على الألوان والأزرار معاً) -->
     <div id="attempt-controls">
-      <button type="button" class="btn-attempt-control btn-new" id="btnNewAttempt" title="محاولة جديدة">+</button>
-      <button type="button" class="btn-attempt-control" id="btnOpenHistory" title="سجل المحاولات">☰</button>
-      <button type="button" class="btn-attempt-control" id="btn-fav-exercise" title="إضافة للمفضلة">⭐</button>
+      <div class="color-picker-toolbar">
+        <button class="color-btn green" id="btnGreen" title="أخضر فاتح"></button>
+        <button class="color-btn red" id="btnRed" title="أحمر فاتح"></button>
+        <button class="color-btn reset" id="btnReset" title="إعادة افتراضي"></button>
+      </div>
+
+      <div class="action-buttons-group">
+        <button type="button" class="btn-attempt-control btn-new" id="btnNewAttempt" title="محاولة جديدة">+</button>
+        <button type="button" class="btn-attempt-control" id="btnOpenHistory" title="سجل المحاولات">☰</button>
+        <button type="button" class="btn-attempt-control" id="btn-fav-exercise" title="إضافة للمفضلة">⭐</button>
+      </div>
     </div>
   </div>
 
