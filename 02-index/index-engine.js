@@ -91,6 +91,7 @@ function renderLessons() {
                 <div class="card-header">
                     <span class="badge type-${lesson.type}">${typeLabels[lesson.type] || lesson.type}</span>
                     <span class="order-num">#${lesson.order}</span>
+                    <button class="btn-fav-star" title="إضافة للمفضلة" onclick="event.stopPropagation(); window.addToFavorite('lesson', '${lesson.id}', '', '${lesson.title}')">⭐</button>
                 </div>
                 <h2 class="card-title">${lesson.title}</h2>
                 <p class="card-desc">${lesson.description || ''}</p>
@@ -101,3 +102,41 @@ function renderLessons() {
         `;
     }).join("");
 }
+
+// 4. دالة إضافة المحتوى إلى قوائم المفضلة
+export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
+    const saved = localStorage.getItem('user_custom_favorites_v1');
+    const customLists = saved ? JSON.parse(saved) : [];
+
+    if (customLists.length === 0) {
+        alert("لا توجد لديك قوائم مفضلة حالياً! يرجى الانتقال لصفحة المفضلة وإنشاء قائمة أولاً.");
+        return;
+    }
+
+    const listNames = customLists.map((l, index) => `${index + 1}. ${l.name}`).join("\n");
+    const choice = prompt(`اختر رقم القائمة التي تريد إضافة العنصر إليها:\n${listNames}`);
+    
+    if (!choice) return;
+
+    const selectedIndex = parseInt(choice) - 1;
+    if (isNaN(selectedIndex) || !customLists[selectedIndex]) {
+        alert("اختيار غير صحيح!");
+        return;
+    }
+
+    const newItem = {
+        id: "item_" + Date.now(),
+        type: type,
+        lessonId: lessonId,
+        targetId: targetId || '',
+        title: title,
+        subtitle: subtitle
+    };
+
+    customLists[selectedIndex].items.push(newItem);
+    localStorage.setItem('user_custom_favorites_v1', JSON.stringify(customLists));
+    alert(`تمت إضافة "${title}" إلى قائمة "${customLists[selectedIndex].name}" بنجاح! ⭐`);
+}
+
+window.addToFavorite = addToFavorite;
+                                                              
