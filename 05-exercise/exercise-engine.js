@@ -1,4 +1,4 @@
-let saveTimer = null;
+Let saveTimer = null;
 let currentExerciseData = null;
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -114,29 +114,24 @@ function setBgColor(color) {
   if (color === "red") textarea.classList.add("bg-red");
 }
 
-function getFormattedEnglishDate() {
+// دالة تنسيق التاريخ باللغة العربية مع الأرقام القياسية (1234)
+function getFormattedArabicDate() {
   const d = new Date();
-  const pad = (n) => String(n).padStart(2, '0');
-  
-  const year = d.getFullYear();
-  const month = pad(d.getMonth() + 1);
-  const day = pad(d.getDate());
-  
-  let hours = d.getHours();
-  const minutes = pad(d.getMinutes());
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  
-  return `${year}/${month}/${day} ${pad(hours)}:${minutes} ${ampm}`;
+  return d.toLocaleString('ar-TN', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
 }
 
 function autoSaveData(latestText) {
   if (!latestText.trim() && isNewAttemptPending) return;
 
   const key = getStorageKey(contextId, exerciseId, currentAttempt);
-  const formattedDate = getFormattedEnglishDate();
+  const formattedDate = getFormattedArabicDate();
 
   const payload = {
     contextId: contextId,
@@ -308,4 +303,5 @@ function deleteAndReorderAttempt(attemptToDelete) {
 
   loadSavedAnswer();
   renderHistoryList();
-}
+    }
+      
