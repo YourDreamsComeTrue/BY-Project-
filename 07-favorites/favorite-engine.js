@@ -147,17 +147,18 @@ function renderActiveListItems() {
     window.removeItemFromList = removeItemFromList;
 }
 
-// 9. تكوين مسار الانتقال المباشر والمستقل بناءً على نوع العنصر
+// 9. تكوين مسار الانتقال بناءً على نوع العنصر (مصحح لتوجيه العناوين والتمارين لصفحاتهم المستقلة)
 function getItemUrl(item) {
     if (item.type === 'lesson') {
-        // فتح الدرس بالكامل
         return `../03-lesson/lesson.html?id=${item.lessonId}`;
     } else if (item.type === 'title') {
-        // فتح العنوان بشكل مستقل تماماً برابطه الخاص
-        return `../04-title/title.html?id=${item.targetId}&lessonId=${item.lessonId}`;
+        // ✔️ يفتح صفحة 04-title المستقلة برابطها الخاص
+        const lessonContext = item.lessonId ? `&lessonId=${item.lessonId}` : '';
+        return `../04-title/title.html?id=${item.targetId}${lessonContext}`;
     } else if (item.type === 'exercise') {
-        // فتح التمرين بشكل مستقل تماماً برابطه الخاص
-        return `../05-exercise/exercise.html?id=${item.targetId}&context=${item.lessonId}`;
+        // ✔️ يفتح صفحة 05-exercise المستقلة برابطها الخاص
+        const context = item.lessonId ? `&context=${item.lessonId}` : '';
+        return `../05-exercise/exercise.html?id=${item.targetId}${context}`;
     }
     return '#';
 }
@@ -171,4 +172,4 @@ function removeItemFromList(itemId) {
     saveListsToStorage();
     renderListsTabs();
     renderActiveListItems();
-            }
+}
