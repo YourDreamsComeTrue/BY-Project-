@@ -100,5 +100,4 @@ function renderLessons() {
             </article>
         `;
     }).join("");
-          }
-
+}
