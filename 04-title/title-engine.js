@@ -12,6 +12,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadExerciseIframe();
 });
 
+// دالة إرسال طلب إضافة للمفضلة إلى الصفحة الأم (lesson.html)
+function sendToFavorite(itemType, targetId, title, subtitle = '') {
+    window.parent.postMessage({
+        type: "ADD_TO_FAVORITE",
+        itemType: itemType,   // 'title' أو 'exercise'
+        targetId: targetId,   // معرف العنوان t02 أو التمرين
+        title: title,
+        subtitle: subtitle
+    }, "*");
+}
+
+window.sendToFavorite = sendToFavorite;
+
 // حساب الارتفاع الحقيقي للحاوية المغلقة
 function sendTitleHeightToParent() {
     requestAnimationFrame(() => {
@@ -35,7 +48,11 @@ async function loadTitleData() {
 
         const headingElement = document.getElementById("title-heading");
         if (headingElement && currentTitleData.heading) {
-            headingElement.textContent = currentTitleData.heading;
+            headingElement.innerHTML = `
+                <span>${currentTitleData.heading}</span>
+                <button class="btn-fav-star" title="إضافة هذا العنوان للمفضلة" 
+                        onclick="window.sendToFavorite('title', '${titleId}', '${currentTitleData.heading}')">⭐</button>
+            `;
         }
     } catch (error) {
         console.error("تعذر تحميل بيانات العنوان:", error);
@@ -46,11 +63,10 @@ async function loadTitleData() {
 function stopAndDestroyVideo() {
     const tabBody = document.getElementById("tab-body");
     if (tabBody) {
-        // إزالة أي إطارات iframe لمنع استمرار تشغيل الصوت في الخلفية
         const iframes = tabBody.querySelectorAll("iframe");
         iframes.forEach(iframe => {
-            iframe.src = "about:blank"; // تدمير رابط الفيديو
-            iframe.remove(); // حذف العنصر من الـ DOM
+            iframe.src = "about:blank";
+            iframe.remove();
         });
         tabBody.innerHTML = "";
     }
@@ -68,7 +84,6 @@ function setupTabNavigation() {
                 return;
             }
 
-            // إيقاف أي فيديو يعمل قبل فتح التبويب الجديد
             stopAndDestroyVideo();
             renderTabContent(tab);
         });
@@ -83,10 +98,8 @@ function setupCloseButton() {
         closeBtn.addEventListener("click", () => {
             contentArea.style.display = "none";
             
-            // 1. تدمير الفيديو وإفراغ الحاوية محلياً
             stopAndDestroyVideo();
             
-            // 2. إرسال أمر لصفحة الدرس لإعادة شحن الـ iframe وقطع الصوت تماماً في المتصفحات التي تُبقي الصوت بالخلفية
             window.parent.postMessage({
                 type: "STOP_VIDEO_STREAM",
                 titleId: titleId
@@ -144,10 +157,7 @@ function loadExerciseIframe() {
         targetExerciseId = typeof firstEx === "string" ? firstEx : (firstEx.id || targetExerciseId);
     }
 
-    // 2. تجميع السياق: إذا كان هناك lessonId نربطه مع titleId، وإلا نكتفي بـ titleId
     const contextParam = lessonId ? `${lessonId}_${titleId}` : titleId;
-
-    // 3. تمرير المعامل context في رابط التمرين
     const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
 
     container.innerHTML = `
@@ -161,12 +171,19 @@ function loadExerciseIframe() {
     `;
 
     window.addEventListener("message", (event) => {
-        if (event.data && event.data.type === "RESIZE_EXERCISE") {
+        if (!event.data) return;
+
+        if (event.data.type === "RESIZE_EXERCISE") {
             const iframe = document.getElementById("exercise-iframe");
             if (iframe) {
                 iframe.style.height = event.data.height + "px";
                 sendTitleHeightToParent();
             }
+        }
+
+        // الاستماع لطلب إضافة التمرين الممارَس داخل exercise.html وتمريره إلى الصفحات الأعلى
+        if (event.data.type === "ADD_TO_FAVORITE") {
+            window.parent.postMessage(event.data, "*");
         }
     });
 }
