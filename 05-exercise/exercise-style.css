@@ -28,27 +28,6 @@ body {
   line-height: 1.5;
 }
 
-.color-picker-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-  justify-content: flex-start;
-}
-
-.color-btn {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid #cbd5e1;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.color-btn:hover { transform: scale(1.1); }
-.color-btn.green { background-color: #d1fae5; }
-.color-btn.red { background-color: #ffe4e6; }
-.color-btn.reset { background-color: #f3f4f6; }
-
 textarea {
   width: 100%;
   min-height: 110px;
@@ -69,15 +48,46 @@ textarea {
 textarea.bg-green { background-color: #f0fdf4 !important; border-color: #86efac; }
 textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
 
-/* شريط التحكم السفلي المصغر */
+/* شريط التحكم السفلي المصغر (محاذاة بين الألوان والأزرار) */
 #attempt-controls {
   margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* حاوية الألوان في الطرف */
+.color-picker-toolbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* تصغير دوائر الألوان لتصبح 22px لتطابق بقية الأزرار */
+.color-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0;
+}
+
+.color-btn:hover { transform: scale(1.1); }
+.color-btn.green { background-color: #d1fae5; }
+.color-btn.red { background-color: #ffe4e6; }
+.color-btn.reset { background-color: #f3f4f6; }
+
+/* مجموعة أزرار الإجراءات (+ / ☰ / ⭐) */
+.action-buttons-group {
   display: flex;
   gap: 5px;
   align-items: center;
 }
 
-/* توحيد حجم الأزرار الثلاثة (+) (☰) (⭐) بـ 22px */
+/* توحيد حجم الأزرار الثلاثة (+ / ☰ / ⭐) بـ 22px */
 .btn-attempt-control {
   width: 22px;
   height: 22px;
