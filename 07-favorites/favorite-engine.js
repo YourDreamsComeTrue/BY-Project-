@@ -94,7 +94,6 @@ function renderListsTabs() {
         </button>
     `).join("");
 
-    // إتاحة الدالة للنافذة العامة لتعمل مع onclick
     window.selectList = setActiveList;
 }
 
@@ -148,14 +147,17 @@ function renderActiveListItems() {
     window.removeItemFromList = removeItemFromList;
 }
 
-// 9. تكوين مسار الانتقال بناءً على نوع العنصر
+// 9. تكوين مسار الانتقال المباشر والمستقل بناءً على نوع العنصر
 function getItemUrl(item) {
     if (item.type === 'lesson') {
+        // فتح الدرس بالكامل
         return `../03-lesson/lesson.html?id=${item.lessonId}`;
     } else if (item.type === 'title') {
-        return `../03-lesson/lesson.html?id=${item.lessonId}#title-${item.targetId}`;
+        // فتح العنوان بشكل مستقل تماماً برابطه الخاص
+        return `../04-title/title.html?id=${item.targetId}&lessonId=${item.lessonId}`;
     } else if (item.type === 'exercise') {
-        return `../03-lesson/lesson.html?id=${item.lessonId}#exercise-${item.targetId}`;
+        // فتح التمرين بشكل مستقل تماماً برابطه الخاص
+        return `../05-exercise/exercise.html?id=${item.targetId}&context=${item.lessonId}`;
     }
     return '#';
 }
@@ -169,5 +171,4 @@ function removeItemFromList(itemId) {
     saveListsToStorage();
     renderListsTabs();
     renderActiveListItems();
-}
-
+            }
