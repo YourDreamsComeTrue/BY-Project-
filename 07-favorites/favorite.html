@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قوائمي المفضلة</title>
+    <link rel="stylesheet" href="favorite-style.css">
+</head>
+<body>
+
+    <main class="favorites-container">
+        <!-- شريط علوي يحتوي على زر العودة للفهرس -->
+        <div class="top-nav">
+            <a href="../02-index/index.html" class="btn-back">☰ الفهرس الرئيسي</a>
+        </div>
+
+        <header class="page-header">
+            <h1>قوائمي المفضلة ⭐️</h1>
+            <p>أنشئ قوائم تشغيل خاصة بك ونظّم الدروس والعناوين والتمارين كما تحب</p>
+        </header>
+
+        <!-- نموذج إنشاء قائمة جديدة -->
+        <section class="create-list-section">
+            <input type="text" id="new-list-input" placeholder="اكتب اسم القائمة الجديدة..." maxlength="40">
+            <button id="create-list-btn" class="btn-primary">إنشاء قائمة</button>
+        </section>
+
+        <!-- شريط تبويب القوائم المتاحة -->
+        <section class="lists-tabs-wrapper">
+            <div id="lists-tabs" class="lists-tabs">
+                <!-- سيتم توليد أزرار القوائم هنا تلقائياً -->
+            </div>
+        </section>
+
+        <!-- منطقة عرض محتويات القائمة المحددة -->
+        <section class="list-content-section">
+            <div class="list-header-info">
+                <h2 id="active-list-title">اختر قائمة لعرض محتواها</h2>
+                <button id="delete-list-btn" class="btn-delete-list hidden">حذف هذه القائمة 🗑️</button>
+            </div>
+
+            <div id="favorites-items-grid" class="items-grid">
+                <!-- سيتم عرض العناصر المضافة هنا -->
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="favorite-engine.js"></script>
+</body>
+</html>
 
