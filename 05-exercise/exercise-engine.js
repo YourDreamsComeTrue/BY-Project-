@@ -3,7 +3,6 @@ let currentExerciseData = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
-
 const contextId = urlParams.get('context') || urlParams.get('titleId') || urlParams.get('lessonId') || 'standalone';
 
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
@@ -43,6 +42,7 @@ function sendHeightToParent() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   setupModalEvents();
+  setupFavoriteStar();
   
   document.getElementById("btnGreen")?.addEventListener("click", () => setBgColor("green"));
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
 
     if (currentExerciseData && currentExerciseData.question) {
-      document.getElementById("questionText").textContent = currentExerciseData.question;
+      const qText = document.getElementById("questionText");
+      if (qText) qText.textContent = currentExerciseData.question;
     }
   } catch (error) {
     console.error("خطأ في تحميل التمرين:", error);
@@ -63,7 +64,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const textarea = document.getElementById("userAnswer");
   
-  // 1. تسريع الحفظ عند الكتابة (0.3 ثانية فقط بدلاً من ثانية كاملة)
   textarea?.addEventListener("input", function () {
     if (isNewAttemptPending) {
       const maxAttempt = getLastAttempt(contextId, exerciseId);
@@ -78,7 +78,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 300);
   });
 
-  // 2. حفظ فوري بمجرد مغادرة حقل الكتابة أو الضغط خارجها
   textarea?.addEventListener("blur", function () {
     clearTimeout(saveTimer);
     autoSaveData(this.value);
@@ -86,6 +85,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   setTimeout(sendHeightToParent, 200);
 });
+
+// إعداد زر المفضلة ⭐ للتمرين
+function setupFavoriteStar() {
+  const favBtn = document.getElementById("btn-fav-exercise");
+  if (!favBtn) return;
+
+  favBtn.addEventListener("click", () => {
+    const exTitle = currentExerciseData?.title || currentExerciseData?.question || `تمرين ${exerciseId}`;
+    
+    window.parent.postMessage({
+      type: "ADD_TO_FAVORITE",
+      itemType: "exercise",
+      targetId: exerciseId,
+      lessonId: contextId,
+      title: exTitle,
+      subtitle: "تمرين تفاعلي"
+    }, "*");
+  });
+}
 
 function setBgColor(color) {
   const textarea = document.getElementById("userAnswer");
@@ -159,7 +177,6 @@ function setupModalEvents() {
 
   btnOpen?.addEventListener("click", (e) => {
     e.preventDefault();
-    // تأكيد حفظ أي نص مكتوب حالياً قبل فتح السجل
     const textarea = document.getElementById("userAnswer");
     if (textarea) autoSaveData(textarea.value);
 
@@ -291,4 +308,4 @@ function deleteAndReorderAttempt(attemptToDelete) {
 
   loadSavedAnswer();
   renderHistoryList();
-    }
+}
