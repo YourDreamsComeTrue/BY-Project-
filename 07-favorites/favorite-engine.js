@@ -94,6 +94,7 @@ function renderListsTabs() {
         </button>
     `).join("");
 
+    // إتاحة الدالة للنافذة العامة لتعمل مع onclick
     window.selectList = setActiveList;
 }
 
@@ -147,16 +148,14 @@ function renderActiveListItems() {
     window.removeItemFromList = removeItemFromList;
 }
 
-// 9. تكوين مسار الانتقال بناءً على نوع العنصر (مصحح لتوجيه العناوين والتمارين لصفحاتهم المستقلة)
+// 9. تكوين مسار الانتقال المباشر للأنواع الثلاثة
 function getItemUrl(item) {
     if (item.type === 'lesson') {
         return `../03-lesson/lesson.html?id=${item.lessonId}`;
     } else if (item.type === 'title') {
-        // ✔️ يفتح صفحة 04-title المستقلة برابطها الخاص
         const lessonContext = item.lessonId ? `&lessonId=${item.lessonId}` : '';
         return `../04-title/title.html?id=${item.targetId}${lessonContext}`;
     } else if (item.type === 'exercise') {
-        // ✔️ يفتح صفحة 05-exercise المستقلة برابطها الخاص
         const context = item.lessonId ? `&context=${item.lessonId}` : '';
         return `../05-exercise/exercise.html?id=${item.targetId}${context}`;
     }
@@ -172,4 +171,5 @@ function removeItemFromList(itemId) {
     saveListsToStorage();
     renderListsTabs();
     renderActiveListItems();
-}
+        }
+                        
