@@ -1,1 +1,182 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    direction: rtl;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+.index-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.index-header {
+    margin-bottom: 24px;
+    text-align: right;
+}
+
+.index-header h1 {
+    font-size: 1.6rem;
+    margin: 0 0 8px 0;
+    color: #1e293b;
+}
+
+.index-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* شريط الفلاتر */
+.filter-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-group label {
+    font-weight: bold;
+    font-size: 0.88rem;
+    color: #334155;
+    min-width: 90px;
+}
+
+.filter-select {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.85rem;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.chips-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #cbd5e1;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chip:hover {
+    background: #e2e8f0;
+}
+
+.chip.active {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+/* شبكة البطاقات */
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.lesson-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lesson-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-color: #cbd5e1;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.badge.type-video { background: #dbeafe; color: #1e40af; }
+.badge.type-short { background: #fce7f3; color: #9d174d; }
+.badge.type-lecture { background: #fef3c7; color: #92400e; }
+
+.order-num {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.card-title {
+    font-size: 1rem;
+    margin: 0 0 8px 0;
+    color: #0f172a;
+    line-height: 1.4;
+}
+
+.card-desc {
+    font-size: 0.83rem;
+    color: #64748b;
+    margin: 0 0 14px 0;
+    line-height: 1.5;
+}
+
+.tags-wrapper {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-size: 0.7rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+}
 
