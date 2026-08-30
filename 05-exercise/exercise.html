@@ -8,7 +8,11 @@
 <body>
 
   <div class="exercise-card">
-    <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
+    <!-- هيدر التمرين: يحتوي على العنوان وزر النجمة للمفضلة -->
+    <div class="exercise-header">
+      <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
+      <button type="button" id="btn-fav-exercise" class="btn-fav-star" title="إضافة للمفضلة">⭐</button>
+    </div>
 
     <div class="color-picker-toolbar">
       <button class="color-btn green" id="btnGreen" title="أخضر فاتح"></button>
@@ -44,5 +48,4 @@
 
   <script type="module" src="exercise-engine.js"></script>
 </body>
-      </html>
-  
+</html>
