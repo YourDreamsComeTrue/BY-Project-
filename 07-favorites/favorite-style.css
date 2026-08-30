@@ -1,1 +1,219 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    direction: rtl;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+.favorites-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.top-nav {
+    margin-bottom: 16px;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: #334155;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.page-header h1 {
+    font-size: 1.6rem;
+    margin: 0 0 6px 0;
+}
+
+.page-header p {
+    color: #64748b;
+    margin: 0 0 20px 0;
+    font-size: 0.9rem;
+}
+
+/* قسم إنشاء قائمة */
+.create-list-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.create-list-section input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+/* شريط تبنيبات القوائم */
+.lists-tabs-wrapper {
+    margin-bottom: 24px;
+}
+
+.lists-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.list-tab {
+    padding: 8px 14px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.list-tab.active {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.list-tab .count {
+    opacity: 0.8;
+    font-size: 0.75rem;
+}
+
+/* محتوى القائمة النشطة */
+.list-content-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.list-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.list-header-info h2 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.btn-delete-list {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* شبكة الكروت */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.item-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.badge-lesson { background: #dbeafe; color: #1e40af; }
+.badge-title { background: #dcfce7; color: #166534; }
+.badge-exercise { background: #fef3c7; color: #92400e; }
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-remove:hover {
+    color: #ef4444;
+}
+
+.item-title {
+    font-size: 0.95rem;
+    margin: 0 0 6px 0;
+}
+
+.item-subtitle {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0 0 12px 0;
+}
+
+.btn-open-item {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 0.9rem;
+  }
 
