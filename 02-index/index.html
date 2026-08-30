@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فهرس الدروس</title>
+    <link rel="stylesheet" href="index-style.css">
+</head>
+<body>
+
+    <main class="index-container">
+        <header class="index-header">
+            <h1>فهرس الدروس</h1>
+            <p>اختر التصنيفات المناسبة لتصفية الدروس</p>
+        </header>
+
+        <!-- منطقة الفلاتر المركبة -->
+        <section class="filter-section">
+            <!-- فلتر الترتيب -->
+            <div class="filter-group">
+                <label>الترتيب:</label>
+                <select id="sort-select" class="filter-select">
+                    <option value="asc">من الأقدم للأحدث</option>
+                    <option value="desc">من الأحدث للأقدم</option>
+                </select>
+            </div>
+
+            <!-- فلتر النوع -->
+            <div class="filter-group">
+                <label>نوع المحتوى:</label>
+                <div id="type-filters" class="chips-group">
+                    <button class="chip active" data-type="all">الكل</button>
+                    <button class="chip" data-type="video">فيديو</button>
+                    <button class="chip" data-type="short">شورت</button>
+                    <button class="chip" data-type="lecture">محاضرة</button>
+                </div>
+            </div>
+
+            <!-- فلتر الموضوعات (يتولد ديناميكياً) -->
+            <div class="filter-group">
+                <label>الموضوع:</label>
+                <div id="topic-filters" class="chips-group">
+                    <!-- سيتم توليد الأزرار تلقائياً عبر السكريبت -->
+                </div>
+            </div>
+        </section>
+
+        <!-- شبكة عرض البطاقات -->
+        <section id="lessons-grid" class="lessons-grid">
+            <!-- سيتم صب بطاقات الدروس هنا -->
+        </section>
+    </main>
+
+    <script type="module" src="index-engine.js"></script>
+</body>
+</html>
 
