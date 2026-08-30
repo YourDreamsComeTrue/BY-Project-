@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadSavedAnswer();
 
   const textarea = document.getElementById("userAnswer");
+  
+  // 1. تسريع الحفظ عند الكتابة (0.3 ثانية فقط بدلاً من ثانية كاملة)
   textarea?.addEventListener("input", function () {
     if (isNewAttemptPending) {
       const maxAttempt = getLastAttempt(contextId, exerciseId);
@@ -73,7 +75,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       autoSaveData(this.value);
-    }, 1000);
+    }, 300);
+  });
+
+  // 2. حفظ فوري بمجرد مغادرة حقل الكتابة أو الضغط خارجها
+  textarea?.addEventListener("blur", function () {
+    clearTimeout(saveTimer);
+    autoSaveData(this.value);
   });
 
   setTimeout(sendHeightToParent, 200);
@@ -88,7 +96,6 @@ function setBgColor(color) {
   if (color === "red") textarea.classList.add("bg-red");
 }
 
-// دالة صريحة لتشديد إخراج الأرقام العربية (123)
 function getFormattedEnglishDate() {
   const d = new Date();
   const pad = (n) => String(n).padStart(2, '0');
@@ -102,7 +109,7 @@ function getFormattedEnglishDate() {
   const ampm = hours >= 12 ? 'PM' : 'AM';
   
   hours = hours % 12;
-  hours = hours ? hours : 12; // الساعة 0 تصبح 12
+  hours = hours ? hours : 12;
   
   return `${year}/${month}/${day} ${pad(hours)}:${minutes} ${ampm}`;
 }
@@ -152,6 +159,10 @@ function setupModalEvents() {
 
   btnOpen?.addEventListener("click", (e) => {
     e.preventDefault();
+    // تأكيد حفظ أي نص مكتوب حالياً قبل فتح السجل
+    const textarea = document.getElementById("userAnswer");
+    if (textarea) autoSaveData(textarea.value);
+
     renderHistoryList();
     if (modal) {
       modal.style.display = "flex";
@@ -215,7 +226,6 @@ function renderHistoryList() {
       </div>
     `;
 
-    // رسالة التأكيد عند الحذف
     card.querySelector(".btn-delete-attempt").onclick = (e) => {
       e.stopPropagation();
       const isConfirmed = confirm("هل أنت متأكد أنك تريد حذف هذه المحاولة؟");
@@ -281,5 +291,4 @@ function deleteAndReorderAttempt(attemptToDelete) {
 
   loadSavedAnswer();
   renderHistoryList();
-        }
-    
+    }
