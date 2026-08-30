@@ -4,10 +4,8 @@ let currentExerciseData = null;
 const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 
-// 1. تحديد السياق بدقة
 const contextId = urlParams.get('context') || urlParams.get('titleId') || urlParams.get('lessonId') || 'standalone';
 
-// 2. جلب آخر محاولة فعلية
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
 let isNewAttemptPending = false; 
 
@@ -90,20 +88,30 @@ function setBgColor(color) {
   if (color === "red") textarea.classList.add("bg-red");
 }
 
+// دالة صريحة لتشديد إخراج الأرقام العربية (123)
+function getFormattedEnglishDate() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  
+  const year = d.getFullYear();
+  const month = pad(d.getMonth() + 1);
+  const day = pad(d.getDate());
+  
+  let hours = d.getHours();
+  const minutes = pad(d.getMinutes());
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  hours = hours % 12;
+  hours = hours ? hours : 12; // الساعة 0 تصبح 12
+  
+  return `${year}/${month}/${day} ${pad(hours)}:${minutes} ${ampm}`;
+}
+
 function autoSaveData(latestText) {
   if (!latestText.trim() && isNewAttemptPending) return;
 
   const key = getStorageKey(contextId, exerciseId, currentAttempt);
-  
-  // التاريخ بالأرقام الإنجليزية en-US
-  const formattedDate = new Date().toLocaleString('en-US', { 
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit', 
-    hour: '2-digit', 
-    minute: '2-digit',
-    hour12: true 
-  });
+  const formattedDate = getFormattedEnglishDate();
 
   const payload = {
     contextId: contextId,
@@ -139,7 +147,6 @@ function setupModalEvents() {
   const btnClose = document.getElementById("btnCloseModal");
   const btnNew = document.getElementById("btnNewAttempt");
 
-  // تحسين الأزرار لتعرض الأيقونات فقط
   if (btnNew) btnNew.innerHTML = "+";
   if (btnOpen) btnOpen.innerHTML = "☰";
 
@@ -194,11 +201,11 @@ function renderHistoryList() {
     card.className = `history-item-card ${i === currentAttempt ? 'active' : ''}`;
 
     card.innerHTML = `
-      <div class="history-item-header" style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="history-item-header">
         <span class="history-title">المحاولة (${item.attempt}) ${i === currentAttempt ? '<b>(الحالية)</b>' : ''}</span>
-        <div>
-          <span class="history-date" style="margin-left: 10px;">${item.updatedAt || ''}</span>
-          <button type="button" class="btn-delete-attempt" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold; font-size:16px;" title="حذف هذه المحاولة">✖</button>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="history-date">${item.updatedAt || ''}</span>
+          <button type="button" class="btn-delete-attempt" title="حذف المحاولة">✖</button>
         </div>
       </div>
       <div class="history-item-body">${item.content}</div>
@@ -208,10 +215,13 @@ function renderHistoryList() {
       </div>
     `;
 
-    // زر محو المحاولة مع إعادة الترقيم
+    // رسالة التأكيد عند الحذف
     card.querySelector(".btn-delete-attempt").onclick = (e) => {
       e.stopPropagation();
-      deleteAndReorderAttempt(i);
+      const isConfirmed = confirm("هل أنت متأكد أنك تريد حذف هذه المحاولة؟");
+      if (isConfirmed) {
+        deleteAndReorderAttempt(i);
+      }
     };
 
     card.querySelector(".btn-copy-act").onclick = () => {
@@ -241,12 +251,10 @@ function renderHistoryList() {
   }
 }
 
-// دالة حذف محاولة مع إعادة ترتيب المحاولات المتبقية تلقائياً
 function deleteAndReorderAttempt(attemptToDelete) {
   const total = getLastAttempt(contextId, exerciseId);
   let validItems = [];
 
-  // 1. تجميع كافة المحاولات السليمة واستثناء المحاولة المراد حذفها
   for (let i = 1; i <= total; i++) {
     const key = getStorageKey(contextId, exerciseId, i);
     const raw = localStorage.getItem(key);
@@ -254,11 +262,9 @@ function deleteAndReorderAttempt(attemptToDelete) {
     if (i !== attemptToDelete && raw) {
       validItems.push(JSON.parse(raw));
     }
-    // مسح المفتاح القديم من الذاكرة
     localStorage.removeItem(key);
   }
 
-  // 2. إعادة كتابة المحاولات المتبقية بترقيم متسلسل جديد (1, 2, 3...)
   validItems.forEach((item, index) => {
     const newAttemptNum = index + 1;
     item.attempt = newAttemptNum;
@@ -266,16 +272,14 @@ function deleteAndReorderAttempt(attemptToDelete) {
     localStorage.setItem(newKey, JSON.stringify(item));
   });
 
-  // 3. تحديث مؤشر أحدث محاولة
   const newTotal = validItems.length;
   setLastAttempt(contextId, exerciseId, newTotal > 0 ? newTotal : 1);
 
-  // 4. تعيين المحاولة الحالية بشكل آمن
   if (currentAttempt >= attemptToDelete) {
     currentAttempt = Math.max(1, currentAttempt - 1);
   }
 
   loadSavedAnswer();
   renderHistoryList();
-    }
+        }
     
