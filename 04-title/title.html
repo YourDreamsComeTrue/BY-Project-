@@ -61,22 +61,44 @@
       }
 
       /* إصلاح تداخل التمارين: ترتيب رأسي + مسافات أمان وإلغاء قيود الارتفاع */
-      #exercises-container, .exercises-list {
+      .exercises-list {
           width: 100% !important;
           display: flex !important;
           flex-direction: column !important;
-          gap: 20px !important; /* مسافة أمان ثابتة تمنع التداخل بين البطاقات */
+          gap: 20px !important;
           height: auto !important;
           min-height: min-content !important;
           overflow: visible !important;
       }
 
       /* اجبار كل iframe على التمدد بشكل مستقل */
-      #exercises-container iframe {
+      .exercises-list iframe {
           width: 100% !important;
           display: block !important;
           flex-shrink: 0 !important;
           border: none !important;
+      }
+
+      /* تنسيق زر التمارين الإضافية */
+      .toggle-extra-btn {
+          background-color: #f0f4f8;
+          color: #2c3e50;
+          border: 1px dashed #cbd5e1;
+          padding: 12px 24px;
+          border-radius: 25px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      }
+      .toggle-extra-btn:hover {
+          background-color: #e2e8f0;
+          border-color: #94a3b8;
+          transform: translateY(-1px);
       }
     </style>
 </head>
@@ -112,13 +134,24 @@
 
         <hr class="section-divider">
 
-        <!-- 3. مساحة استدعاء التمارين -->
+        <!-- 3. مساحة استدعاء التمارين (المقسمة) -->
         <section class="exercises-wrapper">
-            <div id="exercises-container" class="exercises-list"></div>
+            <!-- حاوية التمارين الرئيسية (ظاهرة دائماً) -->
+            <div id="main-exercises-container" class="exercises-list"></div>
+
+            <!-- زر التخصيص لإظهار وإخفاء التمارين الإضافية -->
+            <div id="extra-toggle-wrapper" style="text-align: center; margin: 25px 0; display: none;">
+                <button id="toggle-extra-btn" class="toggle-extra-btn" onclick="window.toggleExtraExercises()">
+                    ➕ عرض التمارين الإضافية
+                </button>
+            </div>
+
+            <!-- حاوية التمارين الإضافية (مخفية افتراضياً) -->
+            <div id="extra-exercises-container" class="exercises-list" style="display: none;"></div>
         </section>
     </main>
 
     <script type="module" src="title-engine.js"></script>
 </body>
-                </html>
-                
+    </html>
+    
