@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function loadLessonData() {
     try {
-        const dataModule = await import(`./data/lesson-${lessonId}.js`);
+        // ✅ إضافة ?v= لضمان عدم تخزين الملف سابباً في المتصفح
+        const dataModule = await import(`./data/lesson-${lessonId}.js?v=${Date.now()}`);
         const data = dataModule.default || dataModule.lessonData;
         
         currentLessonData = data.lessonData ? data.lessonData : data;
@@ -34,9 +35,15 @@ function renderTitles() {
 
     container.innerHTML = "";
 
-    // قراءة كل العناوين بلا استثناء (سواء كانت 1، 2، 3 أو أكثر)
+    // قراءة كل العناوين وتشكيل الـ ID الكامل
     currentLessonData.titles.forEach((tItem, index) => {
-        const tId = typeof tItem === "string" ? tItem : (tItem.id || `t0${index + 1}`);
+        let tId = typeof tItem === "string" ? tItem : (tItem.id || `t0${index + 1}`);
+        
+        // ✅ التأكد من أن معرف العنوان يحتوي على معرف الدرس (مثلاً: l000001-t02)
+        if (!tId.startsWith(lessonId)) {
+            tId = `${lessonId}-${tId}`;
+        }
+
         const titleUrl = `../04-title/title.html?id=${tId}&lessonId=${lessonId}`;
         
         const iframe = document.createElement("iframe");
@@ -134,3 +141,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
+        
