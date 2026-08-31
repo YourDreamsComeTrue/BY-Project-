@@ -40,20 +40,21 @@ function sendTitleHeightToParent() {
     });
 }
 
-// دالة فتح وإغلاق حاوية التمارين الإضافية
+// ✅ دالة فتح وإغلاق حاوية التمارين الإضافية
 function toggleExtraExercises() {
     const extraContainer = document.getElementById("extra-exercises-container");
     const toggleBtn = document.getElementById("toggle-extra-btn");
 
     if (!extraContainer || !toggleBtn) return;
 
-    const isHidden = extraContainer.style.display === "none" || extraContainer.style.display === "";
+    // فحص ما إذا كانت الحاوية مخفية حالياً
+    const isHidden = window.getComputedStyle(extraContainer).display === "none";
 
     if (isHidden) {
-        extraContainer.style.display = "flex"; // أصبحت flex لتطابق تنسيقات CSS الخاصة بـ .exercises-list
+        extraContainer.style.setProperty("display", "flex", "important");
         toggleBtn.innerHTML = "➖ إخفاء التمارين الإضافية";
     } else {
-        extraContainer.style.display = "none";
+        extraContainer.style.setProperty("display", "none", "important");
         toggleBtn.innerHTML = "➕ عرض التمارين الإضافية";
     }
     
@@ -192,6 +193,7 @@ function createExerciseIframe(targetExerciseId, contextParam) {
     return iframe;
 }
 
+// ✅ دالة تحميل التمارين وتجهيز الحاويات
 function loadExerciseIframe() {
     const mainContainer = document.getElementById("main-exercises-container");
     const extraContainer = document.getElementById("extra-exercises-container");
@@ -200,7 +202,12 @@ function loadExerciseIframe() {
     if (!mainContainer || !currentTitleData) return;
 
     mainContainer.innerHTML = "";
-    if (extraContainer) extraContainer.innerHTML = "";
+    
+    if (extraContainer) {
+        extraContainer.innerHTML = "";
+        // إخفاء حاوية التمارين الإضافية فوراً عند التحميل
+        extraContainer.style.setProperty("display", "none", "important");
+    }
 
     // استخراج القوائم سواء بالتصنيف الجديد (Object) أو بالقديم (Array)
     let mainList = [];
@@ -226,6 +233,11 @@ function loadExerciseIframe() {
     if (extraList.length > 0 && extraContainer && toggleWrapper) {
         toggleWrapper.style.display = "block"; // إظهار زر التوسع
         
+        const toggleBtn = document.getElementById("toggle-extra-btn");
+        if (toggleBtn) {
+            toggleBtn.innerHTML = "➕ عرض التمارين الإضافية";
+        }
+
         extraList.forEach((exItem, index) => {
             const targetExerciseId = typeof exItem === "string" ? exItem : (exItem.id || `${titleId}-e0${mainList.length + index + 1}`);
             const iframe = createExerciseIframe(targetExerciseId, contextParam);
@@ -234,6 +246,8 @@ function loadExerciseIframe() {
     } else if (toggleWrapper) {
         toggleWrapper.style.display = "none"; // إخفاء زر التوسع في حال عدم وجود تمارين إضافية
     }
+
+    sendTitleHeightToParent();
 
     // الاستماع لرسائل ضبط الارتفاع والمفضلة من إطارات التمارين
     window.addEventListener("message", (event) => {
@@ -255,5 +269,5 @@ function loadExerciseIframe() {
             window.parent.postMessage(event.data, "*");
         }
     });
-        }
+                        }
             
