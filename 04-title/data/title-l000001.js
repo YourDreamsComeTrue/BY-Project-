@@ -34,7 +34,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t01-e01"
         ]
       }
@@ -70,7 +70,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t02-e01",
           "l000001-t02-e02"
         ],
@@ -114,7 +114,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t03-e01",
           "l000001-t03-e02"
         ],
@@ -158,7 +158,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t04-e01",
           "l000001-t04-e02"
         ]
@@ -194,7 +194,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t05-e01",
           "l000001-t05-e02"
         ]
@@ -230,7 +230,7 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t06-e01",
           "l000001-t06-e02"
         ],
@@ -272,11 +272,10 @@ export default {
       },
       rituelsFile: "../06-rituels/rituels-index.html",
       exercises: {
-        Main: [
+        main: [
           "l000001-t07-e01"
         ]
       }
     }
   }
 };
-      
