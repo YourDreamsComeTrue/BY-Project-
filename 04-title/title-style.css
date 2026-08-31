@@ -7,7 +7,7 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* بطاقة العنوان الرئيسية مقفلة ومحددة الأطراف */
+/* بطاقة العنوان الرئيسية - تم تعديل overflow لمنع قص التمارين */
 .title-container {
     width: 100%;
     box-sizing: border-box;
@@ -17,7 +17,7 @@ html, body {
     border-radius: 16px;
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    overflow: hidden; /* يضمن احتواء الفيديو والعناصر دون خروج الحواف */
+    overflow: visible; /* ✅ التعديل المهم: يسمح بالتمدد الرأسي بدون قص البطاقات */
 }
 
 /* الهيدر الرئيسي مع دعم محاذاة زر المفضلة */
@@ -94,7 +94,7 @@ html, body {
     padding-bottom: 56.25%; /* نسبة 16:9 */
     height: 0;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: hidden; /* ممتاز لمقطع الفيديو فقط */
     margin-top: 10px;
 }
 
@@ -131,18 +131,24 @@ html, body {
     border-top: 1px solid #f1f5f9; 
 }
 
-.exercises-wrapper, 
-.exercises-list {
+.exercises-wrapper {
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
-.exercises-list iframe,
-#exercise-iframe {
+/* ✅ إصلاح شبكة التمارين لمنع تداخل الـ iframes */
+.exercises-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* مسافة ثابتة بين كل تمرين وآخر */
+}
+
+.exercises-list iframe {
     width: 100%;
     border: none;
     border-radius: 12px;
     display: block;
+    flex-shrink: 0; /* يمنع التداخل أو الانكماش */
     }
-    
