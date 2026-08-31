@@ -1,4 +1,4 @@
-Let saveTimer = null;
+let saveTimer = null;
 let currentExerciseData = null;
 
 const urlParams = new URLSearchParams(window.location.search);
