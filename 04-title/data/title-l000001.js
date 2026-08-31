@@ -33,9 +33,11 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t01-e01"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t01-e01"
+        ]
+      }
     },
 
     // === العنوان الثاني (t02) ===
@@ -67,14 +69,20 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t02-e01",
-        "l000001-t02-e02",
-        "l000001-t02-e03",
-        "l000001-t02-e04",
-        "l000001-t02-e05",
-        "l000001-t02-e06"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t02-e01",
+          "l000001-t02-e02"
+        ],
+        extra: [
+          "l000001-t02-e03",
+          "l000001-t02-e04",
+          "l000001-t02-e05",
+          "l000001-t02-e06",
+          "l000001-t02-e07",
+          "l000001-t02-e08"
+        ]
+      }
     },
 
     // === العنوان الثالث (t03) ===
@@ -105,14 +113,20 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t03-e01",
-        "l000001-t03-e02",
-        "l000001-t03-e03",
-        "l000001-t03-e04",
-        "l000001-t03-e05",
-        "l000001-t03-e06"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t03-e01",
+          "l000001-t03-e02"
+        ],
+        extra: [
+          "l000001-t03-e03",
+          "l000001-t03-e04",
+          "l000001-t03-e05",
+          "l000001-t03-e06",
+          "l000001-t03-e07",
+          "l000001-t03-e08"
+        ]
+      }
     },
 
     // === العنوان الرابع (t04) ===
@@ -143,10 +157,12 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t04-e01",
-        "l000001-t04-e02"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t04-e01",
+          "l000001-t04-e02"
+        ]
+      }
     },
 
     // === العنوان الخامس (t05) ===
@@ -177,10 +193,12 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t05-e01",
-        "l000001-t05-e02"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t05-e01",
+          "l000001-t05-e02"
+        ]
+      }
     },
 
     // === العنوان السادس (t06) ===
@@ -211,14 +229,20 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t06-e01",
-        "l000001-t06-e02",
-        "l000001-t06-e03",
-        "l000001-t06-e04",
-        "l000001-t06-e05",
-        "l000001-t06-e06"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t06-e01",
+          "l000001-t06-e02"
+        ],
+        extra: [
+          "l000001-t06-e03",
+          "l000001-t06-e04",
+          "l000001-t06-e05",
+          "l000001-t06-e06",
+          "l000001-t06-e07",
+          "l000001-t06-e08"
+        ]
+      }
     },
 
     // === العنوان السابع (t07) ===
@@ -247,10 +271,12 @@ export default {
         `
       },
       rituelsFile: "../06-rituels/rituels-index.html",
-      exercises: [
-        "l000001-t07-e01"
-      ]
+      exercises: {
+        Main: [
+          "l000001-t07-e01"
+        ]
+      }
     }
   }
 };
-        
+      
