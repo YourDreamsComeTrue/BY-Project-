@@ -6,7 +6,7 @@
     <title>العنوان</title>
     <link rel="stylesheet" href="title-style.css">
     <style>
-      /* محاذاة العنوان الرئيسي إلى اليمين بدلاً من الوسط */
+      /* محاذاة العنوان الرئيسي إلى اليمين */
       .title-header {
           text-align: right;
       }
@@ -23,11 +23,11 @@
           background: #fff;
           border-radius: 12px;
           box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-          max-height: 80vh; /* التوسع والقدرة على التمرير للمحتوى الكبير */
+          max-height: 80vh;
           overflow-y: auto;
       }
 
-      /* زر الإغلاق الاحمر (X) في أسفل اليسار/اليمين */
+      /* زر الإغلاق الأحمر (X) */
       .close-btn {
           position: absolute;
           bottom: 10px;
@@ -52,21 +52,38 @@
           background-color: #cc0000;
       }
 
-      /* توسيع مساحة التمرين إلغاء الهوامش الضيقة */
+      /* توسيع مساحة التمرين وإلغاء الهوامش الضيقة */
       .exercises-wrapper {
           width: 100%;
           margin: 0;
           padding: 0;
+          display: block;
       }
-      .exercises-list {
-          width: 100%;
+
+      /* إصلاح تداخل التمارين: ترتيب رأسي + مسافات أمان وإلغاء قيود الارتفاع */
+      #exercises-container, .exercises-list {
+          width: 100% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 20px !important; /* مسافة أمان ثابتة تمنع التداخل بين البطاقات */
+          height: auto !important;
+          min-height: min-content !important;
+          overflow: visible !important;
+      }
+
+      /* اجبار كل iframe على التمدد بشكل مستقل */
+      #exercises-container iframe {
+          width: 100% !important;
+          display: block !important;
+          flex-shrink: 0 !important;
+          border: none !important;
       }
     </style>
 </head>
 <body>
 
     <main class="title-container">
-        <!-- 1. كتابة العنوان (محاذاة من بداية الصفحة/يمين) -->
+        <!-- 1. كتابة العنوان -->
         <header class="title-header">
             <h1 id="title-heading" class="main-title">جاري التحميل...</h1>
         </header>
@@ -87,7 +104,7 @@
             </button>
         </nav>
 
-        <!-- مساحة عرض المحتوى الديناميكية مع إمكانية التمدد والتمرير وزر الإغلاق -->
+        <!-- مساحة عرض المحتوى الديناميكية -->
         <section id="tab-content-area" class="tab-content-area">
             <div id="tab-body"></div>
             <button id="close-tab-btn" class="close-btn" title="إغلاق">✕</button>
@@ -95,7 +112,7 @@
 
         <hr class="section-divider">
 
-        <!-- 3. مساحة استدعاء التمرين مباشرة بدون عنوان فرعي -->
+        <!-- 3. مساحة استدعاء التمارين -->
         <section class="exercises-wrapper">
             <div id="exercises-container" class="exercises-list"></div>
         </section>
@@ -103,4 +120,5 @@
 
     <script type="module" src="title-engine.js"></script>
 </body>
-</html>
+                </html>
+                
