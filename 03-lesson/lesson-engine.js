@@ -34,20 +34,18 @@ function renderTitles() {
 
     container.innerHTML = "";
 
-    currentLessonData.titles.forEach((tId) => {
+    // قراءة كل العناوين بلا استثناء (سواء كانت 1، 2، 3 أو أكثر)
+    currentLessonData.titles.forEach((tItem, index) => {
+        const tId = typeof tItem === "string" ? tItem : (tItem.id || `t0${index + 1}`);
         const titleUrl = `../04-title/title.html?id=${tId}&lessonId=${lessonId}`;
         
         const iframe = document.createElement("iframe");
         iframe.id = `title-iframe-${tId}`;
+        iframe.setAttribute("data-title-id", tId);
         iframe.src = titleUrl;
         iframe.className = "title-frame";
         iframe.setAttribute("scrolling", "no");
-        iframe.style.width = "100%";
-        iframe.style.minHeight = "350px";
-        iframe.style.border = "none";
-        iframe.style.borderRadius = "12px";
-        iframe.style.marginBottom = "24px";
-        iframe.style.overflow = "hidden";
+        iframe.style.cssText = "width:100%; min-height:350px; border:none; border-radius:12px; margin-bottom:24px; display:block; overflow:hidden;";
 
         container.appendChild(iframe);
     });
@@ -59,13 +57,24 @@ function listenForMessages() {
 
         // 1. التكيف مع الارتفاع
         if (event.data.type === "RESIZE_TITLE") {
-            const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
+            const targetId = event.data.titleId;
+            let targetIframe = document.getElementById(`title-iframe-${targetId}`);
+            
+            if (!targetIframe && event.source) {
+                const iframes = document.querySelectorAll(".title-frame");
+                iframes.forEach(iframe => {
+                    if (iframe.contentWindow === event.source) {
+                        targetIframe = iframe;
+                    }
+                });
+            }
+
             if (targetIframe) {
                 targetIframe.style.height = event.data.height + "px";
             }
         }
 
-        // 2. قاطع الصوت الصارم
+        // 2. قاطع الصوت
         if (event.data.type === "STOP_VIDEO_STREAM") {
             const targetIframe = document.getElementById(`title-iframe-${event.data.titleId}`);
             if (targetIframe) {
@@ -77,7 +86,7 @@ function listenForMessages() {
             }
         }
 
-        // 3. استقبال طلب الإضافة للمفضلة من داخل الـ iframe (للعناوين والتمارين)
+        // 3. الإضافة للمفضلة
         if (event.data.type === "ADD_TO_FAVORITE") {
             addToFavorite(
                 event.data.itemType,
@@ -90,7 +99,6 @@ function listenForMessages() {
     });
 }
 
-// دالة إضافة المحتوى إلى قوائم المفضلة
 export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
     const saved = localStorage.getItem('user_custom_favorites_v1');
     const customLists = saved ? JSON.parse(saved) : [];
@@ -113,7 +121,7 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 
     const newItem = {
         id: "item_" + Date.now(),
-        type: type, // 'lesson' | 'title' | 'exercise'
+        type: type,
         lessonId: lessonId,
         targetId: targetId || '',
         title: title,
