@@ -1,9 +1,10 @@
 let currentTitleData = null;
 
 const urlParams = new URLSearchParams(window.location.search);
-const titleId = urlParams.get('id') || 'l000001-t02';
-// 1. استخراج معرف الدرس إن وجد (لتمييز السياق)
-const lessonId = urlParams.get('lessonId');
+const titleId = urlParams.get('id') || 'l000001-t02'; // مثال: l000001-t02
+
+// استخراج lessonId تلقائياً من بداية العنوان (مثال: l000001)
+const lessonId = urlParams.get('lessonId') || titleId.split('-')[0];
 
 document.addEventListener("DOMContentLoaded", async () => {
     await loadTitleData();
@@ -41,21 +42,30 @@ function sendTitleHeightToParent() {
 
 async function loadTitleData() {
     try {
-        const dataModule = await import(`./data/title-${titleId}.js`);
-        const data = dataModule.default || dataModule.titleData;
+        // ✅ تحميل الملف المجمع الخاص بالدرس مع إضافة معيار v للتغلب على الكاش
+        const dataModule = await import(`./data/title-${lessonId}.js?v=${Date.now()}`);
+        const data = dataModule.default || dataModule;
         
-        currentTitleData = data.titleData ? data.titleData : data;
+        // استخراج خريطة العناوين
+        const titlesMap = data.titles || data;
 
-        const headingElement = document.getElementById("title-heading");
-        if (headingElement && currentTitleData.heading) {
-            headingElement.innerHTML = `
-                <span>${currentTitleData.heading}</span>
-                <button class="btn-fav-star" title="إضافة هذا العنوان للمفضلة" 
-                        onclick="window.sendToFavorite('title', '${titleId}', '${currentTitleData.heading}')">⭐</button>
-            `;
+        // قراءة بيانات العنوان المحدد من داخل الملف المجمع
+        currentTitleData = titlesMap[titleId];
+
+        if (currentTitleData) {
+            const headingElement = document.getElementById("title-heading");
+            if (headingElement && currentTitleData.heading) {
+                headingElement.innerHTML = `
+                    <span>${currentTitleData.heading}</span>
+                    <button class="btn-fav-star" title="إضافة هذا العنوان للمفضلة" 
+                            onclick="window.sendToFavorite('title', '${titleId}', '${currentTitleData.heading}')">⭐</button>
+                `;
+            }
+        } else {
+            console.warn(`لم يتم العثور على العنوان ${titleId} داخل ملف title-${lessonId}.js`);
         }
     } catch (error) {
-        console.error("تعذر تحميل بيانات العنوان:", error);
+        console.error("تعذر تحميل بيانات العنوان المجمع:", error);
     }
 }
 
@@ -192,5 +202,5 @@ function loadExerciseIframe() {
             window.parent.postMessage(event.data, "*");
         }
     });
-        }
-                
+}
+    
