@@ -150,38 +150,35 @@ function loadExerciseIframe() {
     const container = document.getElementById("exercises-container");
     if (!container) return;
 
-    let targetExerciseId = "l000001-t02-e01";
+    container.innerHTML = "";
 
-    if (currentTitleData && currentTitleData.exercises && currentTitleData.exercises.length > 0) {
-        const firstEx = currentTitleData.exercises[0];
-        targetExerciseId = typeof firstEx === "string" ? firstEx : (firstEx.id || targetExerciseId);
-    }
+    const exercisesList = (currentTitleData && currentTitleData.exercises && currentTitleData.exercises.length > 0)
+        ? currentTitleData.exercises
+        : ["l000001-t02-e01"];
 
     const contextParam = lessonId ? `${lessonId}_${titleId}` : titleId;
-    const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
 
-    container.innerHTML = `
-        <iframe 
-            id="exercise-iframe"
-            src="${exerciseUrl}" 
-            class="exercise-frame"
-            scrolling="no"
-            style="width:100%; min-height:200px; border:none; border-radius:12px; overflow:hidden;">
-        </iframe>
-    `;
+    exercisesList.forEach((exItem, index) => {
+        const targetExerciseId = typeof exItem === "string" ? exItem : (exItem.id || `l000001-t02-e0${index + 1}`);
+        const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
+
+        const iframe = document.createElement("iframe");
+        iframe.id = `exercise-iframe-${index}`;
+        iframe.src = exerciseUrl;
+        iframe.className = "exercise-frame";
+        iframe.setAttribute("scrolling", "no");
+        iframe.style.cssText = "width:100%; min-height:200px; border:none; border-radius:12px; overflow:hidden; margin-bottom:15px;";
+
+        container.appendChild(iframe);
+    });
 
     window.addEventListener("message", (event) => {
         if (!event.data) return;
 
         if (event.data.type === "RESIZE_EXERCISE") {
-            const iframe = document.getElementById("exercise-iframe");
-            if (iframe) {
-                iframe.style.height = event.data.height + "px";
-                sendTitleHeightToParent();
-            }
+            sendTitleHeightToParent();
         }
 
-        // الاستماع لطلب إضافة التمرين الممارَس داخل exercise.html وتمريره إلى الصفحات الأعلى
         if (event.data.type === "ADD_TO_FAVORITE") {
             window.parent.postMessage(event.data, "*");
         }
