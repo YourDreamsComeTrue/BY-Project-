@@ -51,18 +51,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
   document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
 
-  // ✅ التعديل هنا: جلب البيانات من الملف المجمع للدرس exercises-[lessonId].js
+  // ✅ جلب البيانات وتوافقها مع البنية المباشرة لملف البيانات
   try {
-    const exerciseModule = await import(`./data/exercises-${lessonId}.js`);
-    const allLessonExercises = exerciseModule.default?.exercises || exerciseModule.exercises || {};
+    const exerciseModule = await import(`./data/exercises-${lessonId}.js?v=${Date.now()}`);
+    const data = exerciseModule.default || exerciseModule;
+    
+    // استخراج جدول التمارين سواء كان مباشراً أو داخل خاصية exercises
+    const exercisesMap = data.exercises || data;
 
-    // قراءة التمرين الخاص بالـ exerciseId المحدد فقط
-    currentExerciseData = allLessonExercises[exerciseId];
+    // قراءة التمرين المحدد
+    currentExerciseData = exercisesMap[exerciseId];
 
     if (currentExerciseData) {
       const qText = document.getElementById("questionText");
       if (qText) {
-        qText.textContent = currentExerciseData.title || currentExerciseData.question || "";
+        qText.textContent = currentExerciseData.question || currentExerciseData.title || "";
       }
     } else {
       console.warn(`لم يتم العثور على التمرين ${exerciseId} داخل ملف exercises-${lessonId}.js`);
@@ -103,7 +106,7 @@ function setupFavoriteStar() {
   if (!favBtn) return;
 
   favBtn.addEventListener("click", () => {
-    const exTitle = currentExerciseData?.title || currentExerciseData?.question || `تمرين ${exerciseId}`;
+    const exTitle = currentExerciseData?.question || currentExerciseData?.title || `تمرين ${exerciseId}`;
     
     window.parent.postMessage({
       type: "ADD_TO_FAVORITE",
@@ -313,5 +316,5 @@ function deleteAndReorderAttempt(attemptToDelete) {
 
   loadSavedAnswer();
   renderHistoryList();
-    }
-                          
+}
+  
