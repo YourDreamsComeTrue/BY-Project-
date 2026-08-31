@@ -40,6 +40,29 @@ function sendTitleHeightToParent() {
     });
 }
 
+// دالة فتح وإغلاق حاوية التمارين الإضافية
+function toggleExtraExercises() {
+    const extraContainer = document.getElementById("extra-exercises-container");
+    const toggleBtn = document.getElementById("toggle-extra-btn");
+
+    if (!extraContainer || !toggleBtn) return;
+
+    const isHidden = extraContainer.style.display === "none" || extraContainer.style.display === "";
+
+    if (isHidden) {
+        extraContainer.style.display = "flex"; // أصبحت flex لتطابق تنسيقات CSS الخاصة بـ .exercises-list
+        toggleBtn.innerHTML = "➖ إخفاء التمارين الإضافية";
+    } else {
+        extraContainer.style.display = "none";
+        toggleBtn.innerHTML = "➕ عرض التمارين الإضافية";
+    }
+    
+    // إعادة حساب ارتفاع العنوان للصفحة الأم بعد التمدد أو الانكماش
+    sendTitleHeightToParent();
+}
+
+window.toggleExtraExercises = toggleExtraExercises;
+
 async function loadTitleData() {
     try {
         // ✅ تحميل الملف المجمع الخاص بالدرس مع إضافة معيار v للتغلب على الكاش
@@ -156,38 +179,68 @@ function renderTabContent(tab) {
     setTimeout(sendTitleHeightToParent, 400);
 }
 
+// دالة مساعدة لإنشاء عناصر iframe الخاصة بالتمارين
+function createExerciseIframe(targetExerciseId, contextParam) {
+    const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
+    const iframe = document.createElement("iframe");
+    iframe.id = `exercise-iframe-${targetExerciseId}`;
+    iframe.setAttribute("data-ex-id", targetExerciseId);
+    iframe.src = exerciseUrl;
+    iframe.className = "exercise-frame";
+    iframe.setAttribute("scrolling", "no");
+    iframe.style.cssText = "width:100%; min-height:250px; border:none; border-radius:12px; overflow:hidden; margin-bottom:20px; display:block;";
+    return iframe;
+}
+
 function loadExerciseIframe() {
-    const container = document.getElementById("exercises-container");
-    if (!container) return;
+    const mainContainer = document.getElementById("main-exercises-container");
+    const extraContainer = document.getElementById("extra-exercises-container");
+    const toggleWrapper = document.getElementById("extra-toggle-wrapper");
 
-    container.innerHTML = "";
+    if (!mainContainer || !currentTitleData) return;
 
-    const exercisesList = (currentTitleData && currentTitleData.exercises && currentTitleData.exercises.length > 0)
-        ? currentTitleData.exercises
-        : ["l000001-t02-e01"];
+    mainContainer.innerHTML = "";
+    if (extraContainer) extraContainer.innerHTML = "";
+
+    // استخراج القوائم سواء بالتصنيف الجديد (Object) أو بالقديم (Array)
+    let mainList = [];
+    let extraList = [];
+
+    if (Array.isArray(currentTitleData.exercises)) {
+        mainList = currentTitleData.exercises;
+    } else if (currentTitleData.exercises) {
+        mainList = currentTitleData.exercises.main || [];
+        extraList = currentTitleData.exercises.extra || [];
+    }
 
     const contextParam = lessonId ? `${lessonId}_${titleId}` : titleId;
 
-    exercisesList.forEach((exItem, index) => {
-        const targetExerciseId = typeof exItem === "string" ? exItem : (exItem.id || `l000001-t02-e0${index + 1}`);
-        const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
-
-        const iframe = document.createElement("iframe");
-        iframe.id = `exercise-iframe-${targetExerciseId}`;
-        iframe.setAttribute("data-ex-id", targetExerciseId);
-        iframe.src = exerciseUrl;
-        iframe.className = "exercise-frame";
-        iframe.setAttribute("scrolling", "no");
-        iframe.style.cssText = "width:100%; min-height:250px; border:none; border-radius:12px; overflow:hidden; margin-bottom:20px; display:block;";
-
-        container.appendChild(iframe);
+    // 1. استدعاء التمارين الرئيسية
+    mainList.forEach((exItem, index) => {
+        const targetExerciseId = typeof exItem === "string" ? exItem : (exItem.id || `${titleId}-e0${index + 1}`);
+        const iframe = createExerciseIframe(targetExerciseId, contextParam);
+        mainContainer.appendChild(iframe);
     });
 
+    // 2. استدعاء التمارين الإضافية (إن وجدت)
+    if (extraList.length > 0 && extraContainer && toggleWrapper) {
+        toggleWrapper.style.display = "block"; // إظهار زر التوسع
+        
+        extraList.forEach((exItem, index) => {
+            const targetExerciseId = typeof exItem === "string" ? exItem : (exItem.id || `${titleId}-e0${mainList.length + index + 1}`);
+            const iframe = createExerciseIframe(targetExerciseId, contextParam);
+            extraContainer.appendChild(iframe);
+        });
+    } else if (toggleWrapper) {
+        toggleWrapper.style.display = "none"; // إخفاء زر التوسع في حال عدم وجود تمارين إضافية
+    }
+
+    // الاستماع لرسائل ضبط الارتفاع والمفضلة من إطارات التمارين
     window.addEventListener("message", (event) => {
         if (!event.data) return;
 
         if (event.data.type === "RESIZE_EXERCISE") {
-            const iframes = container.querySelectorAll("iframe");
+            const iframes = document.querySelectorAll(".exercise-frame");
             
             iframes.forEach(iframe => {
                 if (iframe.contentWindow === event.source) {
@@ -202,5 +255,5 @@ function loadExerciseIframe() {
             window.parent.postMessage(event.data, "*");
         }
     });
-}
-    
+        }
+            
