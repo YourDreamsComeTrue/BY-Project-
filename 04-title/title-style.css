@@ -7,7 +7,7 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* بطاقة العنوان الرئيسية - تم تعديل overflow لمنع قص التمارين */
+/* بطاقة العنوان الرئيسية */
 .title-container {
     width: 100%;
     box-sizing: border-box;
@@ -17,7 +17,7 @@ html, body {
     border-radius: 16px;
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    overflow: visible; /* ✅ التعديل المهم: يسمح بالتمدد الرأسي بدون قص البطاقات */
+    overflow: visible; /* يمنع قص التمارين والتمدد */
 }
 
 /* الهيدر الرئيسي مع دعم محاذاة زر المفضلة */
@@ -66,6 +66,12 @@ html, body {
     border-radius: 20px;
     background: #ffffff;
     cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
 }
 
 .icon-btn .label {
@@ -94,7 +100,7 @@ html, body {
     padding-bottom: 56.25%; /* نسبة 16:9 */
     height: 0;
     border-radius: 10px;
-    overflow: hidden; /* ممتاز لمقطع الفيديو فقط */
+    overflow: hidden;
     margin-top: 10px;
 }
 
@@ -123,6 +129,11 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: #dc2626;
 }
 
 .section-divider { 
@@ -137,7 +148,7 @@ html, body {
     padding: 0;
 }
 
-/* ✅ إصلاح شبكة التمارين لمنع تداخل الـ iframes */
+/* شبكة التمارين لمنع تداخل الـ iframes */
 .exercises-list {
     width: 100%;
     display: flex;
@@ -150,5 +161,33 @@ html, body {
     border: none;
     border-radius: 12px;
     display: block;
-    flex-shrink: 0; /* يمنع التداخل أو الانكماش */
+    flex-shrink: 0;
+}
+
+/* تنسيقات زر إظهار/إخفاء التمارين الإضافية */
+#extra-toggle-wrapper {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.toggle-extra-btn {
+    background-color: #f1f5f9;
+    color: #334155;
+    border: 1px dashed #cbd5e1;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toggle-extra-btn:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+    color: #0f172a;
     }
+    
