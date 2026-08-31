@@ -5,6 +5,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const exerciseId = urlParams.get('id') || 'l000001-t02-e01';
 const contextId = urlParams.get('context') || urlParams.get('titleId') || urlParams.get('lessonId') || 'standalone';
 
+// استخراج lessonId تلقائياً من بداية المعرف (مثال: l000001)
+const lessonId = exerciseId.split('-')[0];
+
 let currentAttempt = parseInt(urlParams.get('attempt') || getLastAttempt(contextId, exerciseId), 10);
 let isNewAttemptPending = false; 
 
@@ -48,16 +51,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("btnRed")?.addEventListener("click", () => setBgColor("red"));
   document.getElementById("btnReset")?.addEventListener("click", () => setBgColor("default"));
 
+  // ✅ التعديل هنا: جلب البيانات من الملف المجمع للدرس exercises-[lessonId].js
   try {
-    const exerciseModule = await import(`./data/exercise-${exerciseId}.js`);
-    currentExerciseData = exerciseModule.default || exerciseModule.exerciseData;
+    const exerciseModule = await import(`./data/exercises-${lessonId}.js`);
+    const allLessonExercises = exerciseModule.default?.exercises || exerciseModule.exercises || {};
 
-    if (currentExerciseData && currentExerciseData.question) {
+    // قراءة التمرين الخاص بالـ exerciseId المحدد فقط
+    currentExerciseData = allLessonExercises[exerciseId];
+
+    if (currentExerciseData) {
       const qText = document.getElementById("questionText");
-      if (qText) qText.textContent = currentExerciseData.question;
+      if (qText) {
+        qText.textContent = currentExerciseData.title || currentExerciseData.question || "";
+      }
+    } else {
+      console.warn(`لم يتم العثور على التمرين ${exerciseId} داخل ملف exercises-${lessonId}.js`);
     }
   } catch (error) {
-    console.error("خطأ في تحميل التمرين:", error);
+    console.error("خطأ في تحميل ملف تمارين الدرس:", error);
   }
 
   loadSavedAnswer();
@@ -114,7 +125,6 @@ function setBgColor(color) {
   if (color === "red") textarea.classList.add("bg-red");
 }
 
-// دالة تنسيق التاريخ باللغة العربية مع الأرقام القياسية (1234)
 function getFormattedArabicDate() {
   const d = new Date();
   return d.toLocaleString('ar-TN', {
@@ -304,4 +314,4 @@ function deleteAndReorderAttempt(attemptToDelete) {
   loadSavedAnswer();
   renderHistoryList();
     }
-      
+                          
