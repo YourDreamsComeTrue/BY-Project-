@@ -163,11 +163,12 @@ function loadExerciseIframe() {
         const exerciseUrl = `../05-exercise/exercise.html?id=${targetExerciseId}&context=${contextParam}`;
 
         const iframe = document.createElement("iframe");
-        iframe.id = `exercise-iframe-${index}`;
+        iframe.id = `exercise-iframe-${targetExerciseId}`;
+        iframe.setAttribute("data-ex-id", targetExerciseId);
         iframe.src = exerciseUrl;
         iframe.className = "exercise-frame";
         iframe.setAttribute("scrolling", "no");
-        iframe.style.cssText = "width:100%; min-height:200px; border:none; border-radius:12px; overflow:hidden; margin-bottom:15px;";
+        iframe.style.cssText = "width:100%; min-height:250px; border:none; border-radius:12px; overflow:hidden; margin-bottom:20px; display:block;";
 
         container.appendChild(iframe);
     });
@@ -176,6 +177,14 @@ function loadExerciseIframe() {
         if (!event.data) return;
 
         if (event.data.type === "RESIZE_EXERCISE") {
+            const iframes = container.querySelectorAll("iframe");
+            
+            iframes.forEach(iframe => {
+                if (iframe.contentWindow === event.source) {
+                    iframe.style.height = event.data.height + "px";
+                }
+            });
+
             sendTitleHeightToParent();
         }
 
@@ -183,4 +192,5 @@ function loadExerciseIframe() {
             window.parent.postMessage(event.data, "*");
         }
     });
-}
+        }
+                
