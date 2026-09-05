@@ -2,51 +2,45 @@
   box-sizing: border-box;
 }
 
-/* 1. خلفية التمرين شفافة تظهر صورة الـ GIF مباشرة */
+/* 1. تجريد الصفحة والجذور من أي أبعاد وخلفيات زائدة */
 html, body {
-  min-height: 100vh;
   margin: 0;
-  padding: 12px;
+  padding: 0;
+  width: 100%;
+  background: transparent !important;
+  background-color: transparent !important;
   font-family: system-ui, -apple-system, sans-serif;
   direction: rtl;
-  background-image: url('assets/exercise-background.gif') !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
-  background-color: transparent !important;
 }
 
-/* 2. بطاقة التمرين شفافة ونقية بدون ضبابية */
+/* 2. إلغاء الحاوية الخارجية وجعل بطاقة التمرين هي الإطار المباشر فقط */
 .exercise-card {
   width: 100%;
-  background-color: transparent !important;
   background: transparent !important;
-  border-radius: 12px;
-  padding: 16px;
+  background-color: transparent !important;
+  border-radius: 0;
+  padding: 0;
   box-shadow: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  border: none !important;
 }
 
-/* عنوان السؤال: فضي لامع متوهج */
+/* عنوان السؤال محاذاة نظيفة بدون مسافات علوية زائدة */
 .question-title {
   font-size: 1.1rem;
   font-weight: 700;
+  margin-top: 0;
   margin-bottom: 12px;
-  color: #f8fafc;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 12px rgba(226, 232, 240, 0.6), 0 0 2px #000000;
+  color: #1e293b;
   text-align: right;
   line-height: 1.5;
 }
 
-/* 3. مربع النص: خط ذهبي لامع مع حواف ذهبية متوهجة */
+/* مربع الكتابة الأساسي */
 textarea {
   width: 100%;
   min-height: 110px;
   padding: 12px;
-  border: 1.5px solid #f59e0b;
+  border: 1.5px solid #cbd5e1;
   border-radius: 8px;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -55,32 +49,12 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  background-color: transparent !important;
-  background: transparent !important;
-  color: #fbbf24;
-  text-shadow: 0 0 6px rgba(251, 191, 36, 0.8), 0 0 2px #000000;
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4), inset 0 0 6px rgba(245, 158, 11, 0.2);
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
-/* حالة اللون الأخضر: خلفية شفافة وحواف + خط أخضر متوهج */
-textarea.bg-green { 
-  background-color: rgba(16, 185, 129, 0.15) !important; 
-  border-color: #10b981 !important; 
-  color: #34d399 !important;
-  text-shadow: 0 0 6px rgba(52, 211, 153, 0.8), 0 0 2px #000000 !important;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6), inset 0 0 8px rgba(16, 185, 129, 0.3) !important;
-}
-
-/* حالة اللون الأحمر: خلفية شفافة وحواف + خط أحمر متوهج */
-textarea.bg-red { 
-  background-color: rgba(244, 63, 94, 0.15) !important; 
-  border-color: #f43f5e !important; 
-  color: #fb7185 !important;
-  text-shadow: 0 0 6px rgba(251, 113, 133, 0.8), 0 0 2px #000000 !important;
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.6), inset 0 0 8px rgba(244, 63, 94, 0.3) !important;
-}
+textarea.bg-green { background-color: #f0fdf4 !important; border-color: #86efac; }
+textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
 
 /* شريط التحكم السفلي */
 #attempt-controls {
@@ -89,7 +63,6 @@ textarea.bg-red {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background: transparent;
 }
 
 /* حاوية الألوان */
@@ -99,38 +72,23 @@ textarea.bg-red {
   align-items: center;
 }
 
-/* دوائر اختيار الألوان */
+/* دوائر الألوان */
 .color-btn {
   width: 22px;
   height: 22px;
   border-radius: 50%;
+  border: 1px solid #cbd5e1;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s;
   padding: 0;
 }
 
-.color-btn:hover { transform: scale(1.15); }
+.color-btn:hover { transform: scale(1.1); }
+.color-btn.green { background-color: #d1fae5; }
+.color-btn.red { background-color: #ffe4e6; }
+.color-btn.reset { background-color: #f3f4f6; }
 
-.color-btn.green { 
-  background-color: #10b981; 
-  border: 1px solid #6ee7b7;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
-}
-
-.color-btn.red { 
-  background-color: #f43f5e; 
-  border: 1px solid #fda4af;
-  box-shadow: 0 0 6px rgba(244, 63, 94, 0.8);
-}
-
-/* زر إعادة الضبط: فضي لامع متوهج */
-.color-btn.reset { 
-  background: linear-gradient(135deg, #ffffff, #cbd5e1); 
-  border: 1px solid #ffffff;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-}
-
-/* أزرار الإجراءات (+ / ☰ / ⭐): فضي متوهج */
+/* مجموعة أزرار الإجراءات (+ / ☰ / ⭐) */
 .action-buttons-group {
   display: flex;
   gap: 5px;
@@ -141,9 +99,9 @@ textarea.bg-red {
   width: 22px;
   height: 22px;
   padding: 0;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: bold;
@@ -154,21 +112,18 @@ textarea.bg-red {
   transition: all 0.2s ease;
   user-select: none;
   line-height: 1;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .btn-attempt-control.btn-new {
-  background-color: rgba(96, 165, 250, 0.25);
-  color: #bfdbfe;
-  border-color: #93c5fd;
-  box-shadow: 0 0 6px rgba(147, 197, 253, 0.5);
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
   font-size: 0.85rem;
 }
 
 .btn-attempt-control:hover { 
-  background-color: rgba(255, 255, 255, 0.35); 
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-  transform: scale(1.08);
+  background-color: #e2e8f0; 
+  transform: scale(1.05);
 }
 
 /* النافذة المنبثقة (Modal) */
@@ -177,7 +132,8 @@ textarea.bg-red {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
   z-index: 99999;
   align-items: center;
   justify-content: center;
@@ -186,13 +142,12 @@ textarea.bg-red {
 }
 
 .modal-content {
-  background: rgba(15, 23, 42, 0.95);
+  background: #ffffff;
   width: 100%;
   max-width: 480px;
   max-height: 80vh;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -200,29 +155,24 @@ textarea.bg-red {
 
 .modal-header {
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.modal-header h3 { 
-  margin: 0; 
-  font-size: 1rem; 
-  color: #f8fafc; 
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
-}
+.modal-header h3 { margin: 0; font-size: 1rem; color: #1e293b; }
 
 .close-modal-btn {
   background: none; 
   border: none; 
   font-size: 1.4rem; 
-  color: #94a3b8; 
+  color: #64748b; 
   cursor: pointer;
   padding: 0 4px;
 }
 
-.close-modal-btn:hover { color: #ffffff; }
+.close-modal-btn:hover { color: #0f172a; }
 
 .modal-body {
   padding: 14px;
@@ -233,16 +183,15 @@ textarea.bg-red {
 }
 
 .history-item-card {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 10px;
-  background: rgba(30, 41, 59, 0.7);
+  background: #f8fafc;
 }
 
 .history-item-card.active {
-  border-color: #60a5fa;
-  background: rgba(30, 58, 138, 0.4);
-  box-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+  border-color: #93c5fd;
+  background: #f0f9ff;
 }
 
 .history-item-header {
@@ -252,11 +201,11 @@ textarea.bg-red {
   margin-bottom: 6px;
 }
 
-.history-title { font-size: 0.85rem; font-weight: bold; color: #f1f5f9; }
+.history-title { font-size: 0.85rem; font-weight: bold; color: #1e293b; }
 
 .history-date { 
   font-size: 0.75rem; 
-  color: #94a3b8; 
+  color: #64748b; 
   font-weight: 500;
   direction: ltr;
   display: inline-block;
@@ -266,7 +215,7 @@ textarea.bg-red {
 .btn-delete-attempt {
   background: none;
   border: none;
-  color: #f87171;
+  color: #ef4444;
   cursor: pointer;
   font-size: 0.8rem;
   padding: 2px 4px;
@@ -275,16 +224,16 @@ textarea.bg-red {
 }
 
 .btn-delete-attempt:hover {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: #fee2e2;
 }
 
 .history-item-body {
   font-size: 0.85rem;
-  color: #fbbf24;
-  background: rgba(0, 0, 0, 0.4);
+  color: #334155;
+  background: #ffffff;
   padding: 8px;
   border-radius: 6px;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid #f1f5f9;
   white-space: pre-wrap;
   max-height: 90px;
   overflow-y: auto;
@@ -297,12 +246,10 @@ textarea.bg-red {
   font-size: 0.75rem;
   padding: 5px 8px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.btn-history-action:hover { background: rgba(255, 255, 255, 0.25); }
-  
+.btn-history-action:hover { background: #f1f5f9; }
