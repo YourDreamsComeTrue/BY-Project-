@@ -156,12 +156,16 @@ html, body {
     gap: 16px; /* مسافة ثابتة بين كل تمرين وآخر */
 }
 
+/* التعديل المضاف لإزالة الخلفية والظلال السوداء من الإطار */
 .exercises-list iframe {
     width: 100%;
     border: none;
     border-radius: 12px;
     display: block;
     flex-shrink: 0;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 /* تنسيقات زر إظهار/إخفاء التمارين الإضافية */
