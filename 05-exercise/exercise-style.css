@@ -2,26 +2,34 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  direction: rtl;
+/* 1. وضع صورة GIF على كامل الصفحة */
+html, body {
+  min-height: 100vh;
   margin: 0;
   padding: 12px;
-  background-color: transparent; /* خلفية الصفحة شفافة */
+  font-family: system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  
+  /* الصورة تغطي الشاشة بالكامل وتظل ثابتة عند التمرير */
+  background-image: url('assets/exercise-background.gif') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-color: transparent !important;
 }
 
-/* البطاقة الأساسية وحاوية التمرين الخارجية */
+/* 2. جعل بطاقة التمرين شفافة تماماً لتظهر خلفية الصفحة من خلالها */
 .exercise-card {
   width: 100%;
-  background-color: transparent !important; /* إزالة اللون الأسود والداكن بالكامل */
-  background-image: url('assets/exercise-background.gif');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid rgba(203, 213, 225, 0.6);
+  border: 1px solid rgba(203, 213, 225, 0.5);
   box-shadow: 0 0 15px rgba(226, 232, 240, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px); /* اختياري: يعطي لمسة ضبابية خفيفة وأنيقة */
 }
 
 /* عنوان السؤال بالفضّي اللامع والمتوهج */
@@ -37,7 +45,7 @@ body {
   text-shadow: 0 0 8px rgba(248, 250, 252, 0.8);
 }
 
-/* مربع النص والكتابة الداخلي (شفاف بالكامل) */
+/* 3. مربع النص الداخلي شفاف بالكامل */
 textarea {
   width: 100%;
   min-height: 110px;
@@ -51,12 +59,9 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  
-  /* خلفية شفافة تماماً ليظهر الـ GIF الممتد خلفه */
-  background-color: transparent !important;
   background: transparent !important;
+  background-color: transparent !important;
   
-  /* الخط الذهبي اللامع مع توهج قوي للوضوح فوق الـ GIF */
   color: #fbbf24;
   text-shadow: 0 0 6px rgba(251, 191, 36, 0.8), 0 0 2px #000000;
   box-shadow: inset 0 0 8px rgba(217, 119, 6, 0.3);
@@ -69,7 +74,7 @@ textarea:focus {
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.6), inset 0 0 8px rgba(245, 158, 11, 0.4);
 }
 
-/* التلوين الأخضر المتوهج (مع إبقاء الشفافية) */
+/* التلوين الأخضر المتوهج الشفاف */
 textarea.bg-green { 
   background-color: rgba(16, 185, 129, 0.25) !important; 
   border-color: #10b981 !important; 
@@ -78,7 +83,7 @@ textarea.bg-green {
   text-shadow: 0 0 6px rgba(167, 243, 208, 0.8), 0 0 2px #000000;
 }
 
-/* التلوين الأحمر المتوهج (مع إبقاء الشفافية) */
+/* التلوين الأحمر المتوهج الشفاف */
 textarea.bg-red { 
   background-color: rgba(244, 63, 94, 0.25) !important; 
   border-color: #f43f5e !important; 
@@ -141,7 +146,6 @@ textarea.bg-red {
   transition: all 0.2s ease;
   user-select: none;
   line-height: 1;
-  backdrop-filter: blur(4px);
 }
 
 .btn-attempt-control.btn-new {
