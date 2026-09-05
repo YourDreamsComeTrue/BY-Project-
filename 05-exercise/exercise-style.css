@@ -10,20 +10,21 @@ body {
   background-color: transparent;
 }
 
-/* البطاقة الخارجية بنفس أبعادك الأصلية مع خلفية الـ GIF */
+/* البطاقة الخارجية شفافة تماماً بدون أي ضبابية */
 .exercise-card {
   width: 100%;
-  background-image: url('assets/exercise-background.gif') !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(226, 232, 240, 0.4);
+  box-shadow: none; /* إزالة الظل الذي يسبب الضبابية حول الحواف */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* حد حافي متوهج خفيف جداً */
+  backdrop-filter: none !important; /* إلغاء الضبابية تماماً */
+  -webkit-backdrop-filter: none !important;
 }
 
-/* عنوان السؤال باللون الأبيض مع ظل خفيف للقراءة */
+/* عنوان السؤال باللون الأبيض مع ظل ناعم للوضوح */
 .question-title {
   font-size: 1.1rem;
   font-weight: 700;
@@ -34,7 +35,7 @@ body {
   line-height: 1.5;
 }
 
-/* مربع الكتابة شفاف لتظهر منه خلفية الـ GIF وتغيير النص للون الذهبي اللامع */
+/* مربع النص شفاف صافي */
 textarea {
   width: 100%;
   min-height: 110px;
@@ -52,6 +53,8 @@ textarea {
   background: transparent !important;
   color: #fef08a;
   text-shadow: 0 0 4px #000000, 0 0 6px rgba(250, 204, 21, 0.6);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 textarea.bg-green { 
@@ -73,6 +76,7 @@ textarea.bg-red {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  background: transparent;
 }
 
 /* حاوية الألوان */
@@ -97,7 +101,7 @@ textarea.bg-red {
 .color-btn.red { background-color: #f43f5e; }
 .color-btn.reset { background-color: #ffffff; }
 
-/* مجموعة أزرار الإجراءات (+ / ☰ / ⭐) */
+/* أزرار الإجراءات (+ / ☰ / ⭐) */
 .action-buttons-group {
   display: flex;
   gap: 5px;
@@ -135,14 +139,13 @@ textarea.bg-red {
   transform: scale(1.05);
 }
 
-/* النافذة المنبثقة (Modal) بنفس أبعاد التنسيق الأصلي */
+/* النافذة المنبثقة (Modal) */
 .modal-overlay {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; height: 100%;
   background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(4px);
   z-index: 99999;
   align-items: center;
   justify-content: center;
@@ -262,3 +265,4 @@ textarea.bg-red {
 }
 
 .btn-history-action:hover { background: #f1f5f9; }
+  
