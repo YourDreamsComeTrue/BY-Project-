@@ -7,21 +7,21 @@ body {
   direction: rtl;
   margin: 0;
   padding: 12px;
-  background-color: #0f172a;
+  background-color: transparent; /* خلفية الصفحة شفافة */
 }
 
-/* الكارت الأساسي بعرض صورة GIF بوضوح تام */
+/* البطاقة الأساسية وحاوية التمرين الخارجية */
 .exercise-card {
   width: 100%;
-  /* إزالة التدرج الداكن الشفاف وتطبيق صورة GIF مباشرة */
+  background-color: transparent !important; /* إزالة اللون الأسود والداكن بالكامل */
   background-image: url('assets/exercise-background.gif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 0 15px rgba(226, 232, 240, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(203, 213, 225, 0.6);
+  box-shadow: 0 0 15px rgba(226, 232, 240, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 /* عنوان السؤال بالفضّي اللامع والمتوهج */
@@ -34,10 +34,10 @@ body {
   background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px rgba(248, 250, 252, 0.6);
+  text-shadow: 0 0 8px rgba(248, 250, 252, 0.8);
 }
 
-/* مربع النص والكتابة باللون الذهبي */
+/* مربع النص والكتابة الداخلي (شفاف بالكامل) */
 textarea {
   width: 100%;
   min-height: 110px;
@@ -51,46 +51,50 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  /* جعل خلفية مربع الكتابة شبه شفافة كي تظهر خلفية GIF من تحتها */
-  background-color: rgba(15, 23, 42, 0.4);
   
+  /* خلفية شفافة تماماً ليظهر الـ GIF الممتد خلفه */
+  background-color: transparent !important;
+  background: transparent !important;
+  
+  /* الخط الذهبي اللامع مع توهج قوي للوضوح فوق الـ GIF */
   color: #fbbf24;
-  text-shadow: 0 0 5px rgba(251, 191, 36, 0.3);
-  box-shadow: inset 0 0 8px rgba(217, 119, 6, 0.2);
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.8), 0 0 2px #000000;
+  box-shadow: inset 0 0 8px rgba(217, 119, 6, 0.3);
   transition: all 0.3s ease;
 }
 
 textarea:focus {
   outline: none;
   border-color: #f59e0b;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5), inset 0 0 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6), inset 0 0 8px rgba(245, 158, 11, 0.4);
 }
 
-/* المربع باللون الأخضر المتوهج */
+/* التلوين الأخضر المتوهج (مع إبقاء الشفافية) */
 textarea.bg-green { 
-  background-color: rgba(6, 78, 59, 0.7) !important; 
+  background-color: rgba(16, 185, 129, 0.25) !important; 
   border-color: #10b981 !important; 
   color: #a7f3d0 !important;
   box-shadow: 0 0 15px rgba(16, 185, 129, 0.5) !important;
-  text-shadow: 0 0 6px rgba(167, 243, 208, 0.6);
+  text-shadow: 0 0 6px rgba(167, 243, 208, 0.8), 0 0 2px #000000;
 }
 
-/* المربع باللون الأحمر المتوهج */
+/* التلوين الأحمر المتوهج (مع إبقاء الشفافية) */
 textarea.bg-red { 
-  background-color: rgba(76, 5, 25, 0.7) !important; 
+  background-color: rgba(244, 63, 94, 0.25) !important; 
   border-color: #f43f5e !important; 
   color: #fecdd3 !important;
   box-shadow: 0 0 15px rgba(244, 63, 94, 0.5) !important;
-  text-shadow: 0 0 6px rgba(254, 205, 211, 0.6);
+  text-shadow: 0 0 6px rgba(254, 205, 211, 0.8), 0 0 2px #000000;
 }
 
-/* شريط التحكم */
+/* شريط التحكم السفلي */
 #attempt-controls {
   margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  background: transparent;
 }
 
 .color-picker-toolbar {
@@ -124,9 +128,9 @@ textarea.bg-red {
   width: 22px;
   height: 22px;
   padding: 0;
-  background-color: rgba(51, 65, 85, 0.8);
+  background-color: rgba(255, 255, 255, 0.15);
   color: #e2e8f0;
-  border: 1px solid #94a3b8;
+  border: 1px solid rgba(203, 213, 225, 0.5);
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: bold;
@@ -137,10 +141,11 @@ textarea.bg-red {
   transition: all 0.2s ease;
   user-select: none;
   line-height: 1;
+  backdrop-filter: blur(4px);
 }
 
 .btn-attempt-control.btn-new {
-  background-color: rgba(30, 58, 138, 0.8);
+  background-color: rgba(96, 165, 250, 0.25);
   color: #93c5fd;
   border-color: #60a5fa;
   font-size: 0.85rem;
@@ -148,9 +153,9 @@ textarea.bg-red {
 }
 
 .btn-attempt-control:hover { 
-  background-color: #475569; 
+  background-color: rgba(255, 255, 255, 0.3); 
   transform: scale(1.05);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 /* النافذة المنبثقة (Modal) */
@@ -159,7 +164,7 @@ textarea.bg-red {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(6px);
   z-index: 99999;
   align-items: center;
@@ -169,7 +174,8 @@ textarea.bg-red {
 }
 
 .modal-content {
-  background: #1e293b;
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(12px);
   width: 100%;
   max-width: 480px;
   max-height: 80vh;
@@ -183,7 +189,7 @@ textarea.bg-red {
 
 .modal-header {
   padding: 12px 16px;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -216,15 +222,15 @@ textarea.bg-red {
 }
 
 .history-item-card {
-  border: 1px solid #334155;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 10px;
-  background: #0f172a;
+  background: rgba(15, 23, 42, 0.5);
 }
 
 .history-item-card.active {
   border-color: #f59e0b;
-  background: #1e1b4b;
+  background: rgba(30, 27, 75, 0.6);
   box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
 }
 
@@ -258,16 +264,16 @@ textarea.bg-red {
 }
 
 .btn-delete-attempt:hover {
-  background-color: #450a0a;
+  background-color: rgba(239, 68, 68, 0.2);
 }
 
 .history-item-body {
   font-size: 0.85rem;
   color: #fbbf24;
-  background: #1e293b;
+  background: rgba(15, 23, 42, 0.4);
   padding: 8px;
   border-radius: 6px;
-  border: 1px solid #334155;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   white-space: pre-wrap;
   max-height: 90px;
   overflow-y: auto;
@@ -280,12 +286,12 @@ textarea.bg-red {
   font-size: 0.75rem;
   padding: 5px 8px;
   border-radius: 6px;
-  border: 1px solid #475569;
-  background: #334155;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   color: #f1f5f9;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.btn-history-action:hover { background: #475569; }
-                  
+.btn-history-action:hover { background: rgba(255, 255, 255, 0.2); }
+  
