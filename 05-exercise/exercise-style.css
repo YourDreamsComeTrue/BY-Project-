@@ -2,10 +2,10 @@
   box-sizing: border-box;
 }
 
-/* 1. إضافة هامش جانبي لتجنب اقتصاص الحدود */
+/* 1. تجريد الصفحة والجذور من أي أبعاد وخلفيات زائدة */
 html, body {
   margin: 0;
-  padding: 12px 2px; /* تم إضافة 2 بكسل على اليمين واليسار */
+  padding: 0;
   width: 100%;
   background: transparent !important;
   background-color: transparent !important;
@@ -13,10 +13,9 @@ html, body {
   direction: rtl;
 }
 
-/* 2. ضبط العرض لمنع تمدد الإطار خارج الشاشة */
+/* 2. إلغاء الحاوية الخارجية وجعل بطاقة التمرين هي الإطار المباشر فقط */
 .exercise-card {
-  width: calc(100% - 4px); /* خصم الـ 2 بكسل من كل جانب */
-  margin: 0 auto;
+  width: 100%;
   background: transparent !important;
   background-color: transparent !important;
   border-radius: 0;
@@ -25,7 +24,7 @@ html, body {
   border: none !important;
 }
 
-/* عنوان السؤال */
+/* عنوان السؤال محاذاة نظيفة بدون مسافات علوية زائدة */
 .question-title {
   font-size: 1.1rem;
   font-weight: 700;
@@ -34,7 +33,6 @@ html, body {
   color: #1e293b;
   text-align: right;
   line-height: 1.5;
-  padding: 0 2px;
 }
 
 /* مربع الكتابة الأساسي */
@@ -65,7 +63,6 @@ textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 0 2px;
 }
 
 /* حاوية الألوان */
@@ -256,4 +253,4 @@ textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
 }
 
 .btn-history-action:hover { background: #f1f5f9; }
-                 
+  
