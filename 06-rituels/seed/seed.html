@@ -131,23 +131,23 @@
       top: 42%;
       left: 50%;
       transform: translate3d(-50%, -50%, 0px) scale(1);
-      width: 550px; /* تم تكبير حجم البذرة لتناسب الشاشة الكاملة */
+      width: 550px;
       height: auto;
       z-index: 3;
       pointer-events: none;
       transition: transform 12s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.8s ease 11.2s;
     }
 
-    /* 5. مساحة الكتابة (تم تكبير العرض والطول الأساسي لتناسب القراءة الواضحة) */
+    /* 5. مساحة الكتابة */
     .oval-input-wrapper {
       position: absolute;
       top: 42%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 600px;        /* عرض أكبر بكثير ومناسب لشاشات الكمبيوتر */
-      max-width: 90vw;     /* لتبقى متجاوبة ولا تخرج عن حدود الشاشات الصغيرة */
-      min-height: 420px;   /* مساحة مريحة للبداية */
-      max-height: 75vh;    /* أقصى ارتفاع مسموح به قبل ظهور شريط التمرير */
+      width: 600px;
+      max-width: 90vw;
+      min-height: 420px;
+      max-height: 75vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -161,15 +161,15 @@
       height: 100%;
       min-height: 420px;
       max-height: 75vh;
-      border-radius: 50% / 305%; /* شكل بيضاوي متناسق وجميل */
+      border-radius: 50% / 305%;
       background: rgba(12, 8, 4, 0.75);
       border: 4px solid #ffd700;
       padding: 60px 50px;
       color: #ffffff;
-      font-size: 20px;     /* خط أضح وأكبر للقارئ */
+      font-size: 20px;
       font-weight: 600;
       text-align: center;
-      line-height: 1.8;    /* تباعد مريح جداً بين السطور */
+      line-height: 1.8;
       outline: none;
       resize: none;
       overflow-y: auto;
@@ -190,7 +190,7 @@
 
     .plant-btn {
       position: absolute;
-      bottom: 80px; /* تم تعديل الموقع لتكون مرئية ومناسبة للشاشة الكاملة */
+      bottom: 150px; /* تم رفع الزر للأعلى بمسافة كافية لضمان ظهوره وعدم اختفائه */
       padding: 16px 56px;
       font-size: 20px;
       font-weight: bold;
@@ -335,5 +335,4 @@
   </script>
 
 </body>
-    </html>
-        
+</html>
