@@ -5,7 +5,7 @@
 /* 1. إضافة هامش جانبي لتجنب اقتصاص الحدود */
 html, body {
   margin: 0;
-  padding: 12px 2px; /* تم إضافة 2 بكسل على اليمين واليسار */
+  padding: 12px 2px;
   width: 100%;
   background: transparent !important;
   background-color: transparent !important;
@@ -15,14 +15,14 @@ html, body {
 
 /* 2. ضبط العرض لمنع تمدد الإطار وإضافة خلفية الـ GIF */
 .exercise-card {
-  width: calc(100% - 4px); /* خصم الـ 2 بكسل من كل جانب */
+  width: calc(100% - 4px);
   margin: 0 auto;
   background: url('assets/exercise-background.gif') no-repeat center center !important;
-  background-size: cover !important; /* تغطية المساحة بالكامل */
+  background-size: cover !important;
   border-radius: 8px;
-  padding: 12px; /* مساحة داخلية لكي لا تلتصق العناصر بالحواف */
+  padding: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid #334155 !important; /* تم تغميق الحدود قليلاً لتتناسب مع الخلفية الداكنة */
 }
 
 /* عنوان السؤال */
@@ -31,18 +31,18 @@ html, body {
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 12px;
-  color: #1e293b;
+  color: #f8fafc; /* جعلنا لون العنوان أبيض ليكون واضحاً فوق الخلفية الداكنة */
   text-align: right;
   line-height: 1.5;
   padding: 0 2px;
 }
 
-/* مربع الكتابة الأساسي (تم جعله شبه شفاف لكي تظهر تحته خلفية الـ GIF مع الحفاظ على وضوح النص) */
+/* مربع الكتابة الأساسي (أسود شفاف لكي تظهر النجوم تحته بوضوح) */
 textarea {
   width: 100%;
   min-height: 110px;
   padding: 12px;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -51,13 +51,13 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  background-color: rgba(255, 255, 255, 0.85) !important; /* أبيض شفاف بنسبة 85% لتبان الخلفية المتحركة تحته قليلاً */
-  color: #0f172a;
+  background-color: rgba(15, 23, 42, 0.6) !important; /* أسود/كحلي داكن شفاف تظهر تحته النجوم */
+  color: #f8fafc !important; /* لون النص أبيض ليكون مقروءاً بوضوح */
 }
 
-/* حالات التلوين شبه الشفافة لكي لا تغطي الخلفية كلياً عند تفعيلها */
-textarea.bg-green { background-color: rgba(240, 253, 244, 0.85) !important; border-color: #86efac; }
-textarea.bg-red { background-color: rgba(255, 241, 242, 0.85) !important; border-color: #fca5a5; }
+/* حالات التلوين (أخضر وأحمر مع خلفية داكنة شفافة ومناسبة للجو الليلي) */
+textarea.bg-green { background-color: rgba(6, 78, 59, 0.65) !important; border-color: #34d399; }
+textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-color: #f87171; }
 
 /* شريط التحكم السفلي */
 #attempt-controls {
@@ -81,16 +81,16 @@ textarea.bg-red { background-color: rgba(255, 241, 242, 0.85) !important; border
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   transition: transform 0.2s;
   padding: 0;
 }
 
 .color-btn:hover { transform: scale(1.1); }
-.color-btn.green { background-color: #d1fae5; }
-.color-btn.red { background-color: #ffe4e6; }
-.color-btn.reset { background-color: #f3f4f6; }
+.color-btn.green { background-color: #059669; }
+.color-btn.red { background-color: #dc2626; }
+.color-btn.reset { background-color: #4b5563; }
 
 /* مجموعة أزرار الإجراءات (+ / ☰ / ⭐) */
 .action-buttons-group {
@@ -103,9 +103,9 @@ textarea.bg-red { background-color: rgba(255, 241, 242, 0.85) !important; border
   width: 22px;
   height: 22px;
   padding: 0;
-  background-color: #f1f5f9;
-  color: #334155;
-  border: 1px solid #cbd5e1;
+  background-color: rgba(30, 41, 59, 0.8);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: bold;
@@ -119,14 +119,14 @@ textarea.bg-red { background-color: rgba(255, 241, 242, 0.85) !important; border
 }
 
 .btn-attempt-control.btn-new {
-  background-color: #eff6ff;
-  color: #1d4ed8;
-  border-color: #bfdbfe;
+  background-color: rgba(30, 58, 138, 0.8);
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.3);
   font-size: 0.85rem;
 }
 
 .btn-attempt-control:hover { 
-  background-color: #e2e8f0; 
+  background-color: rgba(51, 65, 85, 0.9); 
   transform: scale(1.05);
 }
 
