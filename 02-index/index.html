@@ -9,47 +9,19 @@
 <body>
 
     <main class="index-container">
-        <!-- هيدر نظيف ومدمج في الأعلى تماماً بدون عبارات إضافية -->
+        <!-- الهيدر العلوي: العنوان على اليسار، والأيقونات مرتبة على اليمين (فهرس، ترتيب، مفضلة) -->
         <header class="index-header">
             <div class="header-top">
-                <h1 class="main-title">فهرس الدروس</h1>
                 <div class="top-actions-bar">
                     <a href="index.html" class="top-action-btn">📁 الفهرس</a>
+                    <button type="button" class="top-action-btn" id="btnOpenSortModal">🔄 الترتيب</button>
                     <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
                 </div>
+                <h1 class="main-title">فهرس الدروس</h1>
             </div>
         </header>
 
-        <!-- صندوق الفلاتر المضغوط (الترتيب، النوع، الموضوع) -->
-        <section class="filter-section">
-            <!-- السطر الأول: الترتيب -->
-            <div class="filter-group">
-                <label>الترتيب:</label>
-                <div id="sort-filters" class="chips-group">
-                    <button class="chip active" data-sort="asc">من الأقدم</button>
-                    <button class="chip" data-sort="desc">من الأحدث</button>
-                </div>
-            </div>
-
-            <!-- السطر الثاني: النوع -->
-            <div class="filter-group">
-                <label>النوع:</label>
-                <div id="type-filters" class="chips-group">
-                    <button class="chip active" data-type="all">الكل</button>
-                    <button class="chip" data-type="video">فيديو</button>
-                    <button class="chip" data-type="short">شورت</button>
-                    <button class="chip" data-type="lecture">محاضرة</button>
-                </div>
-            </div>
-
-            <!-- السطر الثالث: الموضوع (يتعرف عليه السكريبت ديناميكياً) -->
-            <div class="filter-group">
-                <label>الموضوع:</label>
-                <div id="topic-filters" class="chips-group">
-                    <!-- تتولد الأزرار تلقائياً هنا عبر السكريبت دون الحاجة لكتابة إضافية -->
-                </div>
-            </div>
-        </section>
+        <!-- تم إزالة صندوق الفلاتر من الواجهة الرئيسية ليصبح داخل النافذة المنبثقة -->
 
         <!-- شبكة عرض البطاقات -->
         <section id="lessons-grid" class="lessons-grid">
@@ -57,7 +29,46 @@
         </section>
     </main>
 
+    <!-- النافذة المنبثقة (Modal) وتحتوي على صندوق الفلاتر والترتيب كاملاً -->
+    <div id="sortModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>خيارات الترتيب والتصفية</h3>
+                <button type="button" class="close-modal-btn" id="btnCloseSortModal">&times;</button>
+            </div>
+            
+            <div class="filter-section-modal">
+                <!-- الترتيب -->
+                <div class="filter-group">
+                    <label>الترتيب:</label>
+                    <div id="sort-filters" class="chips-group">
+                        <button class="chip active" data-sort="asc">من الأقدم</button>
+                        <button class="chip" data-sort="desc">من الأحدث</button>
+                    </div>
+                </div>
+
+                <!-- النوع -->
+                <div class="filter-group">
+                    <label>النوع:</label>
+                    <div id="type-filters" class="chips-group">
+                        <button class="chip active" data-type="all">الكل</button>
+                        <button class="chip" data-type="video">فيديو</button>
+                        <button class="chip" data-type="short">شورت</button>
+                        <button class="chip" data-type="lecture">محاضرة</button>
+                    </div>
+                </div>
+
+                <!-- الموضوع -->
+                <div class="filter-group">
+                    <label>الموضوع:</label>
+                    <div id="topic-filters" class="chips-group">
+                        <!-- تتولد ديناميكياً للترتيب والفلترة -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="index-engine.js"></script>
 </body>
-    </html>
-    
+</html>
