@@ -1,30 +1,75 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدرس</title>
-    <link rel="stylesheet" href="Lesson-style.css">
-</head>
-<body>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: transparent !important;
+    background: transparent !important;
+    direction: rtl;
+    font-family: system-ui, -apple-system, sans-serif;
+}
 
-    <main class="lesson-container">
-        <!-- شريط علوي يحتوي على زر العودة للفهرس المرن -->
-        <div class="top-nav">
-            <a href="../02-index/index.html" class="btn-back-index" title="العودة للفهرس">☰ الفهرس</a>
-        </div>
+.lesson-container {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 20px 16px;
+    background: url('assets/exercise-background.gif') no-repeat center center !important;
+    background-size: cover !important;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-        <!-- 1. عنوان الدرس الرئيسي -->
-        <header class="lesson-header">
-            <h1 id="lesson-heading" class="main-title">جاري تحميل الدرس...</h1>
-        </header>
+/* شريط التنقل العلوي وزر الفهرس */
+.top-nav {
+    margin-bottom: 16px;
+    text-align: right;
+}
 
-        <!-- 2. مساحة استدعاء العناوين التابعة للدرس -->
-        <section class="titles-wrapper">
-            <div id="titles-container" class="titles-list"></div>
-        </section>
-    </main>
+.btn-back-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(30, 41, 59, 0.8);
+    color: #f8fafc;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
 
-    <script type="module" src="lesson-engine.js"></script>
-</body>
-</html>
+.btn-back-index:hover {
+    background-color: rgba(51, 65, 85, 0.95);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.main-title {
+    text-align: right;
+    color: #f8fafc; /* لون أبيض واضح فوق الخلفية الداكنة */
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding: 0 5px;
+}
+
+.titles-wrapper, 
+.titles-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.title-frame {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    display: block;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
