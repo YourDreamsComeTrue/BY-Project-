@@ -17,7 +17,7 @@ html, body {
 .exercise-card {
   width: calc(100% - 4px); /* خصم الـ 2 بكسل من كل جانب */
   margin: 0 auto;
-  background: url('05-exercise/assets/exercise-background.gif') no-repeat center center !important;
+  background: url('assets/exercise-background.gif') no-repeat center center !important;
   background-size: cover !important; /* تغطية المساحة بالكامل */
   border-radius: 8px;
   padding: 12px; /* مساحة داخلية لكي لا تلتصق العناصر بالحواف */
