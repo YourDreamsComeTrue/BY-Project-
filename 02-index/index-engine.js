@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLessons();
 });
 
-// 1. استخراج كل الموضوعات الموجودة في البيانات وتوليد أزرارها ديناميكياً
+// 1. توليد الموضوعات ديناميكياً للفلترة والترتيب في الخلفية
 function generateDynamicTopics() {
     const topicContainer = document.getElementById("topic-filters");
     if (!topicContainer) return;
@@ -30,8 +30,37 @@ function generateDynamicTopics() {
     topicContainer.innerHTML = html;
 }
 
-// 2. إعداد أحداث الفلترة والترتيب والنافذة المنبثقة
+// 2. إعداد المستمعات للأحداث والنافذة المنبثقة للترتيب
 function setupEventListeners() {
+    // إدارة النافذة المنبثقة (Modal) للترتيب والتصفية
+    const sortModal = document.getElementById("sortModal");
+    const btnOpenSortModal = document.getElementById("btnOpenSortModal");
+    const btnCloseSortModal = document.getElementById("btnCloseSortModal");
+
+    btnOpenSortModal?.addEventListener("click", () => {
+        if (sortModal) sortModal.style.display = "flex";
+    });
+
+    btnCloseSortModal?.addEventListener("click", () => {
+        if (sortModal) sortModal.style.display = "none";
+    });
+
+    sortModal?.addEventListener("click", (e) => {
+        if (e.target === sortModal) {
+            sortModal.style.display = "none";
+        }
+    });
+
+    // أحداث أزرار الترتيب داخل الـ Modal
+    document.getElementById("sort-filters")?.addEventListener("click", (e) => {
+        if (e.target.tagName === "BUTTON") {
+            document.querySelectorAll("#sort-filters .chip").forEach(b => b.classList.remove("active"));
+            e.target.classList.add("active");
+            sortOrder = e.target.getAttribute("data-sort");
+            renderLessons();
+        }
+    });
+
     // أحداث فلتر النوع
     document.getElementById("type-filters")?.addEventListener("click", (e) => {
         if (e.target.tagName === "BUTTON") {
@@ -51,60 +80,23 @@ function setupEventListeners() {
             renderLessons();
         }
     });
-
-    // عناصر النافذة المنبثقة للترتيب (Modal)
-    const sortModal = document.getElementById("sortModal");
-    const btnOpenSortModal = document.getElementById("btnOpenSortModal");
-    const btnCloseSortModal = document.getElementById("btnCloseSortModal");
-
-    btnOpenSortModal?.addEventListener("click", () => {
-        if (sortModal) sortModal.style.display = "flex";
-    });
-
-    btnCloseSortModal?.addEventListener("click", () => {
-        if (sortModal) sortModal.style.display = "none";
-    });
-
-    sortModal?.addEventListener("click", (e) => {
-        if (e.target === sortModal) {
-            sortModal.style.display = "none";
-        }
-    });
-
-    // أحداث اختيار خيارات الترتيب داخل النافذة المنبثقة
-    document.querySelectorAll(".sort-option-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            sortOrder = e.target.getAttribute("data-sort-val");
-            renderLessons();
-            if (sortModal) sortModal.style.display = "none";
-        });
-    });
-
-    // للتوافق الداخلي إذا كان العنصر القديم موجوداً
-    document.getElementById("sort-select")?.addEventListener("change", (e) => {
-        sortOrder = e.target.value;
-        renderLessons();
-    });
 }
 
-// 3. تصفية وترتيب وعرض الدروس
+// 3. تصفية وترتيب وعرض الدروس (بدون إظهار وسوم الـ topics على البطاقات)
 function renderLessons() {
     const grid = document.getElementById("lessons-grid");
     if (!grid) return;
 
-    // تصفية المحتوى بناءً على الجمع بين الفلاتر
     let filtered = lessonsConfig.filter(lesson => {
         const matchType = (activeType === 'all') || (lesson.type === activeType);
         const matchTopic = (activeTopic === 'all') || (lesson.topics && lesson.topics.includes(activeTopic));
         return matchType && matchTopic;
     });
 
-    // تطبيق الترتيب
     filtered.sort((a, b) => {
         return sortOrder === 'asc' ? a.order - b.order : b.order - a.order;
     });
 
-    // عرض النتيجة
     if (filtered.length === 0) {
         grid.innerHTML = `<div class="no-results">لا توجد دروس تطابق خيارات الفلترة المحددة.</div>`;
         return;
@@ -112,7 +104,6 @@ function renderLessons() {
 
     grid.innerHTML = filtered.map(lesson => {
         const typeLabels = { video: "فيديو", short: "شورت", lecture: "محاضرة" };
-        const topicsTags = lesson.topics.map(t => `<span class="tag">${t}</span>`).join(" ");
 
         return `
             <article class="lesson-card" onclick="window.location.href='${lesson.path}'">
@@ -123,9 +114,6 @@ function renderLessons() {
                 </div>
                 <h2 class="card-title">${lesson.title}</h2>
                 <p class="card-desc">${lesson.description || ''}</p>
-                <div class="card-footer">
-                    <div class="tags-wrapper">${topicsTags}</div>
-                </div>
             </article>
         `;
     }).join("");
@@ -167,4 +155,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                                        
+                                                              
