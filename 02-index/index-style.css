@@ -2,7 +2,6 @@
     box-sizing: border-box;
 }
 
-/* خلفية شفافة لكي تظهر خلفية الـ GIF العامة أو تصميم الحاوية */
 html, body {
     margin: 0;
     padding: 0;
@@ -18,7 +17,7 @@ html, body {
 .index-container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 20px 16px;
+    padding: 16px;
     background: url('assets/exercise-background.gif') no-repeat center center !important;
     background-size: cover !important;
     border-radius: 16px;
@@ -27,22 +26,21 @@ html, body {
 }
 
 .index-header {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     text-align: right;
 }
 
-/* التنسيق المحدث للهيدر العلوي مع الأيقونات الثلاث */
 .header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
 }
 
 .index-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin: 0;
     color: #f8fafc;
 }
@@ -50,10 +48,9 @@ html, body {
 .index-header p {
     margin: 0;
     color: #94a3b8;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
-/* مجموعة الأيقونات الثلاث العلوية (الفهرس، الترتيب، المفضلة) */
 .top-actions-bar {
     display: flex;
     gap: 8px;
@@ -64,12 +61,12 @@ html, body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 14px;
+    padding: 6px 12px;
     background-color: rgba(30, 41, 59, 0.8);
     color: #f8fafc;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
@@ -79,7 +76,6 @@ html, body {
 .top-action-btn:hover {
     background-color: rgba(51, 65, 85, 0.95);
     border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-1px);
 }
 
 .top-action-btn.favorites {
@@ -88,52 +84,52 @@ html, body {
     color: #fef3c7;
 }
 
-/* شريط الفلاتر (تم إخفاء عنصر الترتيب القديم منه) */
+/* صندوق الفلاتر المضغوط والمكون من ثلاثة أسطر أفقية */
 .filter-section {
     background: rgba(15, 23, 42, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .filter-group {
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
 }
 
 .filter-group label {
     font-weight: bold;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: #cbd5e1;
-    min-width: 90px;
-}
-
-/* إخفاء عنصر الترتيب القديم من داخل الفلتر لأنه أصبح أيقونة علوية */
-.filter-group-sort {
-    display: none !important;
+    min-width: 55px;
+    flex-shrink: 0;
 }
 
 .chips-group {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 5px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    width: 100%;
 }
 
 .chip {
-    padding: 5px 12px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(30, 41, 59, 0.6);
     color: #cbd5e1;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     cursor: pointer;
+    white-space: nowrap;
     transition: all 0.2s;
 }
 
@@ -180,7 +176,6 @@ html, body {
     margin-bottom: 10px;
 }
 
-/* زر النجمة ⭐ للمفضلة داخل البطاقة */
 .btn-fav-star {
     background: rgba(30, 41, 59, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -249,59 +244,4 @@ html, body {
     text-align: center;
     padding: 40px;
     color: #94a3b8;
-}
-
-/* تنسيق النافذة المنبثقة (Modal) الخاصة بالترتيب */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(4px);
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
-}
-
-.modal-content {
-    background: #0f172a;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 100%;
-    max-width: 400px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    color: #f8fafc;
-    padding: 20px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.modal-header h3 { margin: 0; font-size: 1.1rem; color: #f8fafc; }
-
-.close-modal-btn {
-    background: none; 
-    border: none; 
-    font-size: 1.4rem; 
-    color: #94a3b8; 
-    cursor: pointer;
-    padding: 0;
-}
-.close-modal-btn:hover { color: #ffffff; }
-
-.sort-options-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     }
-    
