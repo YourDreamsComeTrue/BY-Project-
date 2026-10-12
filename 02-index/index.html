@@ -11,17 +11,23 @@
     <main class="index-container">
         <header class="index-header">
             <div class="header-top">
-                <h1>فهرس الدروس</h1>
-                <!-- زر الانتقال لصفحة المفضلة -->
-                <a href="../07-favorites/favorite.html" class="btn-favorites-link">⭐ قوائمي المفضلة</a>
+                <div>
+                    <h1>فهرس الدروس</h1>
+                    <p>اختر التصنيفات المناسبة لتصفية الدروس</p>
+                </div>
+                <!-- الأيقونات الثلاث العلوية (الفهرس، الترتيب، المفضلة) -->
+                <div class="top-actions-bar">
+                    <a href="index.html" class="top-action-btn">📁 الفهرس</a>
+                    <button type="button" class="top-action-btn" id="btnOpenSortModal">🔄 الترتيب</button>
+                    <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
+                </div>
             </div>
-            <p>اختر التصنيفات المناسبة لتصفية الدروس</p>
         </header>
 
         <!-- منطقة الفلاتر المركبة -->
         <section class="filter-section">
-            <!-- فلتر الترتيب -->
-            <div class="filter-group">
+            <!-- فلتر الترتيب القديم تم نقله للنافذة المنبثقة، ولكن نترك الـ select مخفياً أو بمعرفه لكي لا يتوقف ملف الـ JavaScript عن العمل -->
+            <div class="filter-group filter-group-sort" style="display: none;">
                 <label>الترتيب:</label>
                 <select id="sort-select" class="filter-select">
                     <option value="asc">من الأقدم للأحدث</option>
@@ -55,7 +61,21 @@
         </section>
     </main>
 
+    <!-- النافذة المنبثقة الخاصة بالترتيب -->
+    <div id="sortModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>خيارات الترتيب</h3>
+                <button type="button" class="close-modal-btn" id="btnCloseSortModal">&times;</button>
+            </div>
+            <div class="sort-options-list">
+                <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #94a3b8;">اختر طريقة ترتيب العرض:</p>
+                <button type="button" class="top-action-btn sort-option-btn" data-sort-val="asc" style="width: 100%; justify-content: center; margin-bottom: 8px;">من الأقدم للأحدث</button>
+                <button type="button" class="top-action-btn sort-option-btn" data-sort-val="desc" style="width: 100%; justify-content: center;">من الأحدث للأقدم</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="index-engine.js"></script>
 </body>
-    </html>
-    
+</html>
