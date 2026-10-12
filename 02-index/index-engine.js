@@ -112,7 +112,7 @@ function renderLessons() {
         const typeLabels = { video: "فيديو", short: "شورت", lecture: "محاضرة" };
 
         return `
-            <article class="lesson-card" onclick="window.location.href='${lesson.path}'">
+            <article class="lesson-card" onclick="window.location.href='../03-lesson/lesson.html?id=${lesson.id}'">
                 <div class="card-header">
                     <span class="badge type-${lesson.type}">${typeLabels[lesson.type] || lesson.type}</span>
                     <span class="order-num">#${lesson.order}</span>
@@ -161,4 +161,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                                                               
+                
