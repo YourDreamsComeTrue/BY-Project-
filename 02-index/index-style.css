@@ -26,16 +26,17 @@ html, body {
 }
 
 .index-header {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-align: right;
 }
 
+/* صعود العنوان وأيقونات الفهرس والمفضلة في أعلى سطر واحد تماماً بدون أي عبارات إضافية */
 .header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 0;
     flex-wrap: wrap;
 }
 
@@ -43,12 +44,7 @@ html, body {
     font-size: 1.4rem;
     margin: 0;
     color: #f8fafc;
-}
-
-.index-header p {
-    margin: 0;
-    color: #94a3b8;
-    font-size: 0.85rem;
+    line-height: 1.2;
 }
 
 .top-actions-bar {
@@ -245,3 +241,4 @@ html, body {
     padding: 40px;
     color: #94a3b8;
     }
+    
