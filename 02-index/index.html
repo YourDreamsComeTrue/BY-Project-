@@ -9,7 +9,7 @@
 <body>
 
     <main class="index-container">
-        <!-- الهيدر العلوي: العنوان على اليسار، والأيقونات مرتبة على اليمين (فهرس، ترتيب، مفضلة) -->
+        <!-- الهيدر العلوي والأيقونات على اليمين -->
         <header class="index-header">
             <div class="header-top">
                 <div class="top-actions-bar">
@@ -21,22 +21,8 @@
             </div>
         </header>
 
-        <!-- تم إزالة صندوق الفلاتر من الواجهة الرئيسية ليصبح داخل النافذة المنبثقة -->
-
-        <!-- شبكة عرض البطاقات -->
-        <section id="lessons-grid" class="lessons-grid">
-            <!-- سيتم صب بطاقات الدروس هنا -->
-        </section>
-    </main>
-
-    <!-- النافذة المنبثقة (Modal) وتحتوي على صندوق الفلاتر والترتيب كاملاً -->
-    <div id="sortModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>خيارات الترتيب والتصفية</h3>
-                <button type="button" class="close-modal-btn" id="btnCloseSortModal">&times;</button>
-            </div>
-            
+        <!-- صندوق الفلاتر والترتيب (مخفي افتراضياً، ويظهر تحت الأيقونات وفوق الدروس عند الضغط على الترتيب) -->
+        <div id="sortModal" class="inline-dropdown-box" style="display: none;">
             <div class="filter-section-modal">
                 <!-- الترتيب -->
                 <div class="filter-group">
@@ -62,13 +48,19 @@
                 <div class="filter-group">
                     <label>الموضوع:</label>
                     <div id="topic-filters" class="chips-group">
-                        <!-- تتولد ديناميكياً للترتيب والفلترة -->
+                        <!-- تتولد ديناميكياً -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- شبكة عرض البطاقات -->
+        <section id="lessons-grid" class="lessons-grid">
+            <!-- سيتم صب بطاقات الدروس هنا -->
+        </section>
+    </main>
 
     <script type="module" src="index-engine.js"></script>
 </body>
-</html>
+                        </html>
+                        
