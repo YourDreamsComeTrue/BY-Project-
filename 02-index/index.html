@@ -15,7 +15,6 @@
                     <h1>فهرس الدروس</h1>
                     <p>اختر التصنيفات المناسبة لتصفية الدروس</p>
                 </div>
-                <!-- زر المفضلة فقط في الأعلى بجانب العنوان أو الإبقاء على الفهرس والمفضلة -->
                 <div class="top-actions-bar">
                     <a href="index.html" class="top-action-btn">📁 الفهرس</a>
                     <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
@@ -23,18 +22,18 @@
             </div>
         </header>
 
-        <!-- صندوق الفلاتر المدمج والأصغر حجماً -->
+        <!-- صندوق الفلاتر المصغر (ثلاثة أسطر فقط) -->
         <section class="filter-section">
-            <!-- صف الترتيب مضغوط -->
+            <!-- السطر الأول: الترتيب (أزرار مباشرة) -->
             <div class="filter-group">
                 <label>الترتيب:</label>
-                <select id="sort-select" class="filter-select">
-                    <option value="asc">من الأقدم للأحدث</option>
-                    <option value="desc">من الأحدث للأقدم</option>
-                </select>
+                <div id="sort-filters" class="chips-group">
+                    <button class="chip active" data-sort="asc">من الأقدم</button>
+                    <button class="chip" data-sort="desc">من الأحدث</button>
+                </div>
             </div>
 
-            <!-- صف نوع المحتوى بجانب أزراره -->
+            <!-- السطر الثاني: النوع -->
             <div class="filter-group">
                 <label>النوع:</label>
                 <div id="type-filters" class="chips-group">
@@ -45,7 +44,7 @@
                 </div>
             </div>
 
-            <!-- صف الموضوع بجانب أزراره -->
+            <!-- السطر الثالث: الموضوع -->
             <div class="filter-group">
                 <label>الموضوع:</label>
                 <div id="topic-filters" class="chips-group">
@@ -62,5 +61,5 @@
 
     <script type="module" src="index-engine.js"></script>
 </body>
-    </html>
-    
+        </html>
+        
