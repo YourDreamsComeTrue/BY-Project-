@@ -30,7 +30,7 @@ function generateDynamicTopics() {
     topicContainer.innerHTML = html;
 }
 
-// 2. إعداد أحداث الفلترة والترتيب
+// 2. إعداد أحداث الفلترة والترتيب والنافذة المنبثقة
 function setupEventListeners() {
     // أحداث فلتر النوع
     document.getElementById("type-filters")?.addEventListener("click", (e) => {
@@ -52,7 +52,35 @@ function setupEventListeners() {
         }
     });
 
-    // حدث الترتيب
+    // عناصر النافذة المنبثقة للترتيب (Modal)
+    const sortModal = document.getElementById("sortModal");
+    const btnOpenSortModal = document.getElementById("btnOpenSortModal");
+    const btnCloseSortModal = document.getElementById("btnCloseSortModal");
+
+    btnOpenSortModal?.addEventListener("click", () => {
+        if (sortModal) sortModal.style.display = "flex";
+    });
+
+    btnCloseSortModal?.addEventListener("click", () => {
+        if (sortModal) sortModal.style.display = "none";
+    });
+
+    sortModal?.addEventListener("click", (e) => {
+        if (e.target === sortModal) {
+            sortModal.style.display = "none";
+        }
+    });
+
+    // أحداث اختيار خيارات الترتيب داخل النافذة المنبثقة
+    document.querySelectorAll(".sort-option-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            sortOrder = e.target.getAttribute("data-sort-val");
+            renderLessons();
+            if (sortModal) sortModal.style.display = "none";
+        });
+    });
+
+    // للتوافق الداخلي إذا كان العنصر القديم موجوداً
     document.getElementById("sort-select")?.addEventListener("change", (e) => {
         sortOrder = e.target.value;
         renderLessons();
@@ -139,4 +167,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                                                              
+                                        
