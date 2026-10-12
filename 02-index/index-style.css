@@ -19,12 +19,13 @@ html, body {
     margin: 0 auto;
     padding: 16px;
     position: relative;
-    background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+    /* جعلنا التعتيم أخف بكثير لتظهر النجوم بشكل واضح وجميل */
+    background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
                 url('assets/exercise-background.gif') no-repeat center center !important;
     background-size: cover !important;
     border-radius: 16px;
-    border: 1px solid #334155;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
@@ -33,27 +34,20 @@ html, body {
     text-align: right;
 }
 
-/* ترتيب الهيدر: الأيقونات على اليمين بالترتيب المطلوب والعنوان على اليسار */
+/* ترتيب الهيدر: الأيقونات على اليمين */
 .header-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-}
-
-.index-header h1 {
-    font-size: 1.4rem;
-    margin: 0;
-    color: #f8fafc;
-    line-height: 1.2;
 }
 
 .top-actions-bar {
     display: flex;
     gap: 8px;
     align-items: center;
-    margin-right: auto; /* يدفع الأيقونات إلى اليمين في تخطيط الـ RTL */
+    margin-right: 0; 
 }
 
 .top-action-btn {
@@ -61,9 +55,9 @@ html, body {
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background-color: rgba(30, 41, 59, 0.8);
+    background-color: rgba(30, 41, 59, 0.7);
     color: #f8fafc;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -73,8 +67,8 @@ html, body {
 }
 
 .top-action-btn:hover {
-    background-color: rgba(51, 65, 85, 0.95);
-    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(51, 65, 85, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .top-action-btn.favorites {
@@ -83,9 +77,9 @@ html, body {
     color: #fef3c7;
 }
 
-/* تنسيق صندوق الفلاتر المنسدل تحت الأيقونات عند الضغط على زر الترتيب */
+/* تنسيق صندوق الفلاتر المنسدل تحت الأيقونات */
 .inline-dropdown-box {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
     padding: 14px;
@@ -160,8 +154,9 @@ html, body {
 }
 
 .lesson-card {
-    background: rgba(15, 23, 42, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* جعلنا بطاقات الدروس شفافة أيضاً لتظهر النجوم من خلفها بوضوح أنيق */
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
     padding: 16px;
     cursor: pointer;
@@ -174,7 +169,8 @@ html, body {
 .lesson-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(15, 23, 42, 0.65);
 }
 
 .card-header {
@@ -185,7 +181,7 @@ html, body {
 }
 
 .btn-fav-star {
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(30, 41, 59, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 1.1rem;
@@ -212,7 +208,7 @@ html, body {
 
 .order-num {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     font-weight: 500;
     margin-right: auto;
     margin-left: 8px;
@@ -227,7 +223,7 @@ html, body {
 
 .card-desc {
     font-size: 0.83rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     margin: 0;
     line-height: 1.5;
 }
@@ -241,6 +237,5 @@ html, body {
     grid-column: 1 / -1;
     text-align: center;
     padding: 40px;
-    color: #94a3b8;
-    }
-    
+    color: #cbd5e1;
+                   }
