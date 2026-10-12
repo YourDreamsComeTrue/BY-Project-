@@ -3,7 +3,8 @@ html, body {
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: #f4f6f9;
+    background-color: transparent !important;
+    background: transparent !important;
     direction: rtl;
     font-family: system-ui, -apple-system, sans-serif;
 }
@@ -14,11 +15,16 @@ html, body {
     box-sizing: border-box;
     margin: 0 auto;
     padding: 20px 16px;
+    background: url('assets/exercise-background.gif') no-repeat center center !important;
+    background-size: cover !important;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .main-title {
     text-align: right;
-    color: #0f172a;
+    color: #f8fafc; /* لون أبيض ليكون واضحاً فوق الخلفية الداكنة */
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -37,5 +43,7 @@ html, body {
     border: none;
     border-radius: 12px;
     display: block;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    }
