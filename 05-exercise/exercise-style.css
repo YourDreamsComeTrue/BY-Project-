@@ -18,7 +18,7 @@ html, body {
   width: calc(100% - 4px); /* خصم الـ 2 بكسل من كل جانب */
   margin: 0 auto;
   background: url('05-exercise/assets/exercise-background.gif') no-repeat center center !important;
-  background-size: cover !important; /* تغطية المساحة بالكامل (يمكن تغييرها إلى contain حسب الرغبة) */
+  background-size: cover !important; /* تغطية المساحة بالكامل */
   border-radius: 8px;
   padding: 12px; /* مساحة داخلية لكي لا تلتصق العناصر بالحواف */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
@@ -37,7 +37,7 @@ html, body {
   padding: 0 2px;
 }
 
-/* مربع الكتابة الأساسي */
+/* مربع الكتابة الأساسي (تم جعله شبه شفاف لكي تظهر تحته خلفية الـ GIF مع الحفاظ على وضوح النص) */
 textarea {
   width: 100%;
   min-height: 110px;
@@ -51,12 +51,13 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.85) !important; /* أبيض شفاف بنسبة 85% لتبان الخلفية المتحركة تحته قليلاً */
   color: #0f172a;
 }
 
-textarea.bg-green { background-color: #f0fdf4 !important; border-color: #86efac; }
-textarea.bg-red { background-color: #fff1f2 !important; border-color: #fca5a5; }
+/* حالات التلوين شبه الشفافة لكي لا تغطي الخلفية كلياً عند تفعيلها */
+textarea.bg-green { background-color: rgba(240, 253, 244, 0.85) !important; border-color: #86efac; }
+textarea.bg-red { background-color: rgba(255, 241, 242, 0.85) !important; border-color: #fca5a5; }
 
 /* شريط التحكم السفلي */
 #attempt-controls {
