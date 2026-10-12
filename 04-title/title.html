@@ -12,19 +12,22 @@
       }
       .main-title {
           text-align: right;
+          color: #f8fafc !important;
       }
 
-      /* تنسيقات حاوية المحتوى مع زر الإغلاق والتمدد التلقائي */
+      /* تنسيقات حاوية المحتوى بخلفية سوداء شفافة لتظهر النجوم تحتها */
       .tab-content-area {
           position: relative;
           display: none;
           margin: 20px 0;
           padding: 25px 20px 45px 20px;
-          background: #fff;
+          background: rgba(15, 23, 42, 0.75) !important; /* أسود شفاف متناسق مع النجوم */
+          border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 12px;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
           max-height: 80vh;
           overflow-y: auto;
+          color: #f8fafc;
       }
 
       /* زر الإغلاق الأحمر (X) */
@@ -32,7 +35,7 @@
           position: absolute;
           bottom: 10px;
           left: 15px;
-          background-color: #ff4d4d;
+          background-color: #ef4444;
           color: white;
           border: none;
           border-radius: 50%;
@@ -49,7 +52,7 @@
           transition: background-color 0.2s;
       }
       .close-btn:hover {
-          background-color: #cc0000;
+          background-color: #dc2626;
       }
 
       /* توسيع مساحة التمرين وإلغاء الهوامش الضيقة */
@@ -71,19 +74,21 @@
           overflow: visible !important;
       }
 
-      /* اجبار كل iframe على التمدد بشكل مستقل */
+      /* اجبار كل iframe على التمدد بشكل مستقل وتفريغ خلفيته */
       .exercises-list iframe {
           width: 100% !important;
           display: block !important;
           flex-shrink: 0 !important;
           border: none !important;
+          background: transparent !important;
+          background-color: transparent !important;
       }
 
       /* تنسيق زر التمارين الإضافية */
       .toggle-extra-btn {
-          background-color: #f0f4f8;
-          color: #2c3e50;
-          border: 1px dashed #cbd5e1;
+          background-color: rgba(30, 41, 59, 0.8);
+          color: #f8fafc;
+          border: 1px dashed rgba(255, 255, 255, 0.3);
           padding: 12px 24px;
           border-radius: 25px;
           font-size: 14px;
@@ -96,9 +101,10 @@
           box-shadow: 0 2px 4px rgba(0,0,0,0.03);
       }
       .toggle-extra-btn:hover {
-          background-color: #e2e8f0;
-          border-color: #94a3b8;
+          background-color: rgba(51, 65, 85, 0.95);
+          border-color: rgba(255, 255, 255, 0.5);
           transform: translateY(-1px);
+          color: #ffffff;
       }
     </style>
 </head>
@@ -153,5 +159,5 @@
 
     <script type="module" src="title-engine.js"></script>
 </body>
-    </html>
-    
+                    </html>
+                    
