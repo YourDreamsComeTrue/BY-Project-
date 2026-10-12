@@ -24,17 +24,8 @@
             </div>
         </header>
 
-        <!-- منطقة الفلاتر المركبة -->
+        <!-- منطقة الفلاتر المركبة (تم حذف صندوق الترتيب منها تماماً) -->
         <section class="filter-section">
-            <!-- فلتر الترتيب القديم تم نقله للنافذة المنبثقة، ولكن نترك الـ select مخفياً أو بمعرفه لكي لا يتوقف ملف الـ JavaScript عن العمل -->
-            <div class="filter-group filter-group-sort" style="display: none;">
-                <label>الترتيب:</label>
-                <select id="sort-select" class="filter-select">
-                    <option value="asc">من الأقدم للأحدث</option>
-                    <option value="desc">من الأحدث للأقدم</option>
-                </select>
-            </div>
-
             <!-- فلتر النوع -->
             <div class="filter-group">
                 <label>نوع المحتوى:</label>
@@ -61,7 +52,7 @@
         </section>
     </main>
 
-    <!-- النافذة المنبثقة الخاصة بالترتيب -->
+    <!-- النافذة المنبثقة الخاصة بالترتيب (تظهر فقط عند الضغط على أيقونة الترتيب) -->
     <div id="sortModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -78,4 +69,5 @@
 
     <script type="module" src="index-engine.js"></script>
 </body>
-</html>
+            </html>
+    
