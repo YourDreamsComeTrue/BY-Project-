@@ -18,11 +18,14 @@ html, body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 16px;
-    background: url('assets/exercise-background.gif') no-repeat center center !important;
+    position: relative;
+    background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                url('assets/exercise-background.gif') no-repeat center center !important;
     background-size: cover !important;
     border-radius: 16px;
     border: 1px solid #334155;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .index-header {
@@ -229,7 +232,7 @@ html, body {
     line-height: 1.5;
 }
 
-/* إخفاء وسوم الـ Topics (مثل مال وتطوير ذات) من أسفل البطاقات تماماً */
+/* إخفاء وسوم الـ Topics من أسفل البطاقات تماماً */
 .card-footer, .tags-wrapper {
     display: none !important;
 }
@@ -240,4 +243,4 @@ html, body {
     padding: 40px;
     color: #94a3b8;
     }
-                       
+    
