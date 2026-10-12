@@ -15,20 +15,28 @@
                     <h1>فهرس الدروس</h1>
                     <p>اختر التصنيفات المناسبة لتصفية الدروس</p>
                 </div>
-                <!-- الأيقونات الثلاث العلوية فقط -->
+                <!-- زر المفضلة فقط في الأعلى بجانب العنوان أو الإبقاء على الفهرس والمفضلة -->
                 <div class="top-actions-bar">
                     <a href="index.html" class="top-action-btn">📁 الفهرس</a>
-                    <button type="button" class="top-action-btn" id="btnOpenSortModal">🔄 الترتيب</button>
                     <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
                 </div>
             </div>
         </header>
 
-        <!-- منطقة الفلاتر (تحتوي على نوع المحتوى والموضوع فقط بدون أي آثار للترتيب القديم) -->
+        <!-- صندوق الفلاتر المدمج والأصغر حجماً -->
         <section class="filter-section">
-            <!-- فلتر النوع -->
+            <!-- صف الترتيب مضغوط -->
             <div class="filter-group">
-                <label>نوع المحتوى:</label>
+                <label>الترتيب:</label>
+                <select id="sort-select" class="filter-select">
+                    <option value="asc">من الأقدم للأحدث</option>
+                    <option value="desc">من الأحدث للأقدم</option>
+                </select>
+            </div>
+
+            <!-- صف نوع المحتوى بجانب أزراره -->
+            <div class="filter-group">
+                <label>النوع:</label>
                 <div id="type-filters" class="chips-group">
                     <button class="chip active" data-type="all">الكل</button>
                     <button class="chip" data-type="video">فيديو</button>
@@ -37,7 +45,7 @@
                 </div>
             </div>
 
-            <!-- فلتر الموضوعات (يتولد ديناميكياً) -->
+            <!-- صف الموضوع بجانب أزراره -->
             <div class="filter-group">
                 <label>الموضوع:</label>
                 <div id="topic-filters" class="chips-group">
@@ -51,21 +59,6 @@
             <!-- سيتم صب بطاقات الدروس هنا -->
         </section>
     </main>
-
-    <!-- النافذة المنبثقة الخاصة بالترتيب فقط -->
-    <div id="sortModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>خيارات الترتيب</h3>
-                <button type="button" class="close-modal-btn" id="btnCloseSortModal">&times;</button>
-            </div>
-            <div class="sort-options-list">
-                <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #94a3b8;">اختر طريقة ترتيب العرض:</p>
-                <button type="button" class="top-action-btn sort-option-btn" data-sort-val="asc" style="width: 100%; justify-content: center; margin-bottom: 8px;">من الأقدم للأحدث</button>
-                <button type="button" class="top-action-btn sort-option-btn" data-sort-val="desc" style="width: 100%; justify-content: center;">من الأحدث للأقدم</button>
-            </div>
-        </div>
-    </div>
 
     <script type="module" src="index-engine.js"></script>
 </body>
