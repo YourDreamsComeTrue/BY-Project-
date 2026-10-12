@@ -30,15 +30,30 @@ function generateDynamicTopics() {
     topicContainer.innerHTML = html;
 }
 
-// 2. إعداد المستمعات للأحداث وإدارة صندوق الترتيب المنسدل
+// 2. إعداد المستمعات للأحداث وإدارة صندوق الترتيب المنسدل بدقة
 function setupEventListeners() {
     const sortModal = document.getElementById("sortModal");
     const btnOpenSortModal = document.getElementById("btnOpenSortModal");
 
-    // تبديل إظهار وإخفاء صندوق الترتيب تحت الأيقونات عند النقر على زر الترتيب
-    btnOpenSortModal?.addEventListener("click", () => {
+    // تبديل إظهار وإخفاء صندوق الترتيب عند النقر على الزر
+    btnOpenSortModal?.addEventListener("click", (e) => {
+        e.stopPropagation();
         if (sortModal) {
-            sortModal.style.display = sortModal.style.display === "none" ? "block" : "none";
+            // التحقق من حالة العرض الحالية لتبديلها بسلاسة
+            const currentDisplay = window.getComputedStyle(sortModal).display;
+            sortModal.style.display = (currentDisplay === "none" || currentDisplay === "") ? "block" : "none";
+        }
+    });
+
+    // إخفاء الصندوق تلقائياً عند النقر في أي مكان خارج الصندوق أو زر الترتيب
+    document.addEventListener("click", (e) => {
+        if (sortModal) {
+            const currentDisplay = window.getComputedStyle(sortModal).display;
+            if (currentDisplay === "block") {
+                if (!sortModal.contains(e.target) && !btnOpenSortModal.contains(e.target)) {
+                    sortModal.style.display = "none";
+                }
+            }
         }
     });
 
@@ -73,7 +88,7 @@ function setupEventListeners() {
     });
 }
 
-// 3. تصفية وترتيب وعرض الدروس (مع إخفاء الوسوم من البطاقات وعملها خلف الكواليس)
+// 3. تصفية وترتيب وعرض الدروس (بدون إظهار وسوم الـ topics على البطاقات)
 function renderLessons() {
     const grid = document.getElementById("lessons-grid");
     if (!grid) return;
@@ -146,4 +161,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-        
+                                                               
