@@ -9,7 +9,7 @@
 <body>
 
     <main class="index-container">
-        <!-- الهيدر العلوي والأيقونات على اليمين -->
+        <!-- الهيدر العلوي والأيقونات على اليمين فقط -->
         <header class="index-header">
             <div class="header-top">
                 <div class="top-actions-bar">
@@ -17,14 +17,12 @@
                     <button type="button" class="top-action-btn" id="btnOpenSortModal">🔄 الترتيب</button>
                     <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
                 </div>
-                <h1 class="main-title">فهرس الدروس</h1>
             </div>
         </header>
 
-        <!-- صندوق الفلاتر والترتيب (مخفي افتراضياً، ويظهر تحت الأيقونات وفوق الدروس عند الضغط على الترتيب) -->
+        <!-- صندوق الفلاتر والترتيب -->
         <div id="sortModal" class="inline-dropdown-box" style="display: none;">
             <div class="filter-section-modal">
-                <!-- الترتيب -->
                 <div class="filter-group">
                     <label>الترتيب:</label>
                     <div id="sort-filters" class="chips-group">
@@ -33,7 +31,6 @@
                     </div>
                 </div>
 
-                <!-- النوع -->
                 <div class="filter-group">
                     <label>النوع:</label>
                     <div id="type-filters" class="chips-group">
@@ -44,7 +41,6 @@
                     </div>
                 </div>
 
-                <!-- الموضوع -->
                 <div class="filter-group">
                     <label>الموضوع:</label>
                     <div id="topic-filters" class="chips-group">
@@ -62,5 +58,4 @@
 
     <script type="module" src="index-engine.js"></script>
 </body>
-    </html>
-    
+</html>
