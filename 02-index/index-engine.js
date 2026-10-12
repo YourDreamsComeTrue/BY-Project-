@@ -115,7 +115,7 @@ function renderLessons() {
             <article class="lesson-card" onclick="window.location.href='../03-lesson/lesson.html?id=${lesson.id}'">
                 <div class="card-header">
                     <span class="badge type-${lesson.type}">${typeLabels[lesson.type] || lesson.type}</span>
-                    <span class="order-num">#${lesson.order}</span>
+                    <span class="order-num">${lesson.order}</span>
                     <button class="btn-fav-star" title="إضافة للمفضلة" onclick="event.stopPropagation(); window.addToFavorite('lesson', '${lesson.id}', '', '${lesson.title}')">⭐</button>
                 </div>
                 <h2 class="card-title">${lesson.title}</h2>
@@ -161,4 +161,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                
+                                                                     
