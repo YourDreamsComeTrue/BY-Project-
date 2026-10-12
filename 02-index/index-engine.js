@@ -30,28 +30,19 @@ function generateDynamicTopics() {
     topicContainer.innerHTML = html;
 }
 
-// 2. إعداد المستمعات للأحداث والنافذة المنبثقة للترتيب
+// 2. إعداد المستمعات للأحداث وإدارة صندوق الترتيب المنسدل
 function setupEventListeners() {
-    // إدارة النافذة المنبثقة (Modal) للترتيب والتصفية
     const sortModal = document.getElementById("sortModal");
     const btnOpenSortModal = document.getElementById("btnOpenSortModal");
-    const btnCloseSortModal = document.getElementById("btnCloseSortModal");
 
+    // تبديل إظهار وإخفاء صندوق الترتيب تحت الأيقونات عند النقر على زر الترتيب
     btnOpenSortModal?.addEventListener("click", () => {
-        if (sortModal) sortModal.style.display = "flex";
-    });
-
-    btnCloseSortModal?.addEventListener("click", () => {
-        if (sortModal) sortModal.style.display = "none";
-    });
-
-    sortModal?.addEventListener("click", (e) => {
-        if (e.target === sortModal) {
-            sortModal.style.display = "none";
+        if (sortModal) {
+            sortModal.style.display = sortModal.style.display === "none" ? "block" : "none";
         }
     });
 
-    // أحداث أزرار الترتيب داخل الـ Modal
+    // أحداث أزرار الترتيب
     document.getElementById("sort-filters")?.addEventListener("click", (e) => {
         if (e.target.tagName === "BUTTON") {
             document.querySelectorAll("#sort-filters .chip").forEach(b => b.classList.remove("active"));
@@ -82,7 +73,7 @@ function setupEventListeners() {
     });
 }
 
-// 3. تصفية وترتيب وعرض الدروس (بدون إظهار وسوم الـ topics على البطاقات)
+// 3. تصفية وترتيب وعرض الدروس (مع إخفاء الوسوم من البطاقات وعملها خلف الكواليس)
 function renderLessons() {
     const grid = document.getElementById("lessons-grid");
     if (!grid) return;
@@ -155,4 +146,4 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                                                              
+        
