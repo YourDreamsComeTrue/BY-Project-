@@ -171,4 +171,4 @@ function removeItemFromList(itemId) {
     saveListsToStorage();
     renderListsTabs();
     renderActiveListItems();
-            }
+        }
