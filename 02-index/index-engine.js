@@ -124,7 +124,7 @@ function renderLessons() {
     }).join("");
 }
 
-// 4. دالة إضافة المحتوى إلى قوائم المفضلة
+// 4. دالة إضافة المحتوى إلى قوائم المفضلة عبر نافذة تفاعلية بالنقر المباشر
 export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
     const saved = localStorage.getItem('user_custom_favorites_v1');
     const customLists = saved ? JSON.parse(saved) : [];
@@ -134,29 +134,67 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
         return;
     }
 
-    const listNames = customLists.map((l, index) => `${index + 1}. ${l.name}`).join("\n");
-    const choice = prompt(`اختر رقم القائمة التي تريد إضافة العنصر إليها:\n${listNames}`);
-    
-    if (!choice) return;
-
-    const selectedIndex = parseInt(choice) - 1;
-    if (isNaN(selectedIndex) || !customLists[selectedIndex]) {
-        alert("اختيار غير صحيح!");
-        return;
+    // إنشاء صندوق منسدل تفاعلي مخصص يتيح النقر المباشر على اسم القائمة
+    let modal = document.getElementById('fav-selection-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'fav-selection-modal';
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8); display: flex;
+            justify-content: center; align-items: center; z-index: 1000;
+        `;
+        document.body.appendChild(modal);
     }
 
-    const newItem = {
-        id: "item_" + Date.now(),
-        type: type,
-        lessonId: lessonId,
-        targetId: targetId || '',
-        title: title,
-        subtitle: subtitle
-    };
+    let listsHtml = customLists.map((l, index) => `
+        <button class="fav-modal-list-btn" data-index="${index}" style="
+            display: block; width: 100%; padding: 10px 14px; margin-bottom: 8px;
+            background: rgba(30, 41, 59, 0.9); color: #f8fafc; border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px; cursor: pointer; font-size: 0.9rem; text-align: right;
+            transition: background 0.2s;
+        ">📁 ${l.name}</button>
+    `).join("");
 
-    customLists[selectedIndex].items.push(newItem);
-    localStorage.setItem('user_custom_favorites_v1', JSON.stringify(customLists));
-    alert(`تمت إضافة "${title}" إلى قائمة "${customLists[selectedIndex].name}" بنجاح! ⭐`);
+    modal.innerHTML = `
+        <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 20px; width: 90%; max-width: 320px; text-align: right;">
+            <h3 style="color: #f8fafc; font-size: 1rem; margin-top: 0; margin-bottom: 12px;">اختر القائمة لإضافة العنصر إليها:</h3>
+            ${listsHtml}
+            <button id="close-fav-modal" style="
+                display: block; width: 100%; margin-top: 10px; padding: 8px;
+                background: rgba(220, 38, 38, 0.8); color: white; border: none;
+                border-radius: 8px; cursor: pointer; font-weight: bold;
+            ">إلغاء</button>
+        </div>
+    `;
+
+    modal.style.display = 'flex';
+
+    // تنفيذ الإضافة فور النقر على اسم القائمة في النافذة التفاعلية
+    modal.querySelectorAll('.fav-modal-list-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const selectedIndex = parseInt(e.currentTarget.getAttribute('data-index'));
+            const targetList = customLists[selectedIndex];
+
+            const newItem = {
+                id: "item_" + Date.now(),
+                type: type,
+                lessonId: lessonId,
+                targetId: targetId || '',
+                title: title,
+                subtitle: subtitle
+            };
+
+            targetList.items.push(newItem);
+            localStorage.setItem('user_custom_favorites_v1', JSON.stringify(customLists));
+            alert(`تمت إضافة "${title}" إلى قائمة "${targetList.name}" بنجاح! ⭐`);
+            modal.style.display = 'none';
+        });
+    });
+
+    modal.querySelector('#close-fav-modal').onclick = () => {
+        modal.style.display = 'none';
+    };
 }
 
 window.addToFavorite = addToFavorite;
