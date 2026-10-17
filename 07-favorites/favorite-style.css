@@ -34,26 +34,27 @@ html, body {
     margin-bottom: 20px;
 }
 
-/* تصميم سهم العودة الصغير والدائري */
+/* تعديل سهم العودة ليصبح سهمًا داخل دائرة واضحة اللون، صغيرة الحجم، وبدون خط تحته */
 .btn-back {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    background-color: rgba(30, 41, 59, 0.7);
-    color: #f8fafc;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    font-size: 1.1rem;
-    text-decoration: none;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(37, 99, 235, 0.9); /* لون أزرق واضح وبارز */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50% !important;
+    font-size: 1rem;
+    text-decoration: none !important; /* إلغاء أي خط تحته نهائياً */
     cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
 }
 
 .btn-back:hover {
-    background-color: rgba(51, 65, 85, 0.9);
-    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(29, 78, 216, 1);
+    transform: scale(1.1);
 }
 
 /* إخفاء الهيدر القديم (قوائمي المفضلة والوصف) بناءً على طلبك */
@@ -280,5 +281,5 @@ html, body {
     padding: 30px;
     color: #94a3b8;
     font-size: 0.9rem;
-                           }
+    }
     
