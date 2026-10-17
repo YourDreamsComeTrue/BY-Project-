@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// 1. تحميل القوائم من LocalStorage
+// 1. تحميل القوائم من التخزين المحلي
 function loadListsFromStorage() {
     const saved = localStorage.getItem(STORAGE_KEY);
     customLists = saved ? JSON.parse(saved) : [];
 }
 
-// 2. حفظ التغييرات في LocalStorage
+// 2. حفظ التغييرات في التخزين المحلي
 function saveListsToStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(customLists));
 }
@@ -31,7 +31,7 @@ function setupEventListeners() {
     document.getElementById("create-list-btn")?.addEventListener("click", createNewList);
     document.getElementById("delete-list-btn")?.addEventListener("click", deleteActiveList);
     
-    // دعم الإنشاء عند الضغط على Enter في حقل النص
+    // دعم الإنشاء عند الضغط على مفتاح الإدخال Enter في حقل النص
     document.getElementById("new-list-input")?.addEventListener("keypress", (e) => {
         if (e.key === "Enter") createNewList();
     });
@@ -65,10 +65,10 @@ function setActiveList(listId) {
     renderActiveListItems();
 }
 
-// 6. حذف القائمة النشطة
+// 6. حذف القائمة النشطة (مع رسالة التأكيد)
 function deleteActiveList() {
     if (!activeListId) return;
-    if (!confirm("هل أنت تأكد من رغبتك في حذف هذه القائمة بالكامل؟")) return;
+    if (!confirm("هل أنت متأكد من رغبتك في حذف هذه القائمة بالكامل؟")) return;
 
     customLists = customLists.filter(l => l.id !== activeListId);
     saveListsToStorage();
@@ -94,7 +94,6 @@ function renderListsTabs() {
         </button>
     `).join("");
 
-    // إتاحة الدالة للنافذة العامة لتعمل مع onclick
     window.selectList = setActiveList;
 }
 
@@ -136,11 +135,11 @@ function renderActiveListItems() {
             <article class="item-card">
                 <div class="card-top">
                     <span class="badge ${badge.class}">${badge.label}</span>
-                    <button class="btn-remove" title="حذف من القائمة" onclick="window.removeItemFromList('${item.id}')">✕</button>
+                    <button class="btn-remove" title="حذف من القائمة" onclick="window.removeItemFromList('${item.id}')">×</button>
                 </div>
-                <h3 class="item-title">${item.title}</h3>
+                <!-- الفتح يتم عند الضغط مباشرة على العنوان -->
+                <h3 class="item-title" onclick="window.location.href='${itemUrl}'" title="اضغط لفتح المحتوى">${item.title}</h3>
                 ${item.subtitle ? `<p class="item-subtitle">${item.subtitle}</p>` : ''}
-                <a href="${itemUrl}" class="btn-open-item">فتح المحتوى ←</a>
             </article>
         `;
     }).join("");
@@ -172,4 +171,4 @@ function removeItemFromList(itemId) {
     renderListsTabs();
     renderActiveListItems();
         }
-                        
+    
