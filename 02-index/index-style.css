@@ -35,20 +35,41 @@ html, body {
     text-align: right;
 }
 
-/* ترتيب الهيدر: الأيقونات على اليمين */
+/* ترتيب الهيدر: سهم العودة على اليمين وأزرار الترتيب والمفضلة على اليسار (أو العكس حسب الرغبة) */
 .header-top {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+}
+
+/* تصميم زر سهم العودة الصغير الأنيق */
+.back-arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background-color: rgba(30, 41, 59, 0.7);
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-arrow-btn:hover {
+    background-color: rgba(51, 65, 85, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .top-actions-bar {
     display: flex;
     gap: 8px;
     align-items: center;
-    margin-right: 0; 
 }
 
 .top-action-btn {
@@ -238,4 +259,4 @@ html, body {
     text-align: center;
     padding: 40px;
     color: #cbd5e1;
-                       }
+    }
