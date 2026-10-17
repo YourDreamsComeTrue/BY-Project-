@@ -117,7 +117,8 @@ function renderActiveListItems() {
     deleteBtn?.classList.remove("hidden");
 
     if (currentList.items.length === 0) {
-        grid.innerHTML = `<div class="empty-state">هذه القائمة فارغة حالياً. أضف إليها دروساً أو عناوين أو تمارين من الفهرس أو صفحة الدرس.</div>`;
+        // النص المعدل حسب طلبك (بدون عبارة أو صفحة الدرس)
+        grid.innerHTML = `<div class="empty-state">هذه القائمة فارغة حالياً. أضف إليها دروساً أو عناوين أو تمارين من الفهرس.</div>`;
         return;
     }
 
@@ -170,5 +171,4 @@ function removeItemFromList(itemId) {
     saveListsToStorage();
     renderListsTabs();
     renderActiveListItems();
-        }
-    
+            }
