@@ -11,9 +11,10 @@ html, body {
   background-color: transparent !important;
   font-family: system-ui, -apple-system, sans-serif;
   direction: rtl;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* 2. ضبط العرض لمنع تمدد الإطار وإضافة خلفية الـ GIF */
+/* 2. ضبط العرض لمنع تمدد الإطار وإضافة خلفية الـ GIF بشكل ثابت */
 .exercise-card {
   width: calc(100% - 4px);
   margin: 0 auto;
@@ -22,7 +23,8 @@ html, body {
   border-radius: 8px;
   padding: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-  border: 1px solid #334155 !important; /* تم تغميق الحدود قليلاً لتتناسب مع الخلفية الداكنة */
+  border: 1px solid #334155 !important;
+  transform: translateZ(0); /* تسريع الأداء عبر الـ GPU */
 }
 
 /* عنوان السؤال */
@@ -31,13 +33,13 @@ html, body {
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 12px;
-  color: #f8fafc; /* جعلنا لون العنوان أبيض ليكون واضحاً فوق الخلفية الداكنة */
+  color: #f8fafc;
   text-align: right;
   line-height: 1.5;
   padding: 0 2px;
 }
 
-/* مربع الكتابة الأساسي (أسود شفاف لكي تظهر النجوم تحته بوضوح) */
+/* مربع الكتابة الأساسي مع تعطيل التصحيح التلقائي لمنع ظهور القوائم المنبثقة */
 textarea {
   width: 100%;
   min-height: 110px;
@@ -51,11 +53,12 @@ textarea {
   resize: none;
   overflow: hidden;
   display: block;
-  background-color: rgba(15, 23, 42, 0.6) !important; /* أسود/كحلي داكن شفاف تظهر تحته النجوم */
-  color: #f8fafc !important; /* لون النص أبيض ليكون مقروءاً بوضوح */
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  color: #f8fafc !important;
+  -webkit-user-modify: read-write-plaintext-only; /* تقليل تقطیع وتداخل المتصفح */
 }
 
-/* حالات التلوين (أخضر وأحمر مع خلفية داكنة شفافة ومناسبة للجو الليلي) */
+/* حالات التلوين */
 textarea.bg-green { background-color: rgba(6, 78, 59, 0.65) !important; border-color: #34d399; }
 textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-color: #f87171; }
 
@@ -83,16 +86,14 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  transition: transform 0.2s;
   padding: 0;
 }
 
-.color-btn:hover { transform: scale(1.1); }
 .color-btn.green { background-color: #059669; }
 .color-btn.red { background-color: #dc2626; }
 .color-btn.reset { background-color: #4b5563; }
 
-/* مجموعة أزرار الإجراءات (+ / ☰ / ⭐) */
+/* مجموعة أزرار الإجراءات */
 .action-buttons-group {
   display: flex;
   gap: 5px;
@@ -113,7 +114,6 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
   user-select: none;
   line-height: 1;
 }
@@ -125,11 +125,6 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   font-size: 0.85rem;
 }
 
-.btn-attempt-control:hover { 
-  background-color: rgba(51, 65, 85, 0.9); 
-  transform: scale(1.05);
-}
-
 /* النافذة المنبثقة (Modal) */
 .modal-overlay {
   display: none;
@@ -137,7 +132,6 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100%; height: 100%;
   background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(4px);
   z-index: 99999;
   align-items: center;
   justify-content: center;
@@ -175,8 +169,6 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   cursor: pointer;
   padding: 0 4px;
 }
-
-.close-modal-btn:hover { color: #0f172a; }
 
 .modal-body {
   padding: 14px;
@@ -224,11 +216,6 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   font-size: 0.8rem;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.btn-delete-attempt:hover {
-  background-color: #fee2e2;
 }
 
 .history-item-body {
@@ -253,8 +240,5 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   border: 1px solid #cbd5e1;
   background: #ffffff;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn-history-action:hover { background: #f1f5f9; }
-  
+  }
+    
