@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLessons();
 });
 
-// 1. توليد الموضوعات ديناميكياً للفلترة والترتيب في الخلفية
+// 1. توليد الموضوعات ديناميكياً لتصفية وترتيب الدروس
 function generateDynamicTopics() {
     const topicContainer = document.getElementById("topic-filters");
     if (!topicContainer) return;
@@ -30,7 +30,7 @@ function generateDynamicTopics() {
     topicContainer.innerHTML = html;
 }
 
-// 2. إعداد المستمعات للأحداث وإدارة صندوق الترتيب المنسدل بدقة
+// 2. إعداد مستمعات الأحداث وإدارة صندوق الترتيب المنسدل
 function setupEventListeners() {
     const sortModal = document.getElementById("sortModal");
     const btnOpenSortModal = document.getElementById("btnOpenSortModal");
@@ -39,7 +39,6 @@ function setupEventListeners() {
     btnOpenSortModal?.addEventListener("click", (e) => {
         e.stopPropagation();
         if (sortModal) {
-            // التحقق من حالة العرض الحالية لتبديلها بسلاسة
             const currentDisplay = window.getComputedStyle(sortModal).display;
             sortModal.style.display = (currentDisplay === "none" || currentDisplay === "") ? "block" : "none";
         }
@@ -67,7 +66,7 @@ function setupEventListeners() {
         }
     });
 
-    // أحداث فلتر النوع
+    // أحداث تصفية النوع
     document.getElementById("type-filters")?.addEventListener("click", (e) => {
         if (e.target.tagName === "BUTTON") {
             document.querySelectorAll("#type-filters .chip").forEach(b => b.classList.remove("active"));
@@ -77,7 +76,7 @@ function setupEventListeners() {
         }
     });
 
-    // أحداث فلتر الموضوع
+    // أحداث تصفية الموضوع
     document.getElementById("topic-filters")?.addEventListener("click", (e) => {
         if (e.target.tagName === "BUTTON") {
             document.querySelectorAll("#topic-filters .chip").forEach(b => b.classList.remove("active"));
@@ -88,7 +87,7 @@ function setupEventListeners() {
     });
 }
 
-// 3. تصفية وترتيب وعرض الدروس (بدون إظهار وسوم الـ topics على البطاقات)
+// 3. تصفية وترتيب وعرض الدروس
 function renderLessons() {
     const grid = document.getElementById("lessons-grid");
     if (!grid) return;
@@ -104,7 +103,7 @@ function renderLessons() {
     });
 
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-results">لا توجد دروس تطابق خيارات الفلترة المحددة.</div>`;
+        grid.innerHTML = `<div class="no-results">لا توجد دروس تطابق خيارات التصفية المحددة.</div>`;
         return;
     }
 
@@ -161,4 +160,3 @@ export function addToFavorite(type, lessonId, targetId, title, subtitle = '') {
 }
 
 window.addToFavorite = addToFavorite;
-                                                                     
