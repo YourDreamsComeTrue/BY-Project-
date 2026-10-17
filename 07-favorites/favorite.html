@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قوائمي المفضلة</title>
+    <title>المفضلة</title>
     <link rel="stylesheet" href="favorite-style.css">
 </head>
 <body>
 
     <main class="favorites-container">
-        <!-- شريط علوي يحتوي على زر العودة للفهرس -->
+        <!-- شريط علوي يحتوي على سهم صغير للعودة فقط -->
         <div class="top-nav">
-            <a href="../02-index/index.html" class="btn-back">☰ الفهرس الرئيسي</a>
+            <a href="../02-index/index.html" class="back-arrow-btn" title="العودة للفهرس">➔</a>
         </div>
-
-        <header class="page-header">
-            <h1>قوائمي المفضلة ⭐️</h1>
-            <p>أنشئ قوائم تشغيل خاصة بك ونظّم الدروس والعناوين والتمارين كما تحب</p>
-        </header>
 
         <!-- نموذج إنشاء قائمة جديدة -->
         <section class="create-list-section">
@@ -36,7 +31,8 @@
         <section class="list-content-section">
             <div class="list-header-info">
                 <h2 id="active-list-title">اختر قائمة لعرض محتواها</h2>
-                <button id="delete-list-btn" class="btn-delete-list hidden">حذف هذه القائمة 🗑️</button>
+                <!-- زر حذف القائمة بصيغة علامة ضرب حمراء صغيرة -->
+                <button id="delete-list-btn" class="btn-delete-list hidden" title="حذف هذه القائمة">×</button>
             </div>
 
             <div id="favorites-items-grid" class="items-grid">
@@ -48,4 +44,3 @@
     <script type="module" src="favorite-engine.js"></script>
 </body>
 </html>
-
