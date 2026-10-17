@@ -15,18 +15,19 @@ html, body {
 }
 
 .index-container {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
     padding: 16px;
     position: relative;
-    /* جعلنا التعتيم أخف بكثير لتظهر النجوم بشكل واضح وجميل */
+    /* خلفية النجوم والتعتيم لتشمل الشاشة بالكامل */
     background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
                 url('assets/exercise-background.gif') no-repeat center center !important;
     background-size: cover !important;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+    border-radius: 0; /* إزالة الحواف الدائرية لتمتد حتى أطراف الشاشة */
+    border: none;
+    box-shadow: none;
+    overflow-x: hidden;
 }
 
 .index-header {
@@ -154,7 +155,6 @@ html, body {
 }
 
 .lesson-card {
-    /* جعلنا بطاقات الدروس شفافة أيضاً لتظهر النجوم من خلفها بوضوح أنيق */
     background: rgba(15, 23, 42, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
@@ -238,4 +238,4 @@ html, body {
     text-align: center;
     padding: 40px;
     color: #cbd5e1;
-                   }
+                       }
