@@ -1,10 +1,10 @@
-// نظام إدارة الموسيقى الخلفية عبر الصفحات
+// نظام إدارة الموسيقى الخلفية العام والمستمر عبر الصفحات
 (function() {
     const AUDIO_KEY_SRC = 'app_bg_music_src';
     const AUDIO_KEY_TIME = 'app_bg_music_time';
     const AUDIO_KEY_PLAYING = 'app_bg_music_playing';
 
-    // المسارات الصحيحة بالرجوع خطوة للخلف من مجلد 02-index
+    // مسارات الملفات الصوتية بالرجوع خطوة للخلف للمجلد الرئيسي
     const tracks = {
         '1': '../01-core/assets/background1.mp3',
         '2': '../01-core/assets/méditation.mp3'
@@ -17,25 +17,28 @@
         window.__globalAppAudio = globalAudio;
     }
 
-    // استرجاع الحالة السابقة من التخزين المحلي لتستمر الموسيقى طوال التنقل
+    // استعادة حالة التشغيل عند الانتقال بين الصفحات (كالدروس والمفضلة)
     const savedSrc = localStorage.getItem(AUDIO_KEY_SRC);
     const savedTime = parseFloat(localStorage.getItem(AUDIO_KEY_TIME) || '0');
     const isPlaying = localStorage.getItem(AUDIO_KEY_PLAYING) === 'true';
 
     if (savedSrc && isPlaying) {
-        globalAudio.src = savedSrc;
-        globalAudio.currentTime = savedTime;
-        globalAudio.play().catch(e => console.log("انتظار تفاعل المستخدم لتشغيل الصوت تلقائياً", e));
+        // تجنب إعادة تعيين المصدر إذا كان يعمل مسبقاً
+        if (!globalAudio.src.includes(savedSrc)) {
+            globalAudio.src = savedSrc;
+            globalAudio.currentTime = savedTime;
+        }
+        globalAudio.play().catch(e => console.log("في انتظار تفاعل المستخدم لتشغيل الصوت", e));
     }
 
-    // تحديث وقت التشغيل في التخزين المحلي باستمرار
+    // حفظ الوقت الحالي باستمرار لتستمر الموسيقى من حيث انتهت
     setInterval(() => {
         if (!globalAudio.paused) {
             localStorage.setItem(AUDIO_KEY_TIME, globalAudio.currentTime);
         }
     }, 1000);
 
-    // ربط الأزرار وإدارة النافذة عند تحميل المستند
+    // ربط الأزرار عند تحميل أي صفحة تحتوي على المشغل
     document.addEventListener("DOMContentLoaded", () => {
         const btnOpen = document.getElementById("btnOpenMusicModal");
         const musicModal = document.getElementById("musicModal");
@@ -53,7 +56,7 @@
             if (musicModal) musicModal.style.display = "none";
         });
 
-        // إغلاق النافذة عند النقر في أي مكان خارجها
+        // إغلاق النافذة عند النقر خارجها
         document.addEventListener("click", (e) => {
             if (musicModal && musicModal.style.display === "block") {
                 if (!musicModal.contains(e.target) && !btnOpen?.contains(e.target)) {
@@ -88,9 +91,8 @@
             localStorage.setItem(AUDIO_KEY_PLAYING, 'true');
             localStorage.setItem(AUDIO_KEY_TIME, '0');
         }).catch(err => {
-            console.error("فشل تشغيل الملف الصوتي:", err);
-            alert("يرجى التأكد من وجود ملف الصوت في المسار الصحيح.");
+            console.error("فشل التشغيل:", err);
         });
     }
 })();
-                
+    
