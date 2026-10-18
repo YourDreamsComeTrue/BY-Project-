@@ -54,17 +54,19 @@
             </div>
         </div>
 
-        <!-- نافذة اختيار وتشغيل الموسيقى (منسدلة/مخبأة افتراضياً) -->
+        <!-- نافذة اختيار وتشغيل الموسيقى (محدثة بالترتيب والنصوص النظيفة) -->
         <div id="musicModal" class="inline-dropdown-box" style="display: none; max-width: 280px; margin-right: auto; margin-left: 0;">
             <div class="filter-section-modal">
-                <div style="font-weight: bold; font-size: 0.85rem; color: #f8fafc; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
-                    <span>مشغل الموسيقى الخلفية</span>
+                <div style="font-weight: bold; font-size: 0.85rem; color: #f8fafc; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>مشغل الموسيقى</span>
                     <button type="button" id="closeMusicModal" style="background:none; border:none; color:#cbd5e1; cursor:pointer; font-size:1rem;">×</button>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <button type="button" class="top-action-btn" id="playMusic1" style="width: 100%; justify-content: center;">🎶 موسيقى 1 (Background)</button>
-                    <button type="button" class="top-action-btn" id="playMusic2" style="width: 100%; justify-content: center;">🧘 موسيقى 2 (Méditation)</button>
-                    <button type="button" class="top-action-btn" id="stopMusic" style="width: 100%; justify-content: center; background-color: rgba(220, 38, 38, 0.8); border-color: rgba(255,255,255,0.3); color: white;">⏹️ إيقاف الموسيقى (علامة حمراء)</button>
+                    <!-- زر إيقاف الموسيقى في أول ترتيب وبخلفية حمراء واضحة -->
+                    <button type="button" class="top-action-btn" id="stopMusic" style="width: 100%; justify-content: center; background-color: rgba(220, 38, 38, 0.85); border-color: rgba(255,255,255,0.3); color: white;">⏹️ إيقاف الموسيقى</button>
+                    <!-- خيارات التشغيل نظيفة بدون كلمات إنجليزية -->
+                    <button type="button" class="top-action-btn" id="playMusic1" style="width: 100%; justify-content: center;">🎵 موسيقى 1</button>
+                    <button type="button" class="top-action-btn" id="playMusic2" style="width: 100%; justify-content: center;">🧘 موسيقى 2</button>
                 </div>
             </div>
         </div>
@@ -79,5 +81,5 @@
     <script src="../01-core/assets/global-audio.js"></script>
     <script type="module" src="index-engine.js"></script>
 </body>
-                        </html>
-                        
+    </html>
+    
