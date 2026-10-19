@@ -8,7 +8,11 @@
 </head>
 <body>
 
-    <main class="favorites-container">
+    <!-- عنصر فيديو خلفي ديناميكي (يظهر إذا تم اختيار خلفية فيديو) -->
+    <video id="bg-video-element" autoplay muted loop style="display: none;"></video>
+
+    <!-- تم إضافة id="mainContainer" لكي يتفاعل مع نظام الخلفيات الموحد -->
+    <main class="favorites-container" id="mainContainer">
         <!-- شريط علوي يحتوي على سهم صغير للعودة فقط -->
         <div class="top-nav">
             <a href="../02-index/index.html" class="back-arrow-btn" title="العودة للفهرس">➔</a>
@@ -41,9 +45,9 @@
         </section>
     </main>
 
-    <!-- تضمين سكريبت الموسيقى العام لضمان استمرار التشغيل دون انقطاع داخل صفحة المفضلة -->
+    <!-- تضمين السكريبتات العامة للصوت والخلفيات لضمان عملها بسلاسة -->
     <script src="../01-core/assets/global-audio.js"></script>
+    <script src="../01-core/assets/global-background.js"></script>
     <script type="module" src="favorite-engine.js"></script>
 </body>
-    </html>
-    
+</html>
