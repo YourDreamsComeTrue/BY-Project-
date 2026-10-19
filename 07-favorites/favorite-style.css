@@ -20,14 +20,19 @@ html, body {
     margin: 0;
     padding: 16px;
     position: relative;
-    /* ربطها بنفس خلفية الفهرس المتحركة مع التعتيم المناسب */
-    background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                url('../02-index/assets/exercise-background.gif') no-repeat center center !important;
-    background-size: cover !important;
+    /* تمت إزالة الخلفية الثابتة القديمة لكي يستجيب الحاوي للخلفية الديناميكية المختارة من الـ JavaScript */
     border-radius: 0;
     border: none;
     box-shadow: none;
     overflow-x: hidden;
+    transition: background 0.3s ease;
+}
+
+/* التكيف التلقائي لألوان النصوص عند اختيار الخلفية البيضاء (light-theme) */
+.favorites-container.light-theme h2,
+.favorites-container.light-theme .item-title,
+.favorites-container.light-theme .item-subtitle {
+    color: #0f172a !important;
 }
 
 .top-nav {
@@ -281,5 +286,5 @@ html, body {
     padding: 30px;
     color: #94a3b8;
     font-size: 0.9rem;
-    }
-    
+                           }
+                     
