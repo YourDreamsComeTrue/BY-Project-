@@ -14,20 +14,24 @@ html, body {
     color: #f8fafc;
 }
 
+/* الوضع الافتراضي (الخلفيات الداكنة أو المتحركة): الحاوية شفافة تماماً */
 .index-container {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 16px;
     position: relative;
-    /* الحفاظ على الخلفية الديناميكية (النجوم وغيرها) لتعمل بكفاءة */
-    background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                url('assets/exercise-background.gif') no-repeat center center;
-    background-size: cover;
+    background: transparent !important;
     border-radius: 0;
     border: none;
     box-shadow: none;
     overflow-x: hidden;
+    transition: background 0.3s ease;
+}
+
+/* عند تفعيل الخلفية الفاتحة (light-theme) */
+.index-container.light-theme {
+    color: #0f172a;
 }
 
 /* طبقة عنصر الفيديو الخلفي الديناميكي */
@@ -51,7 +55,6 @@ html, body {
     text-align: right;
 }
 
-/* ترتيب الهيدر */
 .header-top {
     display: flex;
     justify-content: space-between;
@@ -60,7 +63,6 @@ html, body {
     flex-wrap: wrap;
 }
 
-/* تصميم زر سهم العودة */
 .back-arrow-btn {
     display: inline-flex;
     align-items: center;
@@ -74,7 +76,7 @@ html, body {
     font-size: 1rem;
     text-decoration: none !important;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease;
 }
 
@@ -89,13 +91,13 @@ html, body {
     align-items: center;
 }
 
-/* أزرار الإجراءات العلوية: شفافة جداً وناعمة */
+/* أزرار الإجراءات العلوية: شفافة في الداكن، وفاتحة في الفاتح */
 .top-action-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background-color: rgba(241, 245, 249, 0.15); /* شفافة أكثر بكثير */
+    background-color: rgba(15, 23, 42, 0.5);
     color: #f8fafc;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
@@ -103,31 +105,52 @@ html, body {
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
     transition: all 0.2s ease;
 }
 
+.index-container.light-theme .top-action-btn {
+    background-color: rgba(248, 250, 252, 0.85);
+    color: #0f172a;
+    border: 1px solid rgba(203, 213, 225, 0.8);
+}
+
 .top-action-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(51, 65, 85, 0.8);
+}
+
+.index-container.light-theme .top-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 .top-action-btn.favorites {
-    background-color: rgba(146, 64, 14, 0.35);
+    background-color: rgba(146, 64, 14, 0.7);
     border-color: rgba(253, 230, 138, 0.3);
     color: #fef3c7;
 }
 
-/* صندوق الفلاتر والنافذة المنسدلة: شفاف تماماً وناعم */
+.index-container.light-theme .top-action-btn.favorites {
+    background-color: rgba(254, 243, 199, 0.9);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #92400e;
+}
+
+/* صندوق الفلاتر والنافذة المنسدلة */
 .inline-dropdown-box {
-    background: rgba(15, 23, 42, 0.2); /* شفافية عالية جداً لترَ الخلفية بوضوح تام */
+    background: rgba(15, 23, 42, 0.45); /* شفافة وضبابية تعكس ما تحتها في الخلفيات الداكنة */
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 14px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
     animation: fadeIn 0.2s ease-in-out;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.index-container.light-theme .inline-dropdown-box {
+    background: rgba(248, 250, 252, 0.85); /* رمادي فاتح جداً في الخلفية البيضاء */
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 @keyframes fadeIn {
@@ -151,9 +174,14 @@ html, body {
 .filter-group label {
     font-weight: bold;
     font-size: 0.8rem;
-    color: #f1f5f9;
+    color: #cbd5e1;
     min-width: 55px;
     flex-shrink: 0;
+    transition: color 0.3s ease;
+}
+
+.index-container.light-theme .filter-group label {
+    color: #334155;
 }
 
 .chips-group {
@@ -165,22 +193,32 @@ html, body {
     width: 100%;
 }
 
-/* أزرار الفلاتر شفافة جداً */
 .chip {
     padding: 3px 8px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(241, 245, 249, 0.1); /* رمادي فاتح شفاف جداً */
-    color: #f1f5f9;
+    background: rgba(30, 41, 59, 0.5);
+    color: #cbd5e1;
     font-size: 0.75rem;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
 }
 
+.index-container.light-theme .chip {
+    border: 1px solid rgba(203, 213, 225, 0.8);
+    background: rgba(255, 255, 255, 0.7);
+    color: #334155;
+}
+
 .chip:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(51, 65, 85, 0.8);
     color: #ffffff;
+}
+
+.index-container.light-theme .chip:hover {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
 }
 
 .chip.active {
@@ -196,25 +234,37 @@ html, body {
     gap: 16px;
 }
 
-/* كروت الدروس: شفافة تماماً وناعمة جداً لتظهر النجوم من تحتها بشكل مذهل */
+/* كروت الدروس: شفافة تماماً وضبابية في الداكن، وفاتحة وناعمة في الفاتح */
 .lesson-card {
-    background: rgba(15, 23, 42, 0.22) !important; /* شفافية عالية جداً */
+    background: rgba(15, 23, 42, 0.35) !important; /* شفافة وضبابية تعكس الخلفية المتحركة */
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 12px;
     padding: 16px;
     cursor: pointer;
-    backdrop-filter: blur(4px); /* ضبابية خفيفة تحافظ على قراءة النصوص بوضوح وتبرز الخلفية */
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.index-container.light-theme .lesson-card {
+    background: rgba(248, 250, 252, 0.82) !important; /* رمادي فاتح جداً ونظيف في الخلفية البيضاء */
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .lesson-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
     border-color: rgba(255, 255, 255, 0.45);
-    background: rgba(15, 23, 42, 0.38) !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+}
+
+.index-container.light-theme .lesson-card:hover {
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92) !important;
 }
 
 .card-header {
@@ -225,7 +275,7 @@ html, body {
 }
 
 .btn-fav-star {
-    background: rgba(30, 41, 59, 0.5);
+    background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 1.1rem;
@@ -233,6 +283,11 @@ html, body {
     border-radius: 6px;
     transition: transform 0.15s ease;
     line-height: 1;
+}
+
+.index-container.light-theme .btn-fav-star {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(203, 213, 225, 0.8);
 }
 
 .btn-fav-star:hover {
@@ -246,9 +301,14 @@ html, body {
     font-weight: bold;
 }
 
-.badge.type-video { background: rgba(30, 64, 175, 0.6); color: #93c5fd; }
-.badge.type-short { background: rgba(157, 23, 77, 0.6); color: #fbcfe8; }
-.badge.type-lecture { background: rgba(146, 64, 14, 0.6); color: #fef3c7; }
+.badge.type-video { background: rgba(30, 64, 175, 0.8); color: #93c5fd; }
+.index-container.light-theme .badge.type-video { background: rgba(30, 64, 175, 0.15); color: #1d4ed8; }
+
+.badge.type-short { background: rgba(157, 23, 77, 0.8); color: #fbcfe8; }
+.index-container.light-theme .badge.type-short { background: rgba(157, 23, 77, 0.15); color: #be185d; }
+
+.badge.type-lecture { background: rgba(146, 64, 14, 0.8); color: #fef3c7; }
+.index-container.light-theme .badge.type-lecture { background: rgba(146, 64, 14, 0.15); color: #b45309; }
 
 .order-num {
     font-size: 0.75rem;
@@ -256,6 +316,12 @@ html, body {
     font-weight: 500;
     margin-right: auto;
     margin-left: 8px;
+    transition: color 0.3s ease;
+}
+
+.index-container.light-theme .order-num {
+    color: #64748b;
+    font-weight: 600;
 }
 
 .card-title {
@@ -263,6 +329,12 @@ html, body {
     margin: 0 0 8px 0;
     color: #f8fafc;
     line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.index-container.light-theme .card-title {
+    color: #0f172a !important;
+    font-weight: 700;
 }
 
 .card-desc {
@@ -270,9 +342,14 @@ html, body {
     color: #cbd5e1;
     margin: 0;
     line-height: 1.5;
+    transition: color 0.3s ease;
 }
 
-/* إخفاء وسوم الـ Topics من أسفل البطاقات تماماً */
+.index-container.light-theme .card-desc {
+    color: #334155 !important;
+}
+
+/* إخفاء وسوم الـ Topics */
 .card-footer, .tags-wrapper {
     display: none !important;
 }
@@ -283,3 +360,9 @@ html, body {
     padding: 40px;
     color: #cbd5e1;
 }
+
+.index-container.light-theme .no-results {
+    color: #334155;
+    font-weight: bold;
+    }
+        
