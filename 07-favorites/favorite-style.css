@@ -46,7 +46,7 @@ html, body {
     color: #94a3b8;
 }
 
-/* 2. عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): تتحول كافة النصوص إلى داكنة بوضوح */
+/* 2. عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): تتحول كافة النصوص إلى داكنة بوضوح تام */
 .favorites-container.light-theme h2,
 .favorites-container.light-theme .item-title,
 .favorites-container.light-theme .item-subtitle,
@@ -302,4 +302,5 @@ html, body {
     text-align: center;
     padding: 30px;
     font-size: 0.9rem;
-    }
+                                  }
+    
