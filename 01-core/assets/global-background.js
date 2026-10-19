@@ -109,11 +109,15 @@
             }
         });
 
-        // توليد خيارات الأزرار بناءً على مصفوفة الخلفيات المتاحة
+        // توليد خيارات الأزرار بناءً على مصفوفة الخلفيات المتاحة وتحديد الأيقونة المناسبة
         if (optionsContainer) {
             let html = '';
             availableBackgrounds.forEach((bg, idx) => {
-                html += `<button type="button" class="top-action-btn bg-option-btn" data-index="${idx}" style="width: 100%; justify-content: center;">🖼️ ${bg.name}</button>`;
+                let icon = '🖼️'; // افتراضي للصور
+                if (bg.type === 'video') icon = '🎬';
+                if (bg.type === 'color') icon = '⬜';
+
+                html += `<button type="button" class="top-action-btn bg-option-btn" data-index="${idx}" style="width: 100%; justify-content: center;">${icon} ${bg.name}</button>`;
             });
             optionsContainer.innerHTML = html;
 
@@ -128,4 +132,4 @@
         }
     });
 })();
-                              
+                                  
