@@ -14,14 +14,16 @@ html, body {
     color: #f8fafc;
 }
 
-/* الوضع الافتراضي (الخلفيات الداكنة أو المتحركة): الحاوية شفافة تماماً */
+/* الحاوية الرئيسية للفهرس: مهيأة تماماً لاستقبال خلفيات الجافاسكريبت الديناميكية (نجوم، صور، فيديو) */
 .index-container {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 16px;
     position: relative;
-    background: transparent !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -29,7 +31,6 @@ html, body {
     transition: background 0.3s ease;
 }
 
-/* عند تفعيل الخلفية الفاتحة (light-theme) */
 .index-container.light-theme {
     color: #0f172a;
 }
@@ -91,7 +92,7 @@ html, body {
     align-items: center;
 }
 
-/* أزرار الإجراءات العلوية: شفافة في الداكن، وفاتحة في الفاتح */
+/* أزرار الإجراءات العلوية */
 .top-action-btn {
     display: inline-flex;
     align-items: center;
@@ -137,7 +138,7 @@ html, body {
 
 /* صندوق الفلاتر والنافذة المنسدلة */
 .inline-dropdown-box {
-    background: rgba(15, 23, 42, 0.45); /* شفافة وضبابية تعكس ما تحتها في الخلفيات الداكنة */
+    background: rgba(15, 23, 42, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 14px;
@@ -149,7 +150,7 @@ html, body {
 }
 
 .index-container.light-theme .inline-dropdown-box {
-    background: rgba(248, 250, 252, 0.85); /* رمادي فاتح جداً في الخلفية البيضاء */
+    background: rgba(248, 250, 252, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
@@ -197,7 +198,7 @@ html, body {
     padding: 3px 8px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(30, 41, 59, 0.5);
+    background: rgba(30, 41, 59, 0.4);
     color: #cbd5e1;
     font-size: 0.75rem;
     cursor: pointer;
@@ -234,9 +235,9 @@ html, body {
     gap: 16px;
 }
 
-/* كروت الدروس: شفافة تماماً وضبابية في الداكن، وفاتحة وناعمة في الفاتح */
+/* كروت الدروس: شفافة وضبابية تماماً في الخلفيات الداكنة، وفاتحة وناعمة في الخلفية الفاتحة */
 .lesson-card {
-    background: rgba(15, 23, 42, 0.35) !important; /* شفافة وضبابية تعكس الخلفية المتحركة */
+    background: rgba(15, 23, 42, 0.3) !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 12px;
     padding: 16px;
@@ -250,7 +251,7 @@ html, body {
 }
 
 .index-container.light-theme .lesson-card {
-    background: rgba(248, 250, 252, 0.82) !important; /* رمادي فاتح جداً ونظيف في الخلفية البيضاء */
+    background: rgba(248, 250, 252, 0.82) !important;
     border: 1px solid rgba(255, 255, 255, 0.6) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
@@ -259,7 +260,7 @@ html, body {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.25);
     border-color: rgba(255, 255, 255, 0.45);
-    background: rgba(15, 23, 42, 0.5) !important;
+    background: rgba(15, 23, 42, 0.45) !important;
 }
 
 .index-container.light-theme .lesson-card:hover {
@@ -364,5 +365,4 @@ html, body {
 .index-container.light-theme .no-results {
     color: #334155;
     font-weight: bold;
-    }
-        
+                           }
