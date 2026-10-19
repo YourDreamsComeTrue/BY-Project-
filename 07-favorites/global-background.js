@@ -2,7 +2,7 @@
 (function() {
     const BG_KEY = 'app_selected_background';
 
-    // قائمة الخلفيات المتاحة (مع تحديث مسار الصورة ليطابق مجلد images الجديد)
+    // قائمة الخلفيات المتاحة
     const availableBackgrounds = [
         {
             name: 'خلفية بيضاء',
@@ -12,9 +12,8 @@
         {
             name: 'خلفية 1',
             type: 'image',
-            path: 'images/background-01.gif' // المسار الجديد داخل مجلد الصور
+            path: 'images/background-01.gif' // المسار داخل مجلد الصور
         }
-        // يمكنك إضافة أي خلفية جديدة هنا مستقبلاً بكل سهولة
     ];
 
     function applySavedBackground() {
@@ -23,7 +22,7 @@
         if (availableBackgrounds[indexToUse]) {
             setBackground(indexToUse, false);
         } else {
-            setBackground(0, false); // العودة للخيار الأول إذا كان المخزن قديم
+            setBackground(0, false);
         }
     }
 
@@ -48,16 +47,17 @@
                 videoEl.play().catch(e => console.log("تشغيل الفيديو محظور", e));
             }
             container.style.background = 'linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4))';
-            container.style.color = '#f8fafc';
+            container.classList.remove('light-theme');
+            container.classList.add('dark-theme');
         } else if (bg.type === 'color') {
             container.style.backgroundImage = 'none';
             container.style.background = bg.value;
-            container.style.color = '#0f172a'; // نص داكن على الخلفية البيضاء
+            container.classList.remove('dark-theme');
+            container.classList.add('light-theme'); // صنف الخلفية الفاتحة
         } else {
-            container.style.color = '#f8fafc';
             let imagePath = bg.path;
             
-            // ضبط مسار الصور بذكاء بناءً على مكان الصفحة الحالية بالنسبة لمجلد core
+            // ضبط المسار بذكاء: إذا كنا في أي مجلد فرعي نرجع للخلف للوصول للجذر
             if (window.location.pathname.includes('/02-index/') || 
                 window.location.pathname.includes('/03-lesson/') || 
                 window.location.pathname.includes('/07-favorites/')) {
@@ -68,6 +68,8 @@
 
             container.style.background = `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('${imagePath}') no-repeat center center`;
             container.style.backgroundSize = 'cover';
+            container.classList.remove('light-theme');
+            container.classList.add('dark-theme'); // صنف الخلفية الداكنة/الصورة
         }
 
         if (save) {
@@ -124,4 +126,4 @@
         }
     });
 })();
-                              
+            
