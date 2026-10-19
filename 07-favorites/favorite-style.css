@@ -20,7 +20,6 @@ html, body {
     margin: 0;
     padding: 16px;
     position: relative;
-    /* تمت إزالة الخلفية الثابتة القديمة لكي يستجيب الحاوي للخلفية الديناميكية المختارة من الـ JavaScript */
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -28,12 +27,38 @@ html, body {
     transition: background 0.3s ease;
 }
 
-/* التكيف التلقائي لألوان النصوص عند اختيار الخلفية البيضاء (light-theme) */
+/* ==========================================
+   إدارة الألوان الذكية (حسب نوع الخلفية)
+   ========================================== */
+
+/* 1. الافتراضي (مع الخلفيات الداكنة أو الصور): نصوص بيضاء وفاتحة */
+.favorites-container h2,
+.favorites-container .item-title,
+.favorites-container .item-subtitle,
+.favorites-container .list-tab,
+.create-list-section input {
+    color: #f8fafc;
+    transition: color 0.3s ease;
+}
+
+.create-list-section input::placeholder {
+    color: #94a3b8;
+}
+
+/* 2. عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): تتحول النصوص إلى داكنة بوضوح */
 .favorites-container.light-theme h2,
 .favorites-container.light-theme .item-title,
-.favorites-container.light-theme .item-subtitle {
+.favorites-container.light-theme .item-subtitle,
+.favorites-container.light-theme .list-tab,
+.favorites-container.light-theme .create-list-section input {
     color: #0f172a !important;
 }
+
+.favorites-container.light-theme .create-list-section input::placeholder {
+    color: #64748b !important;
+}
+
+/* ========================================== */
 
 .top-nav {
     margin-bottom: 20px;
@@ -80,13 +105,8 @@ html, body {
     background: rgba(15, 23, 42, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
-    color: #f8fafc;
     font-size: 0.9rem;
     outline: none;
-}
-
-.create-list-section input::placeholder {
-    color: #94a3b8;
 }
 
 .btn-primary {
@@ -121,7 +141,6 @@ html, body {
     padding: 6px 14px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(30, 41, 59, 0.6);
-    color: #cbd5e1;
     border-radius: 16px;
     cursor: pointer;
     font-size: 0.85rem;
@@ -131,12 +150,11 @@ html, body {
 
 .list-tab:hover {
     background: rgba(51, 65, 85, 0.8);
-    color: #ffffff;
 }
 
 .list-tab.active {
-    background: #2563eb;
-    color: #ffffff;
+    background: #2563eb !important;
+    color: #ffffff !important;
     border-color: #2563eb;
 }
 
@@ -165,7 +183,6 @@ html, body {
 .list-header-info h2 {
     font-size: 1.1rem;
     margin: 0;
-    color: #f8fafc;
 }
 
 /* تعديل زر حذف القائمة ليصبح علامة ضرب حمراء صغيرة دائرية */
@@ -262,7 +279,6 @@ html, body {
 .item-title {
     font-size: 0.95rem;
     margin: 0 0 6px 0;
-    color: #f8fafc;
     cursor: pointer;
     transition: color 0.2s;
 }
@@ -273,7 +289,6 @@ html, body {
 
 .item-subtitle {
     font-size: 0.8rem;
-    color: #94a3b8;
     margin: 0;
 }
 
@@ -286,5 +301,4 @@ html, body {
     padding: 30px;
     color: #94a3b8;
     font-size: 0.9rem;
-                           }
-                     
+    }
