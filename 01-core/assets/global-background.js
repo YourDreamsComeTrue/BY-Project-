@@ -13,6 +13,11 @@
             name: 'خلفية 2 (فيديو متحرك)',
             type: 'video', // تدعم mp4
             path: 'assets/background-video.mp4'
+        },
+        {
+            name: 'خلفية بيضاء',
+            type: 'color', // نوع خاص باللون السادة
+            value: '#ffffff'
         }
         // أضف أي خلفية جديدة هنا مستقبلاً بهذا الشكل:
         // { name: 'خلفية 3', type: 'image', path: 'assets/my-new-image.jpg' }
@@ -34,6 +39,12 @@
         const container = document.getElementById('mainContainer');
         const videoEl = document.getElementById('bg-video-element');
 
+        // إيقاف الفيديو افتراضياً عند التغيير
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.style.display = 'none';
+        }
+
         if (bg.type === 'video') {
             if (videoEl) {
                 videoEl.src = bg.path;
@@ -42,14 +53,18 @@
             }
             if (container) {
                 container.style.background = 'linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4))';
+                container.style.color = '#f8fafc';
+            }
+        } else if (bg.type === 'color') {
+            // معالجة الخلفية البيضاء السادة
+            if (container) {
+                container.style.background = bg.value;
+                container.style.color = '#0f172a'; // جعل النصوص داكنة لتكون واضحة على الخلفية البيضاء
             }
         } else {
-            if (videoEl) {
-                videoEl.pause();
-                videoEl.style.display = 'none';
-            }
             if (container) {
-                // ضبط مسار الصورة مع مراعاة مسار الصفحة الحالية
+                container.style.color = '#f8fafc';
+                // ضبط مسار الصورة أو الـ GIF مع مراعاة مسار الصفحة الحالية
                 let imagePath = bg.path;
                 if (window.location.pathname.includes('/03-lesson/') || window.location.pathname.includes('/07-favorites/')) {
                     imagePath = '../02-index/' + bg.path;
@@ -113,4 +128,4 @@
         }
     });
 })();
-          
+                              
