@@ -2,7 +2,7 @@
 (function() {
     const BG_KEY = 'app_selected_background';
 
-    // قائمة الخلفيات المتاحة (مرتبة حسب طلبك ومحدثة)
+    // قائمة الخلفيات المتاحة (مع تحديث مسار الصورة ليطابق مجلد images الجديد)
     const availableBackgrounds = [
         {
             name: 'خلفية بيضاء',
@@ -12,7 +12,7 @@
         {
             name: 'خلفية 1',
             type: 'image',
-            path: 'assets/exercise-background.gif'
+            path: 'images/background-01.gif' // المسار الجديد داخل مجلد الصور
         }
         // يمكنك إضافة أي خلفية جديدة هنا مستقبلاً بكل سهولة
     ];
@@ -56,9 +56,16 @@
         } else {
             container.style.color = '#f8fafc';
             let imagePath = bg.path;
-            if (window.location.pathname.includes('/03-lesson/') || window.location.pathname.includes('/07-favorites/')) {
-                imagePath = '../02-index/' + bg.path;
+            
+            // ضبط مسار الصور بذكاء بناءً على مكان الصفحة الحالية بالنسبة لمجلد core
+            if (window.location.pathname.includes('/02-index/') || 
+                window.location.pathname.includes('/03-lesson/') || 
+                window.location.pathname.includes('/07-favorites/')) {
+                imagePath = '../01-core/assets/' + bg.path;
+            } else {
+                imagePath = '01-core/assets/' + bg.path;
             }
+
             container.style.background = `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('${imagePath}') no-repeat center center`;
             container.style.backgroundSize = 'cover';
         }
@@ -117,3 +124,4 @@
         }
     });
 })();
+                              
