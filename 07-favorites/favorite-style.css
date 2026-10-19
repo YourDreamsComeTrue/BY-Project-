@@ -37,6 +37,7 @@ html, body {
 .favorites-container .item-subtitle,
 .favorites-container .list-tab,
 .favorites-container .empty-state,
+.favorites-container .no-lists-msg,
 .create-list-section input {
     color: #f8fafc;
     transition: color 0.3s ease;
@@ -52,6 +53,7 @@ html, body {
 .favorites-container.light-theme .item-subtitle,
 .favorites-container.light-theme .list-tab,
 .favorites-container.light-theme .empty-state,
+.favorites-container.light-theme .no-lists-msg,
 .favorites-container.light-theme .create-list-section input {
     color: #0f172a !important;
 }
@@ -298,9 +300,8 @@ html, body {
     display: none !important;
 }
 
-.empty-state {
+.empty-state, .no-lists-msg {
     text-align: center;
     padding: 30px;
     font-size: 0.9rem;
-                                  }
-    
+}
