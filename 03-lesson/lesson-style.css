@@ -15,7 +15,6 @@ html, body {
     box-sizing: border-box;
     margin: 0 auto;
     padding: 20px 16px;
-    /* تمت إزالة الخلفية الثابتة القديمة لكي يستجيب الحاوي للخلفية الديناميكية القادمة من الـ JavaScript */
     border-radius: 12px;
     border: 1px solid #334155;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -23,7 +22,7 @@ html, body {
 
 .main-title {
     text-align: right;
-    color: #f8fafc; /* لون النص الأساسي */
+    color: var(--title-color, #0f172a); /* لون داكن افتراضي ليظهر بوضوح على الخلفية البيضاء */
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -86,4 +85,4 @@ html, body {
 
 .btn-fav-star:hover {
     transform: scale(1.25);
-    }
+                           }
