@@ -14,18 +14,35 @@ html, body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* 2. ضبط العرض لمنع تمدد الإطار وإضافة خلفية الـ GIF بشكل ثابت */
+/* 2. ضبط العرض لمنع تمدد الإطار والتفاعل مع الخلفية الديناميكية العامة */
 .exercise-card {
   width: calc(100% - 4px);
   margin: 0 auto;
-  background: url('assets/exercise-background.gif') no-repeat center center !important;
-  background-size: cover !important;
+  /* تمت إزالة الخلفية الثابتة لكي تتغير ديناميكياً عبر نظام الخلفيات الموحد */
   border-radius: 8px;
   padding: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
   border: 1px solid #334155 !important;
   transform: translateZ(0); /* تسريع الأداء عبر الـ GPU */
+  transition: background 0.3s ease;
 }
+
+/* ==========================================
+   إدارة الألوان الذكية (حسب نوع الخلفية)
+   ========================================== */
+
+/* 1. الافتراضي (مع الخلفيات الداكنة أو الفيديو أو الصور): نصوص بيضاء وفاتحة */
+.exercise-card .question-title {
+  color: #f8fafc;
+  transition: color 0.3s ease;
+}
+
+/* 2. عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): يتحول عنوان السؤال إلى داكن بوضوح تام */
+.exercise-card.light-theme .question-title {
+  color: #0f172a !important;
+}
+
+/* ========================================== */
 
 /* عنوان السؤال */
 .question-title {
@@ -33,7 +50,6 @@ html, body {
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 12px;
-  color: #f8fafc;
   text-align: right;
   line-height: 1.5;
   padding: 0 2px;
@@ -55,7 +71,7 @@ textarea {
   display: block;
   background-color: rgba(15, 23, 42, 0.6) !important;
   color: #f8fafc !important;
-  -webkit-user-modify: read-write-plaintext-only; /* تقليل تقطیع وتداخل المتصفح */
+  -webkit-user-modify: read-write-plaintext-only; /* تقليل تقطيع وتداخل المتصفح */
 }
 
 /* حالات التلوين */
@@ -241,4 +257,4 @@ textarea.bg-red { background-color: rgba(127, 29, 29, 0.65) !important; border-c
   background: #ffffff;
   cursor: pointer;
   }
-    
+  
