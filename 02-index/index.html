@@ -8,8 +8,11 @@
 </head>
 <body>
 
-    <main class="index-container">
-        <!-- الهيدر العلوي: أزرار الفهرس والترتيب والمفضلة يميناً، وأيقونة الموسيقى يساراً -->
+    <!-- عنصر فيديو خلفي ديناميكي (يظهر إذا تم اختيار خلفية فيديو) -->
+    <video id="bg-video-element" autoplay muted loop style="display: none;"></video>
+
+    <main class="index-container" id="mainContainer">
+        <!-- الهيدر العلوي: أزرار الفهرس والترتيب والمفضلة يميناً، وأيقونات الموسيقى والخلفيات يساراً -->
         <header class="index-header">
             <div class="header-top">
                 <div class="top-actions-bar">
@@ -17,9 +20,11 @@
                     <button type="button" class="top-action-btn" id="btnOpenSortModal">🔄 الترتيب</button>
                     <a href="../07-favorites/favorite.html" class="top-action-btn favorites">⭐ المفضلة</a>
                 </div>
-                <!-- أيقونة الموسيقى في أقصى اليسار -->
-                <div class="music-action-wrapper">
+                
+                <!-- أيقونات اليسار (الموسيقى + تغيير الخلفية) -->
+                <div style="display: flex; gap: 8px; align-items: center;">
                     <button type="button" class="top-action-btn music-btn" id="btnOpenMusicModal" title="مشغل الموسيقى">🎵</button>
+                    <button type="button" class="top-action-btn" id="btnOpenBgModal" title="مشغل الخلفيات">🖼️</button>
                 </div>
             </div>
         </header>
@@ -54,7 +59,7 @@
             </div>
         </div>
 
-        <!-- نافذة اختيار وتشغيل الموسيقى (محدثة بالترتيب والنصوص النظيفة) -->
+        <!-- نافذة مشغل الموسيقى -->
         <div id="musicModal" class="inline-dropdown-box" style="display: none; max-width: 280px; margin-right: auto; margin-left: 0;">
             <div class="filter-section-modal">
                 <div style="font-weight: bold; font-size: 0.85rem; color: #f8fafc; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
@@ -62,11 +67,23 @@
                     <button type="button" id="closeMusicModal" style="background:none; border:none; color:#cbd5e1; cursor:pointer; font-size:1rem;">×</button>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <!-- زر إيقاف الموسيقى في أول ترتيب وبخلفية حمراء واضحة -->
                     <button type="button" class="top-action-btn" id="stopMusic" style="width: 100%; justify-content: center; background-color: rgba(220, 38, 38, 0.85); border-color: rgba(255,255,255,0.3); color: white;">⏹️ إيقاف الموسيقى</button>
-                    <!-- خيارات التشغيل نظيفة بدون كلمات إنجليزية -->
                     <button type="button" class="top-action-btn" id="playMusic1" style="width: 100%; justify-content: center;">🎵 موسيقى 1</button>
                     <button type="button" class="top-action-btn" id="playMusic2" style="width: 100%; justify-content: center;">🧘 موسيقى 2</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- نافذة اختيار وتغيير الخلفية الديناميكية -->
+        <div id="bgModal" class="inline-dropdown-box" style="display: none; max-width: 280px; margin-right: auto; margin-left: 0;">
+            <div class="filter-section-modal">
+                <div style="font-weight: bold; font-size: 0.85rem; color: #f8fafc; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>مشغل الخلفيات</span>
+                    <button type="button" id="closeBgModal" style="background:none; border:none; color:#cbd5e1; cursor:pointer; font-size:1rem;">×</button>
+                </div>
+                <!-- قائمة الأزرار ستتولد تلقائياً هنا عبر السكريبت -->
+                <div id="bg-options-container" style="display: flex; flex-direction: column; gap: 6px;">
+                    <!-- يتم توليد الخلفيات ديناميكياً -->
                 </div>
             </div>
         </div>
@@ -77,9 +94,10 @@
         </section>
     </main>
 
-    <!-- تضمين سكريبت الموسيقى العام ليعمل طوال التنقل -->
+    <!-- تضمين السكريبتات العامة -->
     <script src="../01-core/assets/global-audio.js"></script>
+    <script src="../01-core/assets/global-background.js"></script>
     <script type="module" src="index-engine.js"></script>
 </body>
-    </html>
-    
+                    </html>
+                    
