@@ -47,13 +47,14 @@
                 videoEl.play().catch(e => console.log("تشغيل الفيديو محظور", e));
             }
             container.style.background = 'linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4))';
-            container.style.color = '#f8fafc';
+            container.classList.remove('light-theme');
+            container.classList.add('dark-theme');
         } else if (bg.type === 'color') {
             container.style.backgroundImage = 'none';
             container.style.background = bg.value;
-            container.style.color = '#0f172a'; // نص داكن على الخلفية البيضاء
+            container.classList.remove('dark-theme');
+            container.classList.add('light-theme'); // صنف الخلفية الفاتحة
         } else {
-            container.style.color = '#f8fafc';
             let imagePath = bg.path;
             
             // ضبط المسار بذكاء: إذا كنا في أي مجلد فرعي نرجع للخلف للوصول للجذر
@@ -67,6 +68,8 @@
 
             container.style.background = `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('${imagePath}') no-repeat center center`;
             container.style.backgroundSize = 'cover';
+            container.classList.remove('light-theme');
+            container.classList.add('dark-theme'); // صنف الخلفية الداكنة/الصورة
         }
 
         if (save) {
@@ -123,3 +126,4 @@
         }
     });
 })();
+            
