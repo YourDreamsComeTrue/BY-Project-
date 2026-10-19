@@ -12,16 +12,22 @@
       }
       .main-title {
           text-align: right;
-          color: #f8fafc !important;
+          color: #f8fafc;
+          transition: color 0.3s ease;
       }
 
-      /* تنسيقات حاوية المحتوى بخلفية سوداء شفافة لتظهر النجوم تحتها */
+      /* التكيف التلقائي للعنوان عند اختيار الخلفية البيضاء (light-theme) */
+      .title-container.light-theme .main-title {
+          color: #0f172a !important;
+      }
+
+      /* تنسيقات حاوية المحتوى بخلفية سوداء شفافة لتظهر الخلفية تحتها */
       .tab-content-area {
           position: relative;
           display: none;
           margin: 20px 0;
           padding: 25px 20px 45px 20px;
-          background: rgba(15, 23, 42, 0.75) !important; /* أسود شفاف متناسق مع النجوم */
+          background: rgba(15, 23, 42, 0.75) !important;
           border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 12px;
           box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -110,7 +116,11 @@
 </head>
 <body>
 
-    <main class="title-container">
+    <!-- عنصر فيديو خلفي ديناميكي ليتوافق مع نظام الخلفيات الموحد -->
+    <video id="bg-video-element" autoplay muted loop style="display: none;"></video>
+
+    <!-- تم إضافة id="mainContainer" لكي يتفاعل مع نظام الخلفيات العام -->
+    <main class="title-container" id="mainContainer">
         <!-- 1. كتابة العنوان -->
         <header class="title-header">
             <h1 id="title-heading" class="main-title">جاري التحميل...</h1>
@@ -157,7 +167,8 @@
         </section>
     </main>
 
+    <!-- تضمين سكريبت الخلفيات العام لضبط الخلفية تلقائياً -->
+    <script src="../01-core/assets/global-background.js"></script>
     <script type="module" src="title-engine.js"></script>
 </body>
-                    </html>
-                    
+</html>
