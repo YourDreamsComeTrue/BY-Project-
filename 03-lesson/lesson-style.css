@@ -20,13 +20,20 @@ html, body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
 .main-title {
     text-align: right;
-    color: var(--title-color, #0f172a); /* لون داكن افتراضي ليظهر بوضوح على الخلفية البيضاء */
+    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
     padding: 0 5px;
+    transition: color 0.3s ease;
+}
+
+/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
+.lesson-container.light-theme .main-title {
+    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
 }
 
 .titles-wrapper, 
@@ -85,4 +92,4 @@ html, body {
 
 .btn-fav-star:hover {
     transform: scale(1.25);
-                           }
+    }
