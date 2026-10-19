@@ -11,7 +11,7 @@ html, body {
     background: transparent !important;
     font-family: system-ui, -apple-system, sans-serif;
     direction: rtl;
-    color: #0f172a;
+    color: #f8fafc;
 }
 
 .index-container {
@@ -20,15 +20,17 @@ html, body {
     margin: 0;
     padding: 16px;
     position: relative;
-    /* جعل الحاوية الرئيسية شفافة تماماً لتظهر الخلفية من تحتها */
-    background: transparent !important;
+    /* الحفاظ على الخلفية الأصلية تماماً لكي تعمل الخلفيات (النجوم وغيرها) بكفاءة */
+    background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
+                url('assets/exercise-background.gif') no-repeat center center;
+    background-size: cover;
     border-radius: 0;
     border: none;
     box-shadow: none;
     overflow-x: hidden;
 }
 
-/* طبقة عنصر الفيديو الخلفي الديناميكي */
+/* طبقة عنصر الفيديو الخلفي الديناميكي (لكي يظهر بملء الشاشة خلف كل العناصر عند اختيار خلفية فيديو) */
 #bg-video-element {
     position: fixed;
     top: 0;
@@ -49,7 +51,7 @@ html, body {
     text-align: right;
 }
 
-/* ترتيب الهيدر */
+/* ترتيب الهيدر: أزرار الفهرس والترتيب والمفضلة يميناً، وأيقونات الموسيقى والخلفيات يساراً */
 .header-top {
     display: flex;
     justify-content: space-between;
@@ -58,7 +60,7 @@ html, body {
     flex-wrap: wrap;
 }
 
-/* تصميم زر سهم العودة الصغير والدائري */
+/* تصميم زر سهم العودة الصغير والدائري والواضح بدون خط تحته */
 .back-arrow-btn {
     display: inline-flex;
     align-items: center;
@@ -72,12 +74,13 @@ html, body {
     font-size: 1rem;
     text-decoration: none !important;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
 }
 
 .back-arrow-btn:hover {
     background-color: rgba(29, 78, 216, 1);
+    border-color: rgba(255, 255, 255, 0.6);
     transform: scale(1.1);
 }
 
@@ -87,44 +90,44 @@ html, body {
     align-items: center;
 }
 
-/* أزرار الإجراءات العلوية بلون رمادي فاتح جداً وشفاف وراقي */
+/* تعديل أزرار الإجراءات العلوية لتكون بلون رمادي فاتح جداً وشفاف وناعم */
 .top-action-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background-color: rgba(248, 250, 252, 0.85);
-    color: #0f172a;
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    background-color: rgba(241, 245, 249, 0.65); /* رمادي فاتح جداً وشفاف */
+    color: #0f172a; /* نص داكن وواضح */
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(4px);
     transition: all 0.2s ease;
 }
 
 .top-action-btn:hover {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-color: #94a3b8;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 .top-action-btn.favorites {
-    background-color: rgba(254, 243, 199, 0.9);
-    border-color: rgba(245, 158, 11, 0.4);
+    background-color: rgba(254, 243, 199, 0.75);
+    border-color: rgba(253, 230, 138, 0.5);
     color: #92400e;
 }
 
-/* تنسيق صندوق الفلاتر والنافذة المنسدلة بلون رمادي فاتح جداً وشفاف */
+/* تنسيق صندوق الفلاتر والنافذة المنسدلة (بشفافية أعلى لكي تظهر النجوم من تحته بوضوح) */
 .inline-dropdown-box {
-    background: rgba(248, 250, 252, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(15, 23, 42, 0.45); /* شفافية أعلى لتظهر الخلفية بوضوح */
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 12px;
     padding: 14px;
     margin-bottom: 20px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
     animation: fadeIn 0.2s ease-in-out;
 }
 
@@ -149,7 +152,7 @@ html, body {
 .filter-group label {
     font-weight: bold;
     font-size: 0.8rem;
-    color: #334155;
+    color: #f1f5f9;
     min-width: 55px;
     flex-shrink: 0;
 }
@@ -163,12 +166,13 @@ html, body {
     width: 100%;
 }
 
+/* أزرار الفلاتر بلون رمادي فاتح جداً وشفاف */
 .chip {
     padding: 3px 8px;
     border-radius: 14px;
-    border: 1px solid rgba(203, 213, 225, 0.8);
-    background: rgba(255, 255, 255, 0.7);
-    color: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(241, 245, 249, 0.25); /* رمادي فاتح جداً وشفاف */
+    color: #f1f5f9;
     font-size: 0.75rem;
     cursor: pointer;
     white-space: nowrap;
@@ -176,8 +180,8 @@ html, body {
 }
 
 .chip:hover {
-    background: rgba(255, 255, 255, 0.95);
-    color: #0f172a;
+    background: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
 }
 
 .chip.active {
@@ -193,26 +197,25 @@ html, body {
     gap: 16px;
 }
 
-/* كروت الدروس بلون رمادي فاتح جداً وشفاف وراقي جداً فوق أي خلفية */
+/* كروت الدروس: زيادة الشفّافية (جعلناها شفافة أكثر لكي تظهر النجوم والخلفيات من تحتها بوضوح رائع) */
 .lesson-card {
-    background: rgba(248, 250, 252, 0.82) !important;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    background: rgba(15, 23, 42, 0.42); /* شفافية عالية لترَ الخلفية تتحرك بوضوح من تحت الكارت */
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 12px;
     padding: 16px;
     cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: transform 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(5px); /* ضبابية خفيفة تزيد من جمال الخلفية وتجعل النصوص مقروءة */
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .lesson-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    border-color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(15, 23, 42, 0.58);
 }
 
 .card-header {
@@ -223,8 +226,8 @@ html, body {
 }
 
 .btn-fav-star {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 1.1rem;
     padding: 4px 6px;
@@ -244,14 +247,14 @@ html, body {
     font-weight: bold;
 }
 
-.badge.type-video { background: rgba(30, 64, 175, 0.15); color: #1d4ed8; }
-.badge.type-short { background: rgba(157, 23, 77, 0.15); color: #be185d; }
-.badge.type-lecture { background: rgba(146, 64, 14, 0.15); color: #b45309; }
+.badge.type-video { background: rgba(30, 64, 175, 0.8); color: #93c5fd; }
+.badge.type-short { background: rgba(157, 23, 77, 0.8); color: #fbcfe8; }
+.badge.type-lecture { background: rgba(146, 64, 14, 0.8); color: #fef3c7; }
 
 .order-num {
     font-size: 0.75rem;
-    color: #64748b;
-    font-weight: 600;
+    color: #cbd5e1;
+    font-weight: 500;
     margin-right: auto;
     margin-left: 8px;
 }
@@ -259,19 +262,18 @@ html, body {
 .card-title {
     font-size: 1rem;
     margin: 0 0 8px 0;
-    color: #0f172a !important; /* نصوص العناوين داكنة وواضحة جداً */
+    color: #f8fafc;
     line-height: 1.4;
-    font-weight: 700;
 }
 
 .card-desc {
     font-size: 0.83rem;
-    color: #334155 !important; /* نصوص الوصف واضحة ونظيفة */
+    color: #cbd5e1;
     margin: 0;
     line-height: 1.5;
 }
 
-/* إخفاء وسوم الـ Topics */
+/* إخفاء وسوم الـ Topics من أسفل البطاقات تماماً */
 .card-footer, .tags-wrapper {
     display: none !important;
 }
@@ -280,6 +282,5 @@ html, body {
     grid-column: 1 / -1;
     text-align: center;
     padding: 40px;
-    color: #334155;
-    font-weight: bold;
+    color: #cbd5e1;
 }
