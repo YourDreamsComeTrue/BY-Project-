@@ -9,7 +9,10 @@
 </head>
 <body>
 
-    <main class="lesson-container">
+    <!-- عنصر فيديو خلفي ديناميكي (يظهر إذا تم اختيار خلفية فيديو) -->
+    <video id="bg-video-element" autoplay muted loop style="display: none;"></video>
+
+    <main class="lesson-container" id="mainContainer">
         <!-- شريط التنقل العلوي -->
         <nav class="top-nav">
             <a href="../02-index/index.html" class="btn-back-index">📁 الفهرس</a>
@@ -24,8 +27,9 @@
         </section>
     </main>
 
-    <!-- تضمين سكريبت الموسيقى العام لضمان استمرار التشغيل دون انقطاع داخل الدرس -->
+    <!-- تضمين السكريبتات العامة للموسيقى الخلفية وتغيير الخلفيات -->
     <script src="../01-core/assets/global-audio.js"></script>
+    <script src="../01-core/assets/global-background.js"></script>
     <!-- ربط محرك الدرس البرمجي -->
     <script type="module" src="lesson-engine.js"></script>
 </body>
