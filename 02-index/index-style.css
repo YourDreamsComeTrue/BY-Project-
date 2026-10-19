@@ -20,10 +20,10 @@ html, body {
     margin: 0;
     padding: 16px;
     position: relative;
-    /* الخلفية الافتراضية الأولى (تتغير ديناميكياً عبر JavaScript لتشمل الصور أو الـ GIF) */
+    /* الخلفية الافتراضية مرنة وقابلة للتغيير البرمجي عند اختيار الخلفية البيضاء أو غيرها */
     background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                url('assets/exercise-background.gif') no-repeat center center !important;
-    background-size: cover !important;
+                url('assets/exercise-background.gif') no-repeat center center;
+    background-size: cover;
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -277,4 +277,4 @@ html, body {
     text-align: center;
     padding: 40px;
     color: #cbd5e1;
-    }
+}
