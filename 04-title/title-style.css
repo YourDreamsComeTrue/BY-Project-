@@ -8,19 +8,38 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* بطاقة العنوان الرئيسية مع خلفية الـ GIF والحدود الداكنة */
+/* حاوية العنوان الرئيسية تتكيف ديناميكياً مع نظام الخلفيات الموحد */
 .title-container {
     width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
-    background: url('assets/exercise-background.gif') no-repeat center center !important;
-    background-size: cover !important;
+    /* تمت إزالة الخلفية الثابتة لكي تتغير ديناميكياً عبر الجافاسكريبت */
     padding: 16px 12px;
     border-radius: 16px;
     border: 1px solid #334155;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: visible; /* يمنع قص التمارين والتمدد */
+    overflow: visible;
+    transition: background 0.3s ease;
 }
+
+/* ==========================================
+   إدارة الألوان الذكية (حسب نوع الخلفية)
+   ========================================== */
+
+/* 1. الافتراضي (مع الخلفيات الداكنة أو الفيديو أو الصور): نصوص بيضاء وفاتحة */
+.title-container .main-title,
+.title-container .icon-btn .label {
+    color: #f8fafc;
+    transition: color 0.3s ease;
+}
+
+/* 2. عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): تتحول كافة النصوص إلى داكنة بوضوح تام */
+.title-container.light-theme .main-title,
+.title-container.light-theme .icon-btn .label {
+    color: #0f172a !important;
+}
+
+/* ========================================== */
 
 /* الهيدر الرئيسي مع دعم محاذاة زر المفضلة */
 .main-title {
@@ -28,7 +47,6 @@ html, body {
     align-items: center;
     justify-content: space-between;
     text-align: right;
-    color: #f8fafc; /* لون أبيض واضح فوق الخلفية الداكنة */
     font-size: 1.35rem;
     font-weight: 700;
     margin-top: 0;
@@ -81,7 +99,6 @@ html, body {
 .icon-btn .label {
     font-size: 0.85rem;
     font-weight: 500;
-    color: #f8fafc; /* نص أبيض لضمان وضوح التسميات */
 }
 
 /* منطقة محتوى التبويبات بخلفية سوداء شفافة تظهر النجوم من تحتها */
@@ -199,4 +216,4 @@ html, body {
     background-color: rgba(51, 65, 85, 0.95);
     border-color: rgba(255, 255, 255, 0.5);
     color: #ffffff;
-}
+    }
