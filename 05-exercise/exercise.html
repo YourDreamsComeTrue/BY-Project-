@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التمرين</title>
   <link rel="stylesheet" href="exercise-style.css">
 </head>
 <body>
 
-  <div class="exercise-card">
+  <!-- عنصر فيديو خلفي ديناميكي ليتوافق مع نظام الخلفيات الموحد -->
+  <video id="bg-video-element" autoplay muted loop style="display: none;"></video>
+
+  <!-- تمت إضافة id="mainContainer" لكي يتفاعل مع نظام الخلفيات العام -->
+  <div class="exercise-card" id="mainContainer">
     <div class="question-title" id="questionText">جاري تحميل السؤال...</div>
 
     <textarea 
@@ -47,7 +52,8 @@
     </div>
   </div>
 
+  <!-- تضمين سكريبت الخلفيات العام لضبط الخلفية تلقائياً -->
+  <script src="../01-core/assets/global-background.js"></script>
   <script type="module" src="exercise-engine.js"></script>
 </body>
-  </html>
-  
+</html>
