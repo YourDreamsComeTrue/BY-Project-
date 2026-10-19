@@ -2,23 +2,19 @@
 (function() {
     const BG_KEY = 'app_selected_background';
 
-    // قائمة الخلفيات المتاحة
+    // قائمة الخلفيات المتاحة (مرتبة حسب طلبك ومحدثة)
     const availableBackgrounds = [
-        {
-            name: 'خلفية 1 (الافتراضية GIF)',
-            type: 'image',
-            path: 'assets/exercise-background.gif'
-        },
-        {
-            name: 'خلفية 2 (فيديو متحرك)',
-            type: 'video',
-            path: 'assets/background-video.mp4'
-        },
         {
             name: 'خلفية بيضاء',
             type: 'color',
             value: '#ffffff'
+        },
+        {
+            name: 'خلفية 1',
+            type: 'image',
+            path: 'assets/exercise-background.gif'
         }
+        // يمكنك إضافة أي خلفية جديدة هنا مستقبلاً بكل سهولة
     ];
 
     function applySavedBackground() {
@@ -26,6 +22,8 @@
         const indexToUse = savedIndex !== null ? parseInt(savedIndex) : 0;
         if (availableBackgrounds[indexToUse]) {
             setBackground(indexToUse, false);
+        } else {
+            setBackground(0, false); // العودة للخيار الأول إذا كان المخزن قديم
         }
     }
 
@@ -52,10 +50,9 @@
             container.style.background = 'linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4))';
             container.style.color = '#f8fafc';
         } else if (bg.type === 'color') {
-            // تطبيق اللون الأبيض المباشر وإلغاء أي صور سابقة
             container.style.backgroundImage = 'none';
             container.style.background = bg.value;
-            container.style.color = '#0f172a'; // نص داكن وواضح على الأبيض
+            container.style.color = '#0f172a'; // نص داكن على الخلفية البيضاء
         } else {
             container.style.color = '#f8fafc';
             let imagePath = bg.path;
@@ -120,4 +117,3 @@
         }
     });
 })();
-            
