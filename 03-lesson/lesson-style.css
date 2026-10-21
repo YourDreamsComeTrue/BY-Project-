@@ -13,6 +13,7 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
+/* حاوية الدرس: شفافة تماماً كأنها غير موجودة لتظهر النجوم ببريقها الساطع من تحتها */
 .lesson-container {
     width: 100%;
     min-height: 100vh;
@@ -20,26 +21,24 @@ html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    /* جعل حاوية الدرس شفافة جداً في الخلفيات الداكنة لتظهر النجوم ببريقها الساطع من تحتها */
-    background: rgba(15, 23, 42, 0.05) !important;
+    background: transparent !important;
+    background-color: transparent !important;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2px);
+    box-shadow: none !important;
     transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون وحاوية الدرس لتصبح بيضاء صحيحة */
+/* عند اختيار الخلفية البيضاء: تتحول الحاوية إلى خلفية بيضاء نقية وواضحة */
 .lesson-container.light-theme {
     background: rgba(255, 255, 255, 0.95) !important;
     border: 1px solid #cbd5e1 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-    backdrop-filter: none;
 }
 
-/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
+/* اللون الافتراضي (فوق الخلفية الداكنة والنجوم) */
 .main-title {
     text-align: right;
-    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
+    color: #f8fafc;
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -47,9 +46,9 @@ html, body {
     transition: color 0.3s ease;
 }
 
-/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
+/* إذا كانت الخلفية بيضاء: يتحول لون العنوان إلى داكن */
 .lesson-container.light-theme .main-title {
-    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
+    color: #0f172a !important;
 }
 
 .titles-wrapper, 
