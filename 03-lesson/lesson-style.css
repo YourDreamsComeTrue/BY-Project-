@@ -1,4 +1,8 @@
-Html, body {
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -16,8 +20,20 @@ Html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    border: 1px solid #334155;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /* جعل حاوية الدرس شفافة تماماً لتظهر النجوم ببريقها من تحتها في الخلفية الداكنة */
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* عند اختيار الخلفية البيضاء تتحول الحاوية تلقائياً إلى اللون الأبيض النظيف */
+.lesson-container.light-theme {
+    background: rgba(255, 255, 255, 0.95) !important;
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
@@ -71,9 +87,19 @@ Html, body {
     margin-bottom: 20px;
 }
 
+.lesson-container.light-theme .btn-back-index {
+    background-color: rgba(241, 245, 249, 0.85);
+    color: #0f172a;
+    border: 1px solid rgba(203, 213, 225, 0.8);
+}
+
 .btn-back-index:hover {
     background-color: rgba(51, 65, 85, 0.9);
     border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lesson-container.light-theme .btn-back-index:hover {
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 /* زر المفضلة داخل الدرس */
@@ -90,7 +116,11 @@ Html, body {
     margin-right: 10px;
 }
 
+.lesson-container.light-theme .btn-fav-star {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(203, 213, 225, 0.8);
+}
+
 .btn-fav-star:hover {
     transform: scale(1.25);
-    }
- 
+}
