@@ -13,7 +13,6 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* حاوية الدرس: شفافة جداً في الخلفيات الداكنة لتظهر النجوم ببريقها الساطع، وتتحول لخلفية بيضاء عند اختيار الخلفية البيضاء */
 .lesson-container {
     width: 100%;
     min-height: 100vh;
@@ -21,14 +20,15 @@ html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    background: rgba(15, 23, 42, 0.08) !important; /* شفافة جداً جداً لتتألق النجوم من تحتها ببريقها الكامل */
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* جعل حاوية الدرس شفافة جداً في الخلفيات الداكنة لتظهر النجوم ببريقها الساطع من تحتها */
+    background: rgba(15, 23, 42, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2px); /* ضبابية خفيفة جداً لضمان قراءة النصوص بوضوح */
-    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(2px);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* عند اختيار الخلفية البيضاء (تفعيل صنف light-theme) */
+/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون وحاوية الدرس لتصبح بيضاء صحيحة */
 .lesson-container.light-theme {
     background: rgba(255, 255, 255, 0.95) !important;
     border: 1px solid #cbd5e1 !important;
@@ -36,10 +36,10 @@ html, body {
     backdrop-filter: none;
 }
 
-/* العنوان الرئيسي */
+/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
 .main-title {
     text-align: right;
-    color: #f8fafc;
+    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -47,8 +47,9 @@ html, body {
     transition: color 0.3s ease;
 }
 
+/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
 .lesson-container.light-theme .main-title {
-    color: #0f172a !important;
+    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
 }
 
 .titles-wrapper, 
@@ -74,7 +75,7 @@ html, body {
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background-color: rgba(15, 23, 42, 0.15);
+    background-color: rgba(30, 41, 59, 0.7);
     color: #f8fafc;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
@@ -93,7 +94,8 @@ html, body {
 }
 
 .btn-back-index:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(51, 65, 85, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .lesson-container.light-theme .btn-back-index:hover {
@@ -102,7 +104,7 @@ html, body {
 
 /* زر المفضلة داخل الدرس */
 .btn-fav-star {
-    background: rgba(30, 41, 59, 0.2);
+    background: rgba(30, 41, 59, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 1.1rem;
