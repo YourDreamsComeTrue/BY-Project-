@@ -1,8 +1,4 @@
-* {
-    box-sizing: border-box;
-}
-
-html, body {
+Html, body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -13,7 +9,6 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* حاوية الدرس: شفافة تماماً كأنها غير موجودة لتظهر النجوم ببريقها الساطع من تحتها */
 .lesson-container {
     width: 100%;
     min-height: 100vh;
@@ -21,24 +16,14 @@ html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: none !important;
-    transition: background 0.3s ease, border-color 0.3s ease;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* عند اختيار الخلفية البيضاء: تتحول الحاوية إلى خلفية بيضاء نقية وواضحة */
-.lesson-container.light-theme {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* اللون الافتراضي (فوق الخلفية الداكنة والنجوم) */
+/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
 .main-title {
     text-align: right;
-    color: #f8fafc;
+    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -46,9 +31,9 @@ html, body {
     transition: color 0.3s ease;
 }
 
-/* إذا كانت الخلفية بيضاء: يتحول لون العنوان إلى داكن */
+/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
 .lesson-container.light-theme .main-title {
-    color: #0f172a !important;
+    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
 }
 
 .titles-wrapper, 
@@ -86,19 +71,9 @@ html, body {
     margin-bottom: 20px;
 }
 
-.lesson-container.light-theme .btn-back-index {
-    background-color: rgba(241, 245, 249, 0.85);
-    color: #0f172a;
-    border: 1px solid rgba(203, 213, 225, 0.8);
-}
-
 .btn-back-index:hover {
     background-color: rgba(51, 65, 85, 0.9);
     border-color: rgba(255, 255, 255, 0.5);
-}
-
-.lesson-container.light-theme .btn-back-index:hover {
-    background-color: rgba(255, 255, 255, 0.95);
 }
 
 /* زر المفضلة داخل الدرس */
@@ -115,11 +90,8 @@ html, body {
     margin-right: 10px;
 }
 
-.lesson-container.light-theme .btn-fav-star {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(203, 213, 225, 0.8);
-}
-
 .btn-fav-star:hover {
     transform: scale(1.25);
-}
+    }
+
+حاوية الدرس معتمة جدا اريدها ان تكون شفافة لنرى البريق من تحتها و لا تنسة ان نحتفظ بنوعين من الخلفيات واحدة عند الضغط على بيضاء و واحدة عن الضغط على خلفية 1
