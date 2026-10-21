@@ -13,7 +13,7 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* حاوية الدرس: شفافة تماماً وكأنها غير موجودة في الخلفيات الداكنة لتتألق النجوم من تحتها */
+/* حاوية الدرس: شفافة جداً في الخلفيات الداكنة لتظهر النجوم ببريقها الساطع، وتتحول لخلفية بيضاء عند اختيار الخلفية البيضاء */
 .lesson-container {
     width: 100%;
     min-height: 100vh;
@@ -21,25 +21,25 @@ html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.15); /* إطار كريستالي خفيف جداً وناعم */
-    box-shadow: none;
+    background: rgba(15, 23, 42, 0.08) !important; /* شفافة جداً جداً لتتألق النجوم من تحتها ببريقها الكامل */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px); /* ضبابية خفيفة جداً لضمان قراءة النصوص بوضوح */
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* عند اختيار الخلفية البيضاء (تفعيل صنف light-theme): تتحول حاوية الدرس إلى خلفية بيضاء نقية وساطعة */
+/* عند اختيار الخلفية البيضاء (تفعيل صنف light-theme) */
 .lesson-container.light-theme {
     background: rgba(255, 255, 255, 0.95) !important;
-    background-color: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: none;
 }
 
-/* اللون الافتراضي للعنوان (فوق الخلفيات الداكنة والنجوم) */
+/* العنوان الرئيسي */
 .main-title {
     text-align: right;
-    color: #f8fafc; /* أبيض ساطع وواضح */
+    color: #f8fafc;
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -47,7 +47,6 @@ html, body {
     transition: color 0.3s ease;
 }
 
-/* إذا كانت الخلفية بيضاء: يتحول لون العنوان تلقائياً إلى داكن وواضِح */
 .lesson-container.light-theme .main-title {
     color: #0f172a !important;
 }
@@ -69,15 +68,15 @@ html, body {
     box-shadow: none !important;
 }
 
-/* زر العودة للفهرس: شفاف تماماً في الداكن وفاتح أنيق في الفاتح */
+/* زر العودة للفهرس */
 .btn-back-index {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background-color: rgba(15, 23, 42, 0.05);
+    background-color: rgba(15, 23, 42, 0.15);
     color: #f8fafc;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -94,7 +93,7 @@ html, body {
 }
 
 .btn-back-index:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .lesson-container.light-theme .btn-back-index:hover {
