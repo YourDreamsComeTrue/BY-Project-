@@ -66,7 +66,8 @@
                 imagePath = '01-core/assets/' + bg.path;
             }
 
-            container.style.background = `linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('${imagePath}') no-repeat center center`;
+            // تخفيض عتمة التدرج اللوني إلى 0.05 لكي تظهر النجوم ببريقها الساطع والكامل دون أي حجب
+            container.style.background = `linear-gradient(rgba(15, 23, 42, 0.05), rgba(15, 23, 42, 0.05)), url('${imagePath}') no-repeat center center`;
             container.style.backgroundSize = 'cover';
             container.classList.remove('light-theme');
             container.classList.add('dark-theme'); // صنف الخلفية الداكنة/الصورة
@@ -126,4 +127,4 @@
         }
     });
 })();
-            
+        
