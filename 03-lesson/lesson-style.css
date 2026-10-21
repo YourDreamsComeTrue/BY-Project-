@@ -13,6 +13,23 @@ html, body {
     font-family: system-ui, -apple-system, sans-serif;
 }
 
+/* استخدام متغيرات CSS للتحكم الديناميكي التلقائي */
+:root {
+    --lesson-bg: transparent !important;
+    --lesson-border: rgba(255, 255, 255, 0.2);
+    --lesson-shadow: none;
+    --text-color: #f8fafc;
+}
+
+/* عندما يتم تفعيل صنف الخلفية الفاتحة عبر الـ JS */
+.lesson-container.light-theme,
+body.light-theme .lesson-container {
+    --lesson-bg: #ffffff !important;
+    --lesson-border: #cbd5e1 !important;
+    --lesson-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    --text-color: #0f172a !important;
+}
+
 .lesson-container {
     width: 100%;
     min-height: 100vh;
@@ -20,36 +37,23 @@ html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
-    /* جعل حاوية الدرس شفافة تماماً لتظهر النجوم ببريقها من تحتها في الخلفية الداكنة */
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: none;
+    /* تطبيق المتغيرات بضمان المطلق لتتألق النجوم في الخلفية 1 */
+    background: var(--lesson-bg) !important;
+    background-color: var(--lesson-bg) !important;
+    border: 1px solid var(--lesson-border);
+    box-shadow: var(--lesson-shadow);
     transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* عند اختيار الخلفية البيضاء تتحول الحاوية تلقائياً إلى اللون الأبيض النظيف */
-.lesson-container.light-theme {
-    background: rgba(255, 255, 255, 0.95) !important;
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
+/* العنوان الرئيسي يتكيف تلقائياً مع المتغير */
 .main-title {
     text-align: right;
-    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
+    color: var(--text-color);
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
     padding: 0 5px;
     transition: color 0.3s ease;
-}
-
-/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
-.lesson-container.light-theme .main-title {
-    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
 }
 
 .titles-wrapper, 
@@ -87,7 +91,8 @@ html, body {
     margin-bottom: 20px;
 }
 
-.lesson-container.light-theme .btn-back-index {
+.lesson-container.light-theme .btn-back-index,
+body.light-theme .btn-back-index {
     background-color: rgba(241, 245, 249, 0.85);
     color: #0f172a;
     border: 1px solid rgba(203, 213, 225, 0.8);
@@ -96,10 +101,6 @@ html, body {
 .btn-back-index:hover {
     background-color: rgba(51, 65, 85, 0.9);
     border-color: rgba(255, 255, 255, 0.5);
-}
-
-.lesson-container.light-theme .btn-back-index:hover {
-    background-color: rgba(255, 255, 255, 0.95);
 }
 
 /* زر المفضلة داخل الدرس */
@@ -116,7 +117,8 @@ html, body {
     margin-right: 10px;
 }
 
-.lesson-container.light-theme .btn-fav-star {
+.lesson-container.light-theme .btn-fav-star,
+body.light-theme .btn-fav-star {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(203, 213, 225, 0.8);
 }
