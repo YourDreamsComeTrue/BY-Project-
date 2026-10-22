@@ -15,7 +15,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            height: 100dvh; /* حل مشكلة اختفاء الشريط السفلي في الهواتف */
+            height: 100dvh;
             background-color: #faf9f6;
             color: #2c3e50;
             overflow: hidden;
@@ -24,7 +24,7 @@
         .app-frame {
             width: 100vw;
             height: 100vh;
-            height: 100dvh; /* لملء الشاشة بدقة تامة على الموبايل */
+            height: 100dvh;
             background: #ffffff;
             display: flex;
             flex-direction: column;
@@ -40,7 +40,7 @@
             right: 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 8px 15px;
+            padding: 10px 15px;
             border-bottom: 1px solid #f0f0f0;
             text-align: center;
             z-index: 10;
@@ -52,12 +52,12 @@
             font-weight: 700;
         }
 
-        /* حاوية النص */
+        /* حاوية النص (تأخذ المساحة كاملة وتتيح التمرير العمودي) */
         .story-container {
             flex: 1;
             margin-top: 45px;
-            margin-bottom: 50px;
-            padding: 20px 20px;
+            margin-bottom: 10px;
+            padding: 20px 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -66,96 +66,57 @@
             margin-left: auto;
             margin-right: auto;
             width: 100%;
+            -webkit-overflow-scrolling: touch; /* تمرير سلس جداً على الهواتف */
         }
 
         .page-content {
             font-size: 1.12rem;
-            line-height: 2.3;
+            line-height: 2.4;
             color: #334155;
             text-align: justify;
-            user-select: none;
-        }
-
-        /* شريط التنقل السفلي المصغر جداً */
-        .story-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 6px 20px;
-            border-top: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .nav-btn {
-            background: #f1f5f9;
-            color: #334155;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        }
-
-        .nav-btn:active {
-            transform: scale(0.92);
-            background: #e2e8f0;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            box-shadow: none;
         }
     </style>
 </head>
 <body>
 
     <div class="app-frame" id="appFrame">
-        <!-- العنوان الثابت -->
+        <!-- العنوان الثابت في الأعلى -->
         <header class="story-header">
             <h1 id="main-title">جاري تحميل القصة...</h1>
         </header>
 
-        <!-- حاوية النص -->
+        <!-- حاوية النص القابلة للتمرير -->
         <main class="story-container" id="container">
             <div id="page-content" class="page-content"></div>
         </main>
-
-        <!-- الأسهم السفلية -->
-        <footer class="story-footer">
-            <button id="prevBtn" class="nav-btn" onclick="prevPage()" title="السابق">&#8594;</button>
-            <button id="nextBtn" class="nav-btn" onclick="nextPage()" title="التالي">&#8592;</button>
-        </footer>
     </div>
 
-    <!-- كود التحميل الديناميكي لملفات القصص -->
+    <!-- كود التحميل الديناميكي للقصة -->
     <script>
-        let currentPage = 0;
-
-        // استخراج معرف القصة من الرابط (مثال: story.html?id=000002)
+        // استخراج معرف القصة من الرابط (مثال: story.html?id=000001)
         const urlParams = new URLSearchParams(window.location.search);
-        const storyId = urlParams.get('id') || '000001'; // القيمة الافتراضية 000001
+        const storyId = urlParams.get('id') || '000001';
 
-        // تحميل ملف الجافاسكريبت الخاص بالقصة المطلوبة تلقائياً
+        // تحميل ملف الجافاسكريبت الخاص بالقصة تلقائياً
         const script = document.createElement('script');
         script.src = `stories/story-${storyId}.js`;
         
         script.onload = function() {
             if (typeof storyData !== 'undefined') {
                 document.getElementById('main-title').innerText = storyData.title;
-                renderPage();
+                
+                const contentDiv = document.getElementById('page-content');
+                
+                // دمج جميع صفحات القصة في نص متواصل واحد مع مسافات فاصلة
+                let fullStoryText = "";
+                if (Array.isArray(storyData.pages)) {
+                    fullStoryText = storyData.pages.join('\n\n\n');
+                } else if (storyData.content) {
+                    fullStoryText = storyData.content;
+                }
+
+                // عرض النص وتحويل الأسطر إلى فواصل HTML
+                contentDiv.innerHTML = fullStoryText.replace(/\n/g, '<br>');
             } else {
                 showError("ملف القصة فارغ أو تالف.");
             }
@@ -167,57 +128,10 @@
 
         document.head.appendChild(script);
 
-        function renderPage() {
-            const contentDiv = document.getElementById('page-content');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            contentDiv.innerHTML = storyData.pages[currentPage].replace(/\n/g, '<br>');
-
-            prevBtn.disabled = currentPage === 0;
-            nextBtn.disabled = currentPage === storyData.pages.length - 1;
-            
-            document.getElementById('container').scrollTop = 0;
-        }
-
-        function nextPage() {
-            if (currentPage < storyData.pages.length - 1) {
-                currentPage++;
-                renderPage();
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 0) {
-                currentPage--;
-                renderPage();
-            }
-        }
-
         function showError(msg) {
             document.getElementById('main-title').innerText = "تنبيه";
             document.getElementById('page-content').innerText = msg;
-            document.getElementById('prevBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'none';
         }
-
-        // دعم السحب (Swipe) بالأصبع
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const container = document.getElementById('appFrame');
-
-        container.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        container.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX + 50 < touchStartX) {
-                nextPage();
-            } else if (touchEndX > touchStartX + 50) {
-                prevPage();
-            }
-        });
     </script>
 </body>
 </html>
