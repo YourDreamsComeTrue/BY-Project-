@@ -1,10 +1,15 @@
-Html, body {
+
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: transparent !important;
+
+    /* السماح بظهور الخلفية الموجودة خلف الصفحة */
     background: transparent !important;
+    background-color: transparent !important;
+
     direction: rtl;
     font-family: system-ui, -apple-system, sans-serif;
 }
@@ -16,14 +21,31 @@ Html, body {
     margin: 0 auto;
     padding: 20px 16px;
     border-radius: 12px;
+
+    /* إطار الحاوية */
     border: 1px solid #334155;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    /* شفافية كاملة في خلفية النجوم */
+    background: transparent !important;
+    background-color: transparent !important;
+
+    /* إزالة الظل الداكن */
+    box-shadow: none !important;
 }
 
-/* اللون الافتراضي (للخلفيات الداكنة أو الصور) */
+/* الخلفية البيضاء: تبقى بيضاء */
+.lesson-container.light-theme {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+
+    /* ظل خفيف مناسب للخلفية البيضاء */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* العنوان الرئيسي */
 .main-title {
     text-align: right;
-    color: #f8fafc; /* أبيض واضح فوق الخلفية الداكنة */
+    color: #f8fafc;
     font-size: 1.6rem;
     margin-top: 0;
     margin-bottom: 24px;
@@ -31,29 +53,33 @@ Html, body {
     transition: color 0.3s ease;
 }
 
-/* إذا كانت الخلفية بيضاء (تفعيل صنف الخلفية الفاتحة) يتحول لون العنوان تلقائياً إلى داكن */
+/* لون العنوان في الخلفية البيضاء */
 .lesson-container.light-theme .main-title {
-    color: #0f172a !important; /* لون داكن وواضح فوق الخلفية البيضاء */
+    color: #0f172a !important;
 }
 
-.titles-wrapper, 
+/* حاويات العناوين */
+.titles-wrapper,
 .titles-list {
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
+/* إطار كل عنوان */
 .title-frame {
     width: 100%;
     border: none;
     border-radius: 12px;
     display: block;
+
+    /* عدم حجب الخلفية */
     background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
 }
 
-/* زر العودة للفهرس */
+/* زر العودة إلى الفهرس */
 .btn-back-index {
     display: inline-flex;
     align-items: center;
