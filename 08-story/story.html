@@ -123,7 +123,7 @@
     <div class="app-frame" id="appFrame">
         <!-- العنوان الثابت -->
         <header class="story-header">
-            <h1 id="main-title">عنوان القصة</h1>
+            <h1 id="main-title">جاري تحميل القصة...</h1>
         </header>
 
         <!-- حاوية النص -->
@@ -138,26 +138,38 @@
         </footer>
     </div>
 
-    <!-- استدعاء ملف النص والقصة الخاص بك -->
-    <script src="story.js"></script>
-
-    <!-- محرك التشغيل البرمجي -->
+    <!-- كود التحميل الديناميكي لملفات القصص -->
     <script>
         let currentPage = 0;
 
-        function initReader() {
+        // استخراج معرف القصة من الرابط (مثال: story.html?id=000002)
+        const urlParams = new URLSearchParams(window.location.search);
+        const storyId = urlParams.get('id') || '000001'; // القيمة الافتراضية 000001
+
+        // تحميل ملف الجافاسكريبت الخاص بالقصة المطلوبة تلقائياً
+        const script = document.createElement('script');
+        script.src = `stories/story-${storyId}.js`;
+        
+        script.onload = function() {
             if (typeof storyData !== 'undefined') {
                 document.getElementById('main-title').innerText = storyData.title;
                 renderPage();
+            } else {
+                showError("ملف القصة فارغ أو تالف.");
             }
-        }
+        };
+
+        script.onerror = function() {
+            showError(`عذراً، لم يتم العثور على القصة رقم (${storyId})`);
+        };
+
+        document.head.appendChild(script);
 
         function renderPage() {
             const contentDiv = document.getElementById('page-content');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
 
-            // عرض النص الحالي مع دعم الأسطر الجديدة
             contentDiv.innerHTML = storyData.pages[currentPage].replace(/\n/g, '<br>');
 
             prevBtn.disabled = currentPage === 0;
@@ -180,6 +192,13 @@
             }
         }
 
+        function showError(msg) {
+            document.getElementById('main-title').innerText = "تنبيه";
+            document.getElementById('page-content').innerText = msg;
+            document.getElementById('prevBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
         // دعم السحب (Swipe) بالأصبع
         let touchStartX = 0;
         let touchEndX = 0;
@@ -197,9 +216,6 @@
                 prevPage();
             }
         });
-
-        window.onload = initReader;
     </script>
 </body>
-  </html>
-  
+</html>
